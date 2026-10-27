@@ -70,8 +70,28 @@ function drawDirectionArrow(
 
 /** En mapas densos solo se etiquetan los nodos de interés (almacenes/líneas clave, empacadoras, cargadores). */
 function isDenseLandmark(n: { id: string; type?: string }): boolean {
+  if (getSemanticNodeColor(n.id)) return true;
   if (n.type === "empacadora" || n.type === "carga") return true;
   return /^(WH_MP_\d+|WH_PT_\d+|L\d+_OUT|E\d+_IN)$/.test(n.id);
+}
+
+/** Semántica New_map (planta espol_fusion): colores específicos por prefijo de nodo. */
+function getSemanticNodeColor(id: string): string | null {
+  if (id.startsWith("RECO_")) return "#f97316"; // naranja (puntos de recolección de pallets)
+  if (id.startsWith("PALET_")) return "#8b5cf6"; // morado (zona de paletizaje)
+  if (id.startsWith("TRANSPORTE")) return "#e4032e"; // rojo (hub de transporte externo)
+  if (id.startsWith("INSUMO_")) return "#d29922"; // amarillo (colocación de insumos)
+  if (id.startsWith("FUENTE_INSUMOS")) return "#92400e"; // café (fuente de insumos)
+  return null;
+}
+
+/** Arista del dominio AMR (TRANSPORTE ↔ PALET_* o con domain: "AMR"). */
+function isAmrEdge(e: LayoutEdge): boolean {
+  if ((e as { domain?: string }).domain === "AMR") return true;
+  return (
+    (e.from.startsWith("TRANSPORTE") && e.to.startsWith("PALET_")) ||
+    (e.to.startsWith("TRANSPORTE") && e.from.startsWith("PALET_"))
+  );
 }
 
 interface PlantMapProps {
@@ -375,6 +395,11 @@ export function PlantMap({
         ctx.strokeStyle = "rgba(236,72,153,0.95)";
         ctx.lineWidth = (dense ? 0.6 : 1.4) * 4 * scale;
         ctx.setLineDash([]);
+      } else if (isAmrEdge(e)) {
+        // Aristas TRANSPORTE ↔ PALET_* (dominio AMR)
+        ctx.strokeStyle = "#e4032e";
+        ctx.lineWidth = (dense ? 0.4 : 1) * 3 * scale;
+        ctx.setLineDash([]);
       } else {
         ctx.strokeStyle = dense ? "rgba(74,144,184,0.75)" : "#4a90b8";
         ctx.lineWidth = (dense ? 0.4 : 1) * 3 * scale;
@@ -411,16 +436,17 @@ export function PlantMap({
       try {
         const s = toScreen(n.x, n.y);
         const landmark = !dense || isDenseLandmark(n);
+        const semanticColor = getSemanticNodeColor(n.id);
 
         if (n.type === "cruce") {
           // Cruce: punto; en mapas densos se omite la etiqueta para no saturar el plano
           const r = dense ? 1.6 * scale : 6 * scale;
-          ctx.fillStyle = dense ? "rgba(108,142,191,0.5)" : "#6c8ebf";
+          ctx.fillStyle = semanticColor ?? (dense ? "rgba(108,142,191,0.5)" : "#6c8ebf");
           ctx.beginPath();
           ctx.arc(s.x, s.y, r, 0, Math.PI * 2);
           ctx.fill();
           if (!dense) {
-            ctx.fillStyle = "#4a6a7a";
+            ctx.fillStyle = semanticColor ? "#5b3918" : "#4a6a7a";
             ctx.font = `${7 * scale}px sans-serif`;
             ctx.textAlign = "center";
             ctx.textBaseline = "alphabetic";
@@ -428,13 +454,13 @@ export function PlantMap({
           }
         } else if (n.type === "buffer") {
           const half = (dense ? 2.6 : 3.5) * scale;
-          ctx.fillStyle = "#e8eef2";
+          ctx.fillStyle = semanticColor ?? "#e8eef2";
           ctx.fillRect(s.x - half, s.y - half, half * 2, half * 2);
-          ctx.strokeStyle = "#4a5560";
+          ctx.strokeStyle = semanticColor ?? "#4a5560";
           ctx.lineWidth = 1;
           ctx.strokeRect(s.x - half, s.y - half, half * 2, half * 2);
-          if (!dense && n.label) {
-            ctx.fillStyle = "#6a7a8a";
+          if ((!dense || semanticColor) && n.label) {
+            ctx.fillStyle = semanticColor ? "#5b3918" : "#6a7a8a";
             ctx.font = `${6 * scale}px sans-serif`;
             ctx.textAlign = "center";
             ctx.textBaseline = "alphabetic";
@@ -443,15 +469,15 @@ export function PlantMap({
         } else if (!dense) {
           // === Vista normal (plantas pequeñas): glifo grande + etiqueta ===
           if (n.type === "linea") {
-            ctx.fillStyle = "#2d6a4f";
+            ctx.fillStyle = semanticColor ?? "#2d6a4f";
             ctx.fillRect(s.x - 20 * scale, s.y - 12 * scale, 40 * scale, 24 * scale);
           } else if (n.type === "empacadora") {
-            ctx.fillStyle = "#e85d04";
+            ctx.fillStyle = semanticColor ?? "#e85d04";
             ctx.fillRect(s.x - 20 * scale, s.y - 12 * scale, 40 * scale, 24 * scale);
           } else if (n.type === "almacen") {
-            ctx.fillStyle = "#457b9d";
+            ctx.fillStyle = semanticColor ?? "#457b9d";
             ctx.fillRect(s.x - 22 * scale, s.y - 16 * scale, 44 * scale, 32 * scale);
-            ctx.strokeStyle = "#a8dadc";
+            ctx.strokeStyle = semanticColor ? "rgba(255,255,255,0.45)" : "#a8dadc";
             ctx.lineWidth = 1;
             for (let i = 0; i < 3; i++) {
               ctx.beginPath();
@@ -460,7 +486,7 @@ export function PlantMap({
               ctx.stroke();
             }
           } else if (n.type === "carga") {
-            ctx.fillStyle = "#d29922";
+            ctx.fillStyle = semanticColor ?? "#d29922";
             ctx.beginPath();
             ctx.arc(s.x, s.y, 12 * scale, 0, Math.PI * 2);
             ctx.fill();
@@ -469,14 +495,14 @@ export function PlantMap({
             ctx.textAlign = "center";
             ctx.fillText("⚡", s.x, s.y + 4 * scale);
           } else {
-            ctx.fillStyle = "#6c8ebf";
+            ctx.fillStyle = semanticColor ?? "#6c8ebf";
             ctx.beginPath();
             ctx.arc(s.x, s.y, 6 * scale, 0, Math.PI * 2);
             ctx.fill();
           }
 
           if (n.label) {
-            ctx.fillStyle = "#1a3a4a";
+            ctx.fillStyle = semanticColor ? "#5b3918" : "#1a3a4a";
             ctx.font = `bold ${9 * scale}px sans-serif`;
             ctx.textAlign = "center";
             ctx.textBaseline = "alphabetic";
@@ -485,15 +511,15 @@ export function PlantMap({
         } else if (landmark) {
           // === Vista densa: solo nodos clave, glifos compactos y etiqueta con halo ===
           if (n.type === "linea") {
-            ctx.fillStyle = "#2d6a4f";
+            ctx.fillStyle = semanticColor ?? "#2d6a4f";
             ctx.fillRect(s.x - 12 * scale, s.y - 8 * scale, 24 * scale, 16 * scale);
           } else if (n.type === "empacadora") {
-            ctx.fillStyle = "#e85d04";
+            ctx.fillStyle = semanticColor ?? "#e85d04";
             ctx.fillRect(s.x - 10 * scale, s.y - 7 * scale, 20 * scale, 14 * scale);
           } else if (n.type === "almacen") {
-            ctx.fillStyle = "#457b9d";
+            ctx.fillStyle = semanticColor ?? "#457b9d";
             ctx.fillRect(s.x - 13 * scale, s.y - 10 * scale, 26 * scale, 20 * scale);
-            ctx.strokeStyle = "rgba(168,218,220,0.9)";
+            ctx.strokeStyle = semanticColor ? "rgba(255,255,255,0.45)" : "rgba(168,218,220,0.9)";
             ctx.lineWidth = 0.8;
             for (let i = 1; i < 3; i++) {
               ctx.beginPath();
@@ -502,7 +528,7 @@ export function PlantMap({
               ctx.stroke();
             }
           } else if (n.type === "carga") {
-            ctx.fillStyle = "#d29922";
+            ctx.fillStyle = semanticColor ?? "#d29922";
             ctx.beginPath();
             ctx.arc(s.x, s.y, 8 * scale, 0, Math.PI * 2);
             ctx.fill();
@@ -520,7 +546,7 @@ export function PlantMap({
             ctx.strokeStyle = "rgba(232,244,252,0.85)";
             ctx.lineWidth = 3;
             ctx.strokeText(n.label, s.x, ly);
-            ctx.fillStyle = "#1a3a4a";
+            ctx.fillStyle = semanticColor ? "#5b3918" : "#1a3a4a";
             ctx.fillText(n.label, s.x, ly);
           }
         } else {
