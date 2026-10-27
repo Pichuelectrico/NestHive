@@ -26,7 +26,7 @@ class AMRAgent:
         self.id = id_str
         self.nombre = nombre
         self.tipo = tipo
-        self.clase = clase if clase in ("AGV", "AMR") else "AGV"
+        self.clase = clase if clase in ("AGV", "AMR") else None
         self.velocidad_ms = velocidad_ms
         self.carga_kg = carga_kg
         self.bateria = bateria_inicial
@@ -186,8 +186,7 @@ class AMRAgent:
                     # el paquete pasa a "listo en buffer" (out_stock+1 → emoji 📦) y el control
                     # out_arrive provisiona/encadena el EXPORT único hacia el muro.
                     if (
-                        self.tarea_actual.tipo == "EXPEDITION"
-                        and env
+                        env
                         and getattr(env, "out_nodes", [])
                         and self.tarea_actual.destino in env.out_nodes
                     ):

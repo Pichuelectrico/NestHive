@@ -1,6 +1,7 @@
 {
   "amr_home": "TRANSPORTE",
   "amr_edges": ["TRANSPORTE<->PALETIZAJE"],
+  "out_node_prefixes": ["OUT", "PALET_"],
   "emergency": {
     "allowed_routes": ["RECO_*→PALET_*"],
     "trigger": {"agv_indisponible": ["battery<reserve", "blocked", "charging"], "wait_exceeded_seconds": 120}

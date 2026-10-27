@@ -64,7 +64,8 @@ class SimulationEnvironment:
         self.node_types = {n["id"]: n.get("type", "cruce") for n in self.layout_raw.get("nodes", [])}
 
         # Nodos de expedición (OUT*) → buffer de producto terminado; nodo de entrega al muro externo
-        self.out_nodes: List[str] = sorted(nid for nid in self.node_positions if nid.startswith("OUT"))
+        prefixes = POLICY.get("out_node_prefixes", ["OUT"])
+        self.out_nodes: List[str] = sorted(nid for nid in self.node_positions if any(nid.startswith(p) for p in prefixes))
         self.wall_node: Optional[str] = next((nid for nid in self.node_positions
                                               if nid in ("MURO_ENTREGA", "ENTREGA_MURO", "WALL_DOCK", "TRANSPORTE")), None)
         self.out_stock: Dict[str, int] = {out: 0 for out in self.out_nodes}
@@ -118,7 +119,7 @@ class SimulationEnvironment:
                     node_positions=self.node_positions,
                     node_types=self.node_types,
                     charger_resolver=lambda aid: self.find_best_charger(aid)
-                    , clase=amr_data.get("clase", "AGV")
+                    , clase=amr_data.get("clase")
                 )
             )
 
@@ -544,7 +545,7 @@ class SimulationEnvironment:
         """Point único de creación de misiones EXPORT: provisiona UNA EXPORT hacia el muro externo
         SOLO si hay stock esperando en el OUT y no hay otra ya programada (out_en_ruta==0).
         Devuelve True si creó una misión. Lo usan out_arrive, out_ship y abort_export."""
-        if out_id not in self.out_stock or not self.wall_node or not self.delivery_amr_id:
+        if out_id not in self.out_stock or not self.wall_node or not self.delivery_amr_ids:
             return False
         if self.out_en_ruta.get(out_id, 0) > 0:
             return False
