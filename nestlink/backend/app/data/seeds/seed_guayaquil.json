@@ -1,0 +1,107 @@
+{
+  "lines": [
+    {
+      "id": "L1_OUT",
+      "nombre": "L1 Nescafé (Insumos y PT)",
+      "material": "Frasco Vidrio 200g",
+      "tasa_consumo_kg_min": 4.5,
+      "umbral_critico_pct": 25.0,
+      "nivel_inicial_pct": 72.0
+    },
+    {
+      "id": "L2_OUT",
+      "nombre": "L2 Maggi (Insumos y PT)",
+      "material": "Sobre Sopas 50g",
+      "tasa_consumo_kg_min": 3.8,
+      "umbral_critico_pct": 20.0,
+      "nivel_inicial_pct": 80.0
+    },
+    {
+      "id": "L3_OUT",
+      "nombre": "L3 Nestum (Insumos y PT)",
+      "material": "Cereal Pouch 350g",
+      "tasa_consumo_kg_min": 3.2,
+      "umbral_critico_pct": 20.0,
+      "nivel_inicial_pct": 65.0
+    },
+    {
+      "id": "E1_IN",
+      "nombre": "E1 Savoy (Insumos)",
+      "material": "Film Laminado 120mm",
+      "tasa_consumo_kg_min": 3.0,
+      "umbral_critico_pct": 30.0,
+      "nivel_inicial_pct": 28.0
+    },
+    {
+      "id": "E2_IN",
+      "nombre": "E2 La Lechera (Insumos)",
+      "material": "Lata Hojalata 395g",
+      "tasa_consumo_kg_min": 5.5,
+      "umbral_critico_pct": 25.0,
+      "nivel_inicial_pct": 24.0
+    }
+  ],
+  "amrs": [
+    {
+      "id": "AMR_01",
+      "nombre": "Nescafé Shuttle",
+      "tipo": "pallet_lifter",
+      "velocidad_ms": 1.6,
+      "carga_kg": 500,
+      "bateria_inicial": 95,
+      "posicion_nodo": "CHARGER_1",
+      "home_zone": "L1_OUT"
+    },
+    {
+      "id": "AMR_02",
+      "nombre": "Savoy Express",
+      "tipo": "towing_tug",
+      "velocidad_ms": 1.8,
+      "carga_kg": 350,
+      "bateria_inicial": 88,
+      "posicion_nodo": "X_10",
+      "home_zone": "E1_IN"
+    },
+    {
+      "id": "AMR_03",
+      "nombre": "Maggi Runner",
+      "tipo": "unit_load",
+      "velocidad_ms": 1.5,
+      "carga_kg": 400,
+      "bateria_inicial": 78,
+      "posicion_nodo": "WH_MP_1",
+      "home_zone": "L2_OUT"
+    },
+    {
+      "id": "AMR_04",
+      "nombre": "Lechera Hauler",
+      "tipo": "pallet_lifter",
+      "velocidad_ms": 1.5,
+      "carga_kg": 600,
+      "bateria_inicial": 84,
+      "posicion_nodo": "WH_PT_2",
+      "home_zone": "E2_IN"
+    },
+    {
+      "id": "AMR_05",
+      "nombre": "Nestum Cruiser",
+      "tipo": "unit_load",
+      "velocidad_ms": 1.7,
+      "carga_kg": 450,
+      "bateria_inicial": 90,
+      "posicion_nodo": "L3_OUT",
+      "home_zone": "L3_OUT"
+    },
+    {
+      "id": "AMR_06",
+      "nombre": "Nestlé Runner",
+      "tipo": "unit_load",
+      "velocidad_ms": 2.0,
+      "carga_kg": 300,
+      "bateria_inicial": 96,
+      "posicion_nodo": "CHARGER_2",
+      "home_zone": null
+    }
+  ],
+  "skus": []
+}

@@ -6,7 +6,7 @@ import math
 import random
 from typing import List, Dict, Any, Optional
 from app.models import SimulationSnapshot, NoticeItem
-from app.data_maps import load_layout_raw, load_seeds_raw, build_plant_graph, PLANT_CONFIGS, DEFAULT_PLANT_ID
+from app.data_maps import load_layout_raw, load_seeds_raw, build_plant_graph, PLANT_CONFIGS, TEST_PLANTS, DEFAULT_PLANT_ID, get_plant_config
 from app.metrics import KPIManager
 from app.sim.routing import block_edge, unblock_edge, find_shortest_path
 from app.sim.assignment import MissionQueue, compute_hungarian_assignment
@@ -118,10 +118,10 @@ class SimulationEnvironment:
         self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_4", "L2_OUT", prioridad=8, sim_time=0.0)
 
     def select_plant(self, plant_id: str) -> bool:
-        if plant_id not in PLANT_CONFIGS:
+        if plant_id not in PLANT_CONFIGS and plant_id not in TEST_PLANTS:
             return False
         self.init_plant(plant_id)
-        self.add_notice("INFO", None, f"Simulación reiniciada con {PLANT_CONFIGS[plant_id]['nombre']}")
+        self.add_notice("INFO", None, f"Simulación reiniciada con {get_plant_config(plant_id)['nombre']}")
         return True
 
     def add_notice(self, tipo: str, line_id: Optional[str], mensaje: str):

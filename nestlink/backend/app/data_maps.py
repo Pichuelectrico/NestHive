@@ -17,14 +17,24 @@ PLANT_CONFIGS = {
     "espol_fusion": {"id": "espol_fusion", "nombre": "Planta ESPOL Fusion", "map_file": "espol_fusion.json", "seed_file": "seed_espol.json"},
 }
 
+# Plantas solo para la suite de tests (fixtures históricos). NO se listan en
+# /api/v1/plants ni en el selector: el producto solo expone PLANT_CONFIGS.
+TEST_PLANTS = {
+    "quito": {"id": "quito", "nombre": "Planta Quito (fixture tests)", "map_file": "plant_layout.json", "seed_file": "seed.json"},
+    "cd_guayaquil": {"id": "cd_guayaquil", "nombre": "CD Guayaquil (fixture tests)", "map_file": "cd_guayaquil.json", "seed_file": "seed_guayaquil.json"},
+}
+
+def get_plant_config(plant_id: str) -> Dict[str, Any]:
+    return PLANT_CONFIGS.get(plant_id) or TEST_PLANTS.get(plant_id) or PLANT_CONFIGS[DEFAULT_PLANT_ID]
+
 def load_layout_raw(plant_id: str = DEFAULT_PLANT_ID) -> Dict[str, Any]:
-    cfg = PLANT_CONFIGS.get(plant_id, PLANT_CONFIGS[DEFAULT_PLANT_ID])
+    cfg = get_plant_config(plant_id)
     file_path = os.path.join(MAPS_DIR, cfg["map_file"])
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 def load_seeds_raw(plant_id: str = DEFAULT_PLANT_ID) -> Dict[str, Any]:
-    cfg = PLANT_CONFIGS.get(plant_id, PLANT_CONFIGS[DEFAULT_PLANT_ID])
+    cfg = get_plant_config(plant_id)
     file_path = os.path.join(SEEDS_DIR, cfg["seed_file"])
     with open(file_path, "r", encoding="utf-8") as f:
         return json.load(f)

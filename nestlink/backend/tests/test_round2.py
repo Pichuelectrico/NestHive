@@ -10,14 +10,16 @@ class TestRound2Enhancements(unittest.TestCase):
         sim_env.select_plant("quito")
 
     def test_01_multi_plant_catalog(self):
-        """Verifica el endpoint GET /api/v1/plants y la disponibilidad de Quito y Guayaquil."""
+        """Verifica GET /api/v1/plants: el catálogo expone SOLO las plantas del producto
+        (espol_fusion + realistic); quito/cd_guayaquil son fixtures ocultos de tests."""
         response = self.client.get("/api/v1/plants")
         self.assertEqual(response.status_code, 200)
         data = response.json()
         self.assertIn("plants", data)
         plant_ids = [p["id"] for p in data["plants"]]
-        self.assertIn("quito", plant_ids)
-        self.assertIn("cd_guayaquil", plant_ids)
+        self.assertEqual(sorted(plant_ids), ["espol_fusion", "realistic"])
+        self.assertNotIn("quito", plant_ids)
+        self.assertNotIn("cd_guayaquil", plant_ids)
 
     def test_02_layout_by_plant(self):
         """Verifica la carga de layouts específicos por parámetro query."""

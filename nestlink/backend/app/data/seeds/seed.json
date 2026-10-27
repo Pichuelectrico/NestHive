@@ -1,0 +1,129 @@
+{
+  "lines": [
+    {
+      "id": "L1_OUT",
+      "nombre": "L1 Nescafé (Insumos y PT)",
+      "material": "Frasco Vidrio 200g",
+      "tasa_consumo_kg_min": 4.2,
+      "umbral_critico_pct": 25.0,
+      "nivel_inicial_pct": 68.0,
+      "capacidad_pallet_unidades": 480
+    },
+    {
+      "id": "L2_OUT",
+      "nombre": "L2 Maggi (Insumos y PT)",
+      "material": "Sobre Sopas 50g",
+      "tasa_consumo_kg_min": 3.5,
+      "umbral_critico_pct": 20.0,
+      "nivel_inicial_pct": 82.0,
+      "capacidad_pallet_unidades": 960
+    },
+    {
+      "id": "E1_IN",
+      "nombre": "E1 Savoy (Insumos)",
+      "material": "Film Laminado 120mm",
+      "tasa_consumo_kg_min": 2.8,
+      "umbral_critico_pct": 30.0,
+      "nivel_inicial_pct": 32.0,
+      "capacidad_pallet_unidades": 12
+    },
+    {
+      "id": "E2_IN",
+      "nombre": "E2 La Lechera (Insumos)",
+      "material": "Lata Hojalata 395g",
+      "tasa_consumo_kg_min": 5.1,
+      "umbral_critico_pct": 25.0,
+      "nivel_inicial_pct": 22.0,
+      "capacidad_pallet_unidades": 600
+    }
+  ],
+  "amrs": [
+    {
+      "id": "AMR_01",
+      "nombre": "Nescafé Shuttle",
+      "tipo": "pallet_lifter",
+      "velocidad_ms": 1.5,
+      "carga_kg": 500,
+      "bateria_inicial": 95,
+      "posicion_nodo": "CHARGER_1"
+    },
+    {
+      "id": "AMR_02",
+      "nombre": "Savoy Express",
+      "tipo": "towing_tug",
+      "velocidad_ms": 1.8,
+      "carga_kg": 350,
+      "bateria_inicial": 88,
+      "posicion_nodo": "X_07"
+    },
+    {
+      "id": "AMR_03",
+      "nombre": "Maggi Runner",
+      "tipo": "unit_load",
+      "velocidad_ms": 1.4,
+      "carga_kg": 400,
+      "bateria_inicial": 76,
+      "posicion_nodo": "WH_MP_1"
+    },
+    {
+      "id": "AMR_04",
+      "nombre": "Lechera Hauler",
+      "tipo": "pallet_lifter",
+      "velocidad_ms": 1.5,
+      "carga_kg": 600,
+      "bateria_inicial": 82,
+      "posicion_nodo": "WH_PT_1"
+    },
+    {
+      "id": "AMR_05",
+      "nombre": "Nestlé Runner",
+      "tipo": "unit_load",
+      "velocidad_ms": 2.0,
+      "carga_kg": 300,
+      "bateria_inicial": 91,
+      "posicion_nodo": "CHARGER_2"
+    }
+  ],
+  "skus": [
+    {
+      "id": "SKU_NES_200",
+      "nombre": "Nescafé Tradición 200g",
+      "categoria": "Producto Terminado",
+      "material_empaque": "Frasco Vidrio / Tapa Plástica",
+      "packaging": "Caja x24 unidades",
+      "peso_unitario_kg": 4.8
+    },
+    {
+      "id": "SKU_MAG_050",
+      "nombre": "Maggi Caldo de Gallina 50g",
+      "categoria": "Producto Terminado",
+      "material_empaque": "Sobre Laminado Barrera",
+      "packaging": "Display x48 unidades",
+      "peso_unitario_kg": 2.4
+    },
+    {
+      "id": "SKU_SAV_130",
+      "nombre": "Savoy Chocolate con Leche 130g",
+      "categoria": "Insumo Bobina",
+      "material_empaque": "Film Laminado 120mm",
+      "packaging": "Bobina 250m",
+      "peso_unitario_kg": 18.0
+    },
+    {
+      "id": "SKU_LCH_395",
+      "nombre": "La Lechera Condensada 395g",
+      "categoria": "Insumo Latas",
+      "material_empaque": "Lata Hojalata Litografiada",
+      "packaging": "Pallet x400 unidades",
+      "peso_unitario_kg": 160.0
+    },
+    {
+      "id": "SKU_COR_12OZ",
+      "nombre": "Caja Corrugada Master 12oz",
+      "categoria": "Insumo Embalaje",
+      "material_empaque": "Cartón Corrugado Simple Onda",
+      "packaging": "Fardo x100 unidades",
+      "peso_unitario_kg": 15.0
+    }
+  ]
+}
