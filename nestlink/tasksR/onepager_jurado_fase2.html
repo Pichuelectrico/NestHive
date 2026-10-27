@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>NestHive — One-pager Mesa Jurado</title>
+<style>
+  @page { size: A4; margin: 14mm 12mm 12mm 12mm; }
+  @media print {
+    body{padding:0;margin:0;box-shadow:none;background:#fff}
+    .no-print{display:none}
+  }
+  body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#1f1f1f;background:#fff;line-height:1.45;margin:0}
+  h1,h2,h3{color:#e3262d;margin-bottom:0.4em}
+  .red{color:#e3262d}
+  .brown{color:#63513d}
+  .tagline{font-size:1.05em;color:#63513d;margin-top:0.2em}
+  .dolor{margin-bottom:0.55em;padding-left:1.2em;position:relative}
+  .dolor::before{content:"•";position:absolute;left:0;color:#e3262d;font-weight:bold}
+  .dolor b{color:#1f1f1f}
+  .dolor small{color:#555}
+  .solucion{background:#f6f8fa;padding:0.8em 1em;margin:1em 0;border-left:4px solid #e3262d}
+  .solucion li{margin-bottom:0.3em}
+  .numeros{margin:1em 0}
+  .numero{display:inline-block;margin:0.15em 0.9em 0.15em 0;font-family:Menlo,Consolas,monospace;font-weight:bold;font-size:1.05em;color:#1f1f1f;background:#fdecec;border:1px solid #f3c1c3;border-radius:4px;padding:0.15em 0.45em}
+  .numero small{font-weight:normal;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#555}
+  .wifi{margin:1em 0;padding:0.6em 0.9em;border:1px dashed #63513d;border-radius:4px;color:#63513d;font-size:0.95em}
+  .footer{margin-top:1.6em;font-size:0.85em;color:#666;border-top:1px solid #e0e0e0;padding-top:1em}
+  .logo{width:46px;height:46px;background:#e3262d;margin-right:0.7em;vertical-align:middle;border-radius:6px;position:relative}
+  .logo::after{content:"NH";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:1.1em}
+</style>
+</head>
+<body>
+<header style="display:flex;align-items:center;margin-bottom:0.8em">
+  <div class="logo" aria-hidden="true"></div>
+  <div>
+    <h1 style="font-size:1.5em;margin:0">NestHive</h1>
+    <p class="tagline">El Waze + cerebro de Nestlé para que sus AMRs nunca vayan vacíos y sus líneas nunca paren</p>
+  </div>
+</header>
+
+<section>
+  <h2 class="brown" style="margin:0.8em 0 0.5em 0">4 dolores que resolvemos</h2>
+  <ul style="margin:0;padding:0;list-style:none">
+    <li class="dolor"><b>Bloqueo de línea</b> — <small>la empacadora se detiene mientras el insumo no llega a tiempo</small></li>
+    <li class="dolor"><b>Punto único de falla</b> — <small>un solo montacargas averiado detiene el flujo de toda la planta</small></li>
+    <li class="dolor"><b>1.035 escaneos manuales/día</b> — <small>cada pallet se registra a mano: lento, caro y con errores</small></li>
+    <li class="dolor"><b>Seguridad montacargas–peatón</b> — <small>vehículos y operarios comparten los mismos pasillos</small></li>
+  </ul>
+</section>
+
+<section class="solucion">
+  <h2 class="brown" style="margin:0 0 0.4em 0">Solución en 3 líneas</h2>
+  <ol style="margin:0;padding-left:1.2em">
+    <li>Cola de misiones P1–P10 + asignación húngara + rutas A*</li>
+    <li>Evasión de obstáculos y personas según ISO 3691-4</li>
+    <li>VDA 5050 + SAP EWM, con buffer local en el AMR si cae el Wi-Fi</li>
+  </ol>
+</section>
+
+<div class="wifi"><b>Usamos la red que Nestlé ya tiene:</b> cobertura Wi-Fi tipo en pasillos (RSSI ≥ −65 dBm, roaming 802.11k/v/r), sin CAPEX de red nueva. El piloto trae el mapa de red.</div>
+
+<section class="numeros">
+  <h2 class="brown" style="margin:0.8em 0 0.5em 0">Los números</h2>
+  <div>
+    <span class="numero">1.035 <small>mov/día</small></span>
+    <span class="numero">215 <small>pallets salida/turno</small></span>
+    <span class="numero">131 <small>entrada/turno</small></span>
+    <span class="numero">takt 132 s</span>
+    <span class="numero">6 AMRs <small>(5+1)</small></span>
+    <span class="numero">89/89 <small>tests</small></span>
+    <span class="numero">techo 411 <small>pallets/turno (+91 %)</small></span>
+    <span class="numero">CAPEX $0,95M</span>
+    <span class="numero">ahorro $0,21M/año</span>
+    <span class="numero">payback ≤3 años <small>(3 turnos)</small></span>
+    <span class="numero red" style="background:#e3262d;color:#fff;border-color:#e3262d">PILOTO $0,22M <small style="color:#fff">reversible &lt; 1 turno</small></span>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>Demo en vivo (prototipo NestLink → NestHive): <a href="https://mare1225.github.io/NestLink/" target="_blank" style="color:#e3262d">https://mare1225.github.io/NestLink/</a> — un turno completo en setenta segundos.</p>
+  <p>Equipo: <b>Joshua</b> (USFQ) · <b>ESPOL</b> (tecnología y red) · <b>UTPL</b> (ROI y finanzas) — ODS 9: Industria, Innovación e Infraestructura.</p>
+</footer>
+</body>
+</html>

@@ -1,0 +1,485 @@
+{
+  "canvas": {
+    "w": 800,
+    "h": 500,
+    "title": "Planta Nestlé — Gemelo Intralogístico NestHive"
+  },
+  "nodes": [
+    {
+      "id": "L1_OUT",
+      "x": 80,
+      "y": 100,
+      "type": "linea",
+      "label": "L1 Nescafé (Insumos y PT)"
+    },
+    {
+      "id": "L2_OUT",
+      "x": 80,
+      "y": 220,
+      "type": "linea",
+      "label": "L2 Maggi (Insumos y PT)"
+    },
+    {
+      "id": "E1_IN",
+      "x": 80,
+      "y": 340,
+      "type": "empacadora",
+      "label": "E1 Savoy (Insumos)"
+    },
+    {
+      "id": "E2_IN",
+      "x": 80,
+      "y": 440,
+      "type": "empacadora",
+      "label": "E2 La Lechera (Insumos)"
+    },
+    {
+      "id": "CHARGER_1",
+      "x": 400,
+      "y": 40,
+      "type": "carga",
+      "label": "Cargador 1"
+    },
+    {
+      "id": "CHARGER_2",
+      "x": 560,
+      "y": 40,
+      "type": "carga",
+      "label": "Cargador 2"
+    },
+    {
+      "id": "X_01",
+      "x": 240,
+      "y": 100,
+      "type": "cruce",
+      "label": "Cruce X01"
+    },
+    {
+      "id": "X_04",
+      "x": 240,
+      "y": 220,
+      "type": "cruce",
+      "label": "Cruce X04"
+    },
+    {
+      "id": "X_07",
+      "x": 240,
+      "y": 340,
+      "type": "cruce",
+      "label": "Cruce X07"
+    },
+    {
+      "id": "X_10",
+      "x": 240,
+      "y": 440,
+      "type": "cruce",
+      "label": "Cruce X10"
+    },
+    {
+      "id": "X_02",
+      "x": 400,
+      "y": 100,
+      "type": "cruce",
+      "label": "Cruce X02"
+    },
+    {
+      "id": "X_05",
+      "x": 400,
+      "y": 220,
+      "type": "cruce",
+      "label": "Cruce X05"
+    },
+    {
+      "id": "X_08",
+      "x": 400,
+      "y": 340,
+      "type": "cruce",
+      "label": "Cruce X08"
+    },
+    {
+      "id": "X_11",
+      "x": 400,
+      "y": 440,
+      "type": "cruce",
+      "label": "Cruce X11"
+    },
+    {
+      "id": "X_03",
+      "x": 560,
+      "y": 100,
+      "type": "cruce",
+      "label": "Cruce X03"
+    },
+    {
+      "id": "X_06",
+      "x": 560,
+      "y": 220,
+      "type": "cruce",
+      "label": "Cruce X06"
+    },
+    {
+      "id": "X_09",
+      "x": 560,
+      "y": 340,
+      "type": "cruce",
+      "label": "Cruce X09"
+    },
+    {
+      "id": "X_12",
+      "x": 560,
+      "y": 440,
+      "type": "cruce",
+      "label": "Cruce X12"
+    },
+    {
+      "id": "WH_PT_1",
+      "x": 720,
+      "y": 100,
+      "type": "almacen",
+      "label": "Almacén PT 1 (Nescafé)"
+    },
+    {
+      "id": "WH_PT_2",
+      "x": 720,
+      "y": 220,
+      "type": "almacen",
+      "label": "Almacén PT 2 (Maggi)"
+    },
+    {
+      "id": "WH_MP_1",
+      "x": 720,
+      "y": 340,
+      "type": "almacen",
+      "label": "Almacén MP 1 (Savoy/Film)"
+    },
+    {
+      "id": "WH_MP_2",
+      "x": 720,
+      "y": 440,
+      "type": "almacen",
+      "label": "Almacén MP 2 (Lechera/Latas)"
+    },
+    {
+      "id": "WH_MP_3",
+      "x": 720,
+      "y": 40,
+      "type": "almacen",
+      "label": "Almacén MP 3 (Nescafé/Café)"
+    },
+    {
+      "id": "WH_MP_4",
+      "x": 720,
+      "y": 160,
+      "type": "almacen",
+      "label": "Almacén MP 4 (Maggi/Salsas)"
+    }
+  ],
+  "edges": [
+    {
+      "from": "L1_OUT",
+      "to": "X_01",
+      "length": 16.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "L2_OUT",
+      "to": "X_04",
+      "length": 16.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "E1_IN",
+      "to": "X_07",
+      "length": 16.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "E2_IN",
+      "to": "X_10",
+      "length": 16.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "CHARGER_1",
+      "to": "X_02",
+      "length": 6.0,
+      "max_speed": 1.0,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "CHARGER_2",
+      "to": "X_03",
+      "length": 6.0,
+      "max_speed": 1.0,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_01",
+      "to": "X_02",
+      "length": 16.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_02",
+      "to": "X_03",
+      "length": 16.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_03",
+      "to": "WH_PT_1",
+      "length": 16.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_04",
+      "to": "X_05",
+      "length": 16.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_05",
+      "to": "X_06",
+      "length": 16.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_06",
+      "to": "WH_PT_2",
+      "length": 16.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_07",
+      "to": "X_08",
+      "length": 16.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_08",
+      "to": "X_09",
+      "length": 16.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_09",
+      "to": "WH_MP_1",
+      "length": 16.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_10",
+      "to": "X_11",
+      "length": 16.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_11",
+      "to": "X_12",
+      "length": 16.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_12",
+      "to": "WH_MP_2",
+      "length": 16.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_01",
+      "to": "X_04",
+      "length": 12.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_04",
+      "to": "X_07",
+      "length": 12.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_07",
+      "to": "X_10",
+      "length": 10.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_02",
+      "to": "X_05",
+      "length": 12.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_05",
+      "to": "X_08",
+      "length": 12.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_08",
+      "to": "X_11",
+      "length": 10.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_03",
+      "to": "X_06",
+      "length": 12.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_06",
+      "to": "X_09",
+      "length": 12.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_09",
+      "to": "X_12",
+      "length": 10.0,
+      "max_speed": 1.8,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_1",
+      "to": "WH_PT_2",
+      "length": 12.0,
+      "max_speed": 1.2,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_2",
+      "to": "WH_MP_1",
+      "length": 12.0,
+      "max_speed": 1.2,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_1",
+      "to": "WH_MP_2",
+      "length": 10.0,
+      "max_speed": 1.2,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_03",
+      "to": "WH_MP_3",
+      "length": 16.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_3",
+      "to": "WH_PT_1",
+      "length": 6.0,
+      "max_speed": 1.2,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_06",
+      "to": "WH_MP_4",
+      "length": 16.0,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_1",
+      "to": "WH_MP_4",
+      "length": 6.0,
+      "max_speed": 1.2,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_4",
+      "to": "WH_PT_2",
+      "length": 6.0,
+      "max_speed": 1.2,
+      "direction": "bi",
+      "blocked": false
+    }
+  ],
+  "pedestrians": [
+    {
+      "id": "PED_01",
+      "name": "Operario Carlos (Control Calidad)",
+      "waypoints": [
+        "X_02",
+        "X_05",
+        "X_08",
+        "X_05"
+      ],
+      "speed": 1.0,
+      "radius": 2.5
+    },
+    {
+      "id": "PED_02",
+      "name": "Operaria Elena (Mantenimiento)",
+      "waypoints": [
+        "X_07",
+        "X_08",
+        "X_09",
+        "X_08"
+      ],
+      "speed": 0.8,
+      "radius": 2.5
+    }
+  ]
+}

@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NestLink — Dashboard Simulación</title>
+  <style>
+    :root {
+      --bg: #0d1117;
+      --panel: #161b22;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+      --accent: #58a6ff;
+      --green: #3fb950;
+      --yellow: #d29922;
+      --orange: #db6d28;
+      --blue: #388bfd;
+      --red: #f85149;
+      --blueprint: #e8f4fc;
+      --blueprint-grid: #c5dce8;
+      --blueprint-line: #4a90b8;
+    }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Header */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 20px;
+    background: var(--panel);
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+  }
+  .logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+  .logo span { color: var(--green); }
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--muted);
+  }
+  .live-dot {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 1.5s ease infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(63,185,80,0.5); }
+    50% { opacity: 0.8; box-shadow: 0 0 8px 2px rgba(63,185,80,0.4); }
+  }
+  .amr-count {
+    background: #21262d;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    border: 1px solid var(--border);
+  }
+  .amr-count strong { color: var(--accent); }
+
+  /* Layout principal */
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 280px;
+    grid-template-rows: 1fr auto auto;
+    gap: 12px;
+    padding: 12px;
+    height: calc(100vh - 56px);
+    max-height: calc(100vh - 56px);
+  }
+  .map-panel {
+    grid-row: 1 / 3;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    min-height: 320px;
+  }
+  .map-toolbar {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .btn-block {
+    background: #21262d;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .btn-block:hover { border-color: var(--accent); }
+  .btn-block.active {
+    background: rgba(248,81,49,0.2);
+    border-color: var(--red);
+    color: var(--red);
+  }
+  #mapCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    cursor: crosshair;
+  }
+
+  /* Kanban lateral */
+  .kanban {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px;
+    overflow-y: auto;
+    max-height: 100%;
+  }
+  .kanban h3 {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 6px;
+  }
+  .mission-card {
+    background: #21262d;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-bottom: 8px;
+    font-size: 0.78rem;
+    transition: transform 0.3s, opacity 0.3s;
+    border-left: 3px solid var(--muted);
+  }
+  .mission-card.p10 { border-left-color: var(--red); }
+  .mission-card.p8  { border-left-color: var(--orange); }
+  .mission-card.p5  { border-left-color: var(--yellow); }
+  .mission-card.p3  { border-left-color: var(--green); }
+  .mission-card .prio { font-weight: 700; margin-bottom: 2px; }
+  .mission-card .status {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+  .mission-card .amr-tag {
+    display: inline-block;
+    background: #30363d;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    margin-top: 4px;
+  }
+
+  /* Gauges de línea */
+  .gauges {
+    grid-column: 1;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .gauge-item {
+    flex: 1;
+    min-width: 140px;
+  }
+  .gauge-label {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 4px;
+  }
+  .gauge-bar-wrap {
+    height: 10px;
+    background: #21262d;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .gauge-bar {
+    height: 100%;
+    border-radius: 5px;
+    transition: width 0.5s ease;
+  }
+  .gauge-val {
+    font-size: 0.7rem;
+    color: var(--muted);
+    margin-top: 2px;
+  }
+  .alert-low {
+    color: var(--red);
+    font-size: 0.7rem;
+    font-weight: 600;
+    animation: blink 1s ease infinite;
+  }
+  @keyframes blink { 50% { opacity: 0.5; } }
+
+  /* KPI bar */
+  .kpi-bar {
+    grid-column: 1 / -1;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .kpi {
+    text-align: center;
+    min-width: 100px;
+  }
+  .kpi-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .kpi-value.roi { color: var(--green); }
+  .kpi-label {
+    font-size: 0.7rem;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  @media (max-width: 900px) {
+    .main {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto auto;
+      height: auto;
+      max-height: none;
+    }
+    .map-panel { grid-row: auto; min-height: 400px; }
+    .kanban { max-height: 300px; }
+  }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="logo">NEST<span>LINK</span></div>
+    <div class="live-badge">
+      <span class="live-dot"></span>
+      <span id="simClock">● EN VIVO · sim 14:23</span>
+    </div>
+    <div class="amr-count">AMRs activos: <strong id="amrCount">4</strong></div>
+  </header>
+
+  <div class="main">
+    <div class="map-panel">
+      <div class="map-toolbar">
+        <button class="btn-block" id="btnBlock1" data-edge="X_02-X_05">🚧 Derrame X_02–X_05</button>
+        <button class="btn-block" id="btnBlock2" data-edge="X_04-X_07">🚧 Derrame X_04–X_07</button>
+      </div>
+      <canvas id="mapCanvas"></canvas>
+    </div>
+
+    <aside class="kanban">
+      <h3>Kanban de Misiones</h3>
+      <div id="kanbanList"></div>
+    </aside>
+
+    <div class="gauges" id="gaugesPanel"></div>
+
+    <div class="kpi-bar">
+      <div class="kpi">
+        <div class="kpi-value" id="kpiTrips">0</div>
+        <div class="kpi-label">Viajes completados</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-value" id="kpiEmpty">0</div>
+        <div class="kpi-label">Vacíos evitados</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-value" id="kpiStops">0</div>
+        <div class="kpi-label">Paradas evitadas</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-value" id="kpiTime">4.2m</div>
+        <div class="kpi-label">Tiempo medio entrega</div>
+      </div>
+      <div class="kpi">
+        <div class="kpi-value roi" id="kpiRoi">-22% km</div>
+        <div class="kpi-label">ROI distancia</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // ─── Generador determinista (reproducible demo) ───
+  function mulberry32(seed) {
+    return function() {
+      seed |= 0;
+      seed = seed + 0x6D2B79F5 | 0;
+      let t = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+      return ((t ^ t >>> 14) >>> 0) / 4294967296;
+    };
+  }
+  const rng = mulberry32(42);
+
+  // ─── Grafo de planta (coords del plan NestLink) ───
+  const NODES = {
+    L1_OUT:   { x: 60,  y: 80,  type: 'linea',      label: 'L1 NESCAFÉ' },
+    L2_OUT:   { x: 60,  y: 200, type: 'linea',      label: 'L2 MAGGI' },
+    E1_IN:    { x: 60,  y: 320, type: 'empacadora', label: 'E1 SAVOY' },
+    E2_IN:    { x: 60,  y: 440, type: 'empacadora', label: 'E2 LECHERA' },
+    WH_IN_1:  { x: 720, y: 100, type: 'almacen',    label: 'Almacén MP' },
+    WH_OUT_1: { x: 720, y: 260, type: 'almacen',    label: 'Almacén PT' },
+    CHARGER_1:{ x: 720, y: 420, type: 'carga',      label: 'Cargador' },
+    X_01: { x: 200, y: 80,  type: 'cruce', label: 'X_01' },
+    X_02: { x: 340, y: 80,  type: 'cruce', label: 'X_02' },
+    X_03: { x: 480, y: 80,  type: 'cruce', label: 'X_03' },
+    X_04: { x: 200, y: 200, type: 'cruce', label: 'X_04' },
+    X_05: { x: 340, y: 200, type: 'cruce', label: 'X_05' },
+    X_06: { x: 480, y: 200, type: 'cruce', label: 'X_06' },
+    X_07: { x: 200, y: 320, type: 'cruce', label: 'X_07' },
+    X_08: { x: 340, y: 320, type: 'cruce', label: 'X_08' },
+    X_09: { x: 480, y: 320, type: 'cruce', label: 'X_09' },
+  };
+
+  // Aristas bidireccionales (clave única para bloqueos)
+  const EDGES = [
+    ['L1_OUT','X_01'], ['X_01','X_02'], ['X_02','X_03'], ['X_03','WH_IN_1'],
+    ['L2_OUT','X_04'], ['X_04','X_05'], ['X_05','X_06'], ['X_06','WH_OUT_1'],
+    ['E1_IN','X_07'],  ['X_07','X_08'], ['X_08','X_09'], ['X_09','CHARGER_1'],
+    ['E2_IN','X_07'],
+    ['X_02','X_05'], ['X_05','X_08'], ['X_04','X_07'], ['X_01','X_04'],
+    ['X_03','X_06'], ['X_06','X_09'], ['WH_IN_1','WH_OUT_1'], ['WH_OUT_1','CHARGER_1'],
+  ];
+
+  function edgeKey(a, b) {
+    return a < b ? `${a}-${b}` : `${b}-${a}`;
+  }
+
+  const blockedEdges = new Set();
+
+  // Rutas predefinidas para AMRs (ciclos de demo)
+  const ROUTES = {
+    nescafe: ['L1_OUT','X_01','X_02','X_03','WH_IN_1','WH_OUT_1','X_06','X_05','X_04','L2_OUT'],
+    savoy:   ['E1_IN','X_07','X_08','X_05','X_02','X_03','WH_IN_1'],
+    maggi:   ['L2_OUT','X_04','X_05','X_06','WH_OUT_1','X_06','X_09','X_08','X_07','E1_IN'],
+    lechera: ['E2_IN','X_07','X_04','X_01','L1_OUT','X_01','X_02','X_05','X_08','CHARGER_1'],
+  };
+
+  // Rutas alternativas cuando X_02-X_05 está bloqueado
+  const ALT_ROUTES = {
+    nescafe: ['L1_OUT','X_01','X_04','X_07','X_08','X_09','X_06','WH_OUT_1'],
+    savoy:   ['E1_IN','X_07','X_04','X_01','X_02','X_03','WH_IN_1'],
+    maggi:   ['L2_OUT','X_04','X_07','X_08','X_09','X_06','WH_OUT_1'],
+    lechera: ['E2_IN','X_07','X_08','X_09','X_06','WH_OUT_1','CHARGER_1'],
+  };
+
+  const ALT_ROUTES2 = {
+    nescafe: ['L1_OUT','X_01','X_04','X_05','X_06','WH_OUT_1'],
+    savoy:   ['E1_IN','X_07','X_08','X_09','X_06','WH_IN_1'],
+    maggi:   ['L2_OUT','X_04','X_07','X_08','X_05','X_02','X_03','WH_OUT_1'],
+    lechera: ['E2_IN','X_07','X_04','X_01','X_02','X_03','CHARGER_1'],
+  };
+
+  // Estados de AMR con colores de aro
+  const AMR_STATES = {
+    MOVING:     { color: '#3fb950', label: 'En ruta' },
+    CHARGING:   { color: '#d29922', label: 'Cargando' },
+    WAITING:    { color: '#db6d28', label: 'Esperando' },
+    REROUTING:  { color: '#388bfd', label: 'Re-ruteando' },
+    ERROR:      { color: '#f85149', label: 'Error' },
+    IDLE:       { color: '#8b949e', label: 'Idle' },
+  };
+
+  // ─── AMRs ───
+  const amrs = [
+    { id: 'amr1', name: 'Nescafé Shuttle', routeKey: 'nescafe', battery: 0.82, state: 'MOVING', missionId: null },
+    { id: 'amr2', name: 'Savoy Express',   routeKey: 'savoy',   battery: 0.65, state: 'MOVING', missionId: 'm2' },
+    { id: 'amr3', name: 'MAGGI Runner',    routeKey: 'maggi',   battery: 0.91, state: 'MOVING', missionId: 'm3' },
+    { id: 'amr4', name: 'Lechera Hauler',  routeKey: 'lechera', battery: 0.45, state: 'MOVING', missionId: 'm4' },
+  ];
+
+  // Posición y movimiento de cada AMR
+  amrs.forEach((amr, i) => {
+    const route = ROUTES[amr.routeKey];
+    amr.path = route;
+    amr.segIdx = 0;
+    amr.t = 0;
+    amr.speed = 0.00035 + rng() * 0.00015;
+    amr.x = NODES[route[0]].x;
+    amr.y = NODES[route[0]].y;
+    amr.color = ['#e85d04','#2d6a4f','#e63946','#457b9d'][i];
+  });
+
+  // ─── Peatones ───
+  const pedestrians = [
+  { id: 'P1', waypoints: ['X_02','X_05','X_08','X_05'], wpIdx: 0, t: 0, speed: 0.0004, radius: 28 },
+  { id: 'P2', waypoints: ['X_04','X_07','X_08','X_04'], wpIdx: 0, t: 0, speed: 0.00035, radius: 28 },
+  ];
+
+  pedestrians.forEach(p => {
+    const n = NODES[p.waypoints[0]];
+    p.x = n.x; p.y = n.y;
+  });
+
+  // ─── Misiones Kanban ───
+  let missions = [
+    { id: 'm1', type: 'SUPPLY_REQUEST', label: '🔴 P10 SUPPLY→E1', prio: 10, status: 'pendiente', amr: null },
+    { id: 'm2', type: 'SUPPLY', label: '🟠 P8 Film→E1 SAVOY', prio: 8, status: 'en_curso', amr: 'Savoy Express' },
+    { id: 'm3', type: 'PICKUP', label: '🟡 P5 PICKUP←L2', prio: 5, status: 'asignada', amr: 'MAGGI Runner' },
+    { id: 'm4', type: 'TRANSFER', label: '🟢 P3 PT→Almacén', prio: 3, status: 'en_curso', amr: 'Lechera Hauler' },
+    { id: 'm5', type: 'SUPPLY', label: '🟠 P8 Corrugado→E2', prio: 8, status: 'pendiente', amr: null },
+    { id: 'm6', type: 'PICKUP', label: '🟢 P3 Pallet L1', prio: 3, status: 'completada', amr: 'Nescafé Shuttle' },
+  ];
+
+  // ─── Gauges de material por línea ───
+  const gauges = [
+    { id: 'film_e1', label: 'Film E1 Savoy', value: 34, threshold: 25 },
+    { id: 'corr_e2', label: 'Corrugado E2', value: 58, threshold: 25 },
+    { id: 'pouch_l2', label: 'Bobina Pouch L2', value: 72, threshold: 25 },
+    { id: 'pallet_l1', label: 'Pallet PT L1', value: 88, threshold: 25 },
+  ];
+
+  // ─── KPIs ───
+  const kpis = { trips: 12, empty: 7, stops: 3, avgTime: 4.2 };
+
+  // ─── Simulación tiempo ───
+  let simMinutes = 14 * 60 + 23; // 14:23
+  let lastGaugeTick = 0;
+
+  // ─── Canvas setup ───
+  const canvas = document.getElementById('mapCanvas');
+  const ctx = canvas.getContext('2d');
+  let scale = 1, offsetX = 0, offsetY = 0;
+
+  function resizeCanvas() {
+    const panel = canvas.parentElement;
+    canvas.width = panel.clientWidth;
+    canvas.height = panel.clientHeight;
+    const pad = 40;
+    const w = 800, h = 500;
+    scale = Math.min((canvas.width - pad * 2) / w, (canvas.height - pad * 2) / h);
+    offsetX = (canvas.width - w * scale) / 2;
+    offsetY = (canvas.height - h * scale) / 2;
+  }
+
+  function toScreen(x, y) {
+    return { x: offsetX + x * scale, y: offsetY + y * scale };
+  }
+
+  function dist(ax, ay, bx, by) {
+    return Math.hypot(bx - ax, by - ay);
+  }
+
+  function getActiveRoute(amr) {
+    if (blockedEdges.has('X_02-X_05')) return ALT_ROUTES[amr.routeKey] || amr.path;
+    if (blockedEdges.has('X_04-X_07')) return ALT_ROUTES2[amr.routeKey] || amr.path;
+    return ROUTES[amr.routeKey];
+  }
+
+  function isEdgeBlocked(from, to) {
+    return blockedEdges.has(edgeKey(from, to));
+  }
+
+  function advanceAMR(amr) {
+    const route = getActiveRoute(amr);
+    if (amr.path !== route) {
+      amr.path = route;
+      amr.segIdx = 0;
+      amr.t = 0;
+      amr.state = 'REROUTING';
+    }
+
+    const fromId = amr.path[amr.segIdx];
+    const toId = amr.path[(amr.segIdx + 1) % amr.path.length];
+
+  if (isEdgeBlocked(fromId, toId)) {
+      amr.state = 'REROUTING';
+      const alt = getActiveRoute(amr);
+      amr.path = alt;
+      amr.segIdx = 0;
+      amr.t = 0;
+      return;
+    }
+
+    const from = NODES[fromId];
+    const to = NODES[toId];
+    amr.t += amr.speed;
+
+    // Verificar peatones en radio de seguridad
+    let nearPed = false;
+    for (const p of pedestrians) {
+      const d = dist(amr.x, amr.y, p.x, p.y);
+      if (d < p.radius / scale + 15) {
+        nearPed = true;
+        break;
+      }
+    }
+
+    if (nearPed) {
+      amr.state = 'WAITING';
+      return;
+    }
+
+    if (amr.state === 'REROUTING' && amr.t > 0.05) amr.state = 'MOVING';
+    if (amr.state === 'WAITING') amr.state = 'MOVING';
+
+    if (amr.t >= 1) {
+      amr.t = 0;
+      amr.segIdx = (amr.segIdx + 1) % amr.path.length;
+      // Completar misión ocasionalmente
+      if (rng() < 0.02 && amr.missionId) {
+        completeMission(amr.missionId);
+        amr.missionId = null;
+        kpis.trips++;
+        kpis.empty += rng() < 0.6 ? 1 : 0;
+      }
+    }
+
+    const t = Math.min(amr.t, 1);
+    amr.x = from.x + (to.x - from.x) * t;
+    amr.y = from.y + (to.y - from.y) * t;
+
+    // Batería decrece lentamente
+    amr.battery = Math.max(0.1, amr.battery - 0.00002);
+    if (amr.battery < 0.2) amr.state = 'CHARGING';
+    if (amr.battery > 0.85 && amr.state === 'CHARGING') amr.state = 'MOVING';
+  }
+
+  function advancePedestrian(p) {
+    const fromId = p.waypoints[p.wpIdx];
+    const toId = p.waypoints[(p.wpIdx + 1) % p.waypoints.length];
+    const from = NODES[fromId];
+    const to = NODES[toId];
+    p.t += p.speed;
+    if (p.t >= 1) {
+      p.t = 0;
+      p.wpIdx = (p.wpIdx + 1) % p.waypoints.length;
+    }
+    const t = Math.min(p.t, 1);
+    p.x = from.x + (to.x - from.x) * t;
+    p.y = from.y + (to.y - from.y) * t;
+  }
+
+  function completeMission(id) {
+    const m = missions.find(x => x.id === id);
+    if (m) m.status = 'completada';
+  }
+
+  function spawnSupplyMission() {
+    const id = 'm' + Date.now();
+    missions.unshift({
+      id,
+      type: 'SUPPLY_REQUEST',
+      label: '🔴 P10 SUPPLY→E1',
+      prio: 10,
+      status: 'pendiente',
+      amr: null
+    });
+    kpis.stops++;
+    if (missions.length > 8) missions.pop();
+  }
+
+  // ─── Dibujo del mapa blueprint ───
+  function drawMap() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Fondo blueprint
+    ctx.fillStyle = '#e8f4fc';
+    ctx.fillRect(offsetX, offsetY, 800 * scale, 500 * scale);
+
+    // Grid sutil
+    ctx.strokeStyle = '#c5dce8';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x <= 800; x += 40) {
+      const s = toScreen(x, 0);
+      ctx.beginPath();
+      ctx.moveTo(s.x, offsetY);
+      ctx.lineTo(s.x, offsetY + 500 * scale);
+      ctx.stroke();
+    }
+    for (let y = 0; y <= 500; y += 40) {
+      const s = toScreen(0, y);
+      ctx.beginPath();
+      ctx.moveTo(offsetX, s.y);
+      ctx.lineTo(offsetX + 800 * scale, s.y);
+      ctx.stroke();
+    }
+
+    // Aristas / pasillos
+    EDGES.forEach(([a, b]) => {
+      const na = NODES[a], nb = NODES[b];
+      const sa = toScreen(na.x, na.y);
+      const sb = toScreen(nb.x, nb.y);
+      const blocked = blockedEdges.has(edgeKey(a, b));
+
+      ctx.beginPath();
+      ctx.moveTo(sa.x, sa.y);
+      ctx.lineTo(sb.x, sb.y);
+      ctx.strokeStyle = blocked ? '#f85149' : '#4a90b8';
+      ctx.lineWidth = blocked ? 4 * scale : 3 * scale;
+      if (blocked) {
+        ctx.setLineDash([6, 4]);
+      } else {
+        ctx.setLineDash([]);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Cono de bloqueo
+      if (blocked) {
+        const mx = (sa.x + sb.x) / 2;
+        const my = (sa.y + sb.y) / 2;
+        ctx.fillStyle = '#f85149';
+        ctx.font = `${14 * scale}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('🚧', mx, my - 4 * scale);
+      }
+    });
+
+    // Nodos de zona
+    Object.entries(NODES).forEach(([id, n]) => {
+      const s = toScreen(n.x, n.y);
+      const r = n.type === 'cruce' ? 6 * scale : 14 * scale;
+
+      if (n.type === 'linea') {
+        ctx.fillStyle = '#2d6a4f';
+        ctx.fillRect(s.x - 20 * scale, s.y - 12 * scale, 40 * scale, 24 * scale);
+      } else if (n.type === 'empacadora') {
+        ctx.fillStyle = '#e85d04';
+        ctx.fillRect(s.x - 20 * scale, s.y - 12 * scale, 40 * scale, 24 * scale);
+      } else if (n.type === 'almacen') {
+        ctx.fillStyle = '#457b9d';
+        ctx.fillRect(s.x - 22 * scale, s.y - 16 * scale, 44 * scale, 32 * scale);
+        // Rack lines
+        ctx.strokeStyle = '#a8dadc';
+        ctx.lineWidth = 1;
+        for (let i = 0; i < 3; i++) {
+          ctx.beginPath();
+          ctx.moveTo(s.x - 18 * scale, s.y - 12 * scale + i * 10 * scale);
+          ctx.lineTo(s.x + 18 * scale, s.y - 12 * scale + i * 10 * scale);
+          ctx.stroke();
+        }
+      } else if (n.type === 'carga') {
+        ctx.fillStyle = '#d29922';
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 12 * scale, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#fff';
+        ctx.font = `${10 * scale}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('⚡', s.x, s.y + 4 * scale);
+      } else {
+        ctx.fillStyle = '#6c8ebf';
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      if (n.label && n.type !== 'cruce') {
+        ctx.fillStyle = '#1a3a4a';
+        ctx.font = `bold ${9 * scale}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText(n.label, s.x, s.y - 18 * scale);
+      } else if (n.type === 'cruce') {
+        ctx.fillStyle = '#4a6a7a';
+        ctx.font = `${7 * scale}px sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText(n.label, s.x, s.y + 14 * scale);
+      }
+    });
+
+    // Peatones con radio de seguridad
+    pedestrians.forEach(p => {
+      const s = toScreen(p.x, p.y);
+      const rad = p.radius * scale;
+
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, rad, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(219, 110, 40, 0.15)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(219, 110, 40, 0.5)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.fillStyle = '#db6d28';
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, 8 * scale, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#fff';
+      ctx.font = `${8 * scale}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText('🚶', s.x, s.y + 3 * scale);
+    });
+
+    // AMRs
+    amrs.forEach(amr => {
+      const s = toScreen(amr.x, amr.y);
+      const stateColor = AMR_STATES[amr.state]?.color || '#8b949e';
+
+      // Aro de estado
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, 16 * scale, 0, Math.PI * 2);
+      ctx.strokeStyle = stateColor;
+      ctx.lineWidth = 3 * scale;
+      ctx.stroke();
+
+      // Cuerpo AMR
+      ctx.fillStyle = amr.color;
+      ctx.beginPath();
+      ctx.roundRect(s.x - 10 * scale, s.y - 8 * scale, 20 * scale, 16 * scale, 4 * scale);
+      ctx.fill();
+
+      // Etiqueta nombre
+      ctx.fillStyle = '#1a1a2e';
+      ctx.font = `bold ${8 * scale}px sans-serif`;
+      ctx.textAlign = 'center';
+      ctx.fillText(amr.name.split(' ')[0], s.x, s.y - 22 * scale);
+
+      // Barra batería
+      const bw = 24 * scale;
+      ctx.fillStyle = '#30363d';
+      ctx.fillRect(s.x - bw / 2, s.y + 12 * scale, bw, 4 * scale);
+      ctx.fillStyle = amr.battery > 0.3 ? '#3fb950' : '#f85149';
+      ctx.fillRect(s.x - bw / 2, s.y + 12 * scale, bw * amr.battery, 4 * scale);
+    });
+  }
+
+  // ─── UI Kanban ───
+  function renderKanban() {
+    const el = document.getElementById('kanbanList');
+    const statusLabels = {
+      pendiente: '⏳ Pendiente',
+      asignada: '📋 Asignada',
+      en_curso: '🚀 En curso',
+      completada: '✅ Completada'
+    };
+    el.innerHTML = missions.map(m => {
+      const pClass = m.prio >= 10 ? 'p10' : m.prio >= 8 ? 'p8' : m.prio >= 5 ? 'p5' : 'p3';
+      return `<div class="mission-card ${pClass}">
+        <div class="prio">${m.label}</div>
+        <div class="status">${statusLabels[m.status] || m.status}</div>
+        ${m.amr ? `<span class="amr-tag">🤖 ${m.amr}</span>` : ''}
+      </div>`;
+    }).join('');
+  }
+
+  // ─── UI Gauges ───
+  function renderGauges() {
+    const el = document.getElementById('gaugesPanel');
+    el.innerHTML = gauges.map(g => {
+      const low = g.value < g.threshold;
+      const color = low ? '#f85149' : g.value < 50 ? '#d29922' : '#3fb950';
+      return `<div class="gauge-item">
+        <div class="gauge-label">${g.label}</div>
+        <div class="gauge-bar-wrap">
+          <div class="gauge-bar" style="width:${g.value}%;background:${color}"></div>
+        </div>
+        <div class="gauge-val">${g.value}% ${low ? '<span class="alert-low">⚠ stock bajo</span>' : ''}</div>
+      </div>`;
+    }).join('');
+  }
+
+  function updateKPIs() {
+    document.getElementById('kpiTrips').textContent = kpis.trips;
+    document.getElementById('kpiEmpty').textContent = kpis.empty;
+    document.getElementById('kpiStops').textContent = kpis.stops;
+    document.getElementById('kpiTime').textContent = kpis.avgTime.toFixed(1) + 'm';
+  }
+
+  function updateClock() {
+    simMinutes += 0.05;
+    const h = Math.floor(simMinutes / 60) % 24;
+    const m = Math.floor(simMinutes % 60);
+    document.getElementById('simClock').textContent =
+      `● EN VIVO · sim ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`;
+  }
+
+  // ─── Bloqueos dinámicos ───
+  document.getElementById('btnBlock1').addEventListener('click', function() {
+    toggleBlock('X_02-X_05', this);
+  });
+  document.getElementById('btnBlock2').addEventListener('click', function() {
+    toggleBlock('X_04-X_07', this);
+  });
+
+  function toggleBlock(key, btn) {
+    if (blockedEdges.has(key)) {
+      blockedEdges.delete(key);
+      btn.classList.remove('active');
+    } else {
+      blockedEdges.add(key);
+      btn.classList.add('active');
+      amrs.forEach(a => { a.state = 'REROUTING'; a.t = 0; });
+    }
+  }
+
+  // ─── Loop principal 60fps ───
+  let frame = 0;
+  function loop() {
+    frame++;
+    amrs.forEach(advanceAMR);
+    pedestrians.forEach(advancePedestrian);
+
+    if (frame % 120 === 0) {
+      updateClock();
+      // Decrecer gauges
+      gauges.forEach(g => {
+        g.value = Math.max(5, g.value - 0.3 - rng() * 0.5);
+        if (g.value < g.threshold && rng() < 0.3) spawnSupplyMission();
+      });
+      renderGauges();
+      renderKanban();
+      updateKPIs();
+
+      // Avanzar estados de misiones
+      missions.forEach(m => {
+        if (m.status === 'pendiente' && rng() < 0.1) m.status = 'asignada';
+        if (m.status === 'asignada' && rng() < 0.15) m.status = 'en_curso';
+      });
+    }
+
+    drawMap();
+    requestAnimationFrame(loop);
+  }
+
+  // ─── Init ───
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+  renderKanban();
+  renderGauges();
+  updateKPIs();
+  loop();
+  </script>
+</body>
+</html>
