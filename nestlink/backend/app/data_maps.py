@@ -9,24 +9,12 @@ from typing import Dict, Any, Tuple
 MAPS_DIR = os.path.join(os.path.dirname(__file__), "data", "maps")
 SEEDS_DIR = os.path.join(os.path.dirname(__file__), "data", "seeds")
 
-# Planta por defecto del demo (realistic = mapa Nestlé con LiDAR + AMRs rojos)
-DEFAULT_PLANT_ID: str = "realistic"
+# Planta por defecto del MVP (ESPOL fusion)
+DEFAULT_PLANT_ID: str = "espol_fusion"
 
 PLANT_CONFIGS = {
-    "quito": {
-        "id": "quito",
-        "nombre": "Planta Quito",
-        "map_file": "plant_layout.json",
-        "seed_file": "seed.json"
-    },
     "realistic": {"id": "realistic", "nombre": "Planta Realistic", "map_file": "realistic.json", "seed_file": "seed_realistic.json"},
     "espol_fusion": {"id": "espol_fusion", "nombre": "Planta ESPOL Fusion", "map_file": "espol_fusion.json", "seed_file": "seed_espol.json"},
-    "cd_guayaquil": {
-        "id": "cd_guayaquil",
-        "nombre": "CD Guayaquil",
-        "map_file": "cd_guayaquil.json",
-        "seed_file": "seed_guayaquil.json"
-    }
 }
 
 def load_layout_raw(plant_id: str = DEFAULT_PLANT_ID) -> Dict[str, Any]:

@@ -32,13 +32,12 @@ export const BACKEND_TIMEOUT_MS = 1500;
  * local/raíz siga siendo /maps/... (docker/live: BASE_PATH="").
  */
 export const LAYOUT_FALLBACK_PATHS: Record<string, string> = {
-  quito: `${BASE_PATH}/maps/plant_layout.json`,
   realistic: `${BASE_PATH}/maps/realistic_layout.json`,
   espol_fusion: `${BASE_PATH}/maps/espol_fusion.json`,
 };
 
-export const DEFAULT_PLANT_ID = "realistic";
-export const DEFAULT_PLANT_NAME = "Planta Realistic";
+export const DEFAULT_PLANT_ID = "espol_fusion";
+export const DEFAULT_PLANT_NAME = "Planta ESPOL Fusion";
 
 export const FLEET_PRESENTATION = {
   AGV_IDS: ["AMR_01", "AMR_02", "AMR_03", "AMR_06"],
@@ -82,12 +81,4 @@ export const WIFI_APS_BY_PLANT: Record<string, WifiAp[]> = {
     { id: "AP_OUT", x: 530, y: 360 },
   ],
   // Canvas 800×500 — cobertura tipo sobre el mapa clásico
-  quito: [
-    { id: "AP_Q1", x: 160, y: 80 },
-    { id: "AP_Q2", x: 360, y: 80 },
-    { id: "AP_Q3", x: 560, y: 80 },
-    { id: "AP_Q4", x: 280, y: 250 },
-    { id: "AP_Q5", x: 480, y: 250 },
-    { id: "AP_Q6", x: 400, y: 400 },
-  ],
 };

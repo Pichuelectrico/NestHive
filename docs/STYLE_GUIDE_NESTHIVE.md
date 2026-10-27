@@ -1,6 +1,8 @@
 # NestHive — guía visual MVP
 
-## Paleta
+## Tema MVP: Café & Amarillo
+
+La interfaz se lee como café profundo + amarillo miel + crema. El rojo queda reservado para semántica operativa (por ejemplo AGV Nestlé, alarmas y errores), nunca como decoración.
 
 | Token | Hex | Uso |
 |---|---|---|
@@ -9,19 +11,22 @@
 | `--hive-crema` | `#FBFBF8` | superficies limpias y fondos de contenido |
 | `--hive-arena` | `#EAD3A9` | fondos suaves, separadores y contexto |
 | `--hive-oro-claro` | `#FBC866` | hover, highlights y estados de atención no críticos |
+| `--nh-cocoa-deep` | `#241609` | canvas y superficies oscuras |
+| `--nh-cocoa` | `#3B2413` | paneles elevados |
 
 ## Reglas de aplicación
 
 - La identidad NestHive usa miel + cacao; no usar rojo como color de marca.
+- Aplicar 60/30/10: crema/café base, cacao en superficies y miel como acento; rojo solo semántico.
 - Rojo, verde y ámbar semánticos se conservan para estados operativos, alertas y salud de flota. No recolorear AMRs ni estados del mapa.
-- Fondos: crema/blanco; paneles con borde neutro y arena únicamente como lavado sutil.
+- Fondos: café profundo en el canvas; crema para tarjetas y texto; paneles elevados cacao con bordes café.
 - Contraste: cacao sobre crema/miel; texto blanco solo sobre cacao suficientemente oscuro.
 - El header muestra el monograma `NH` en miel con texto cacao y el nombre NestHive.
 
 ## Mapping para slides
 
 - Portada y propuesta: cacao para titulares, miel para la palabra Hive y cifras clave.
-- Demo: mantener mapa y flota con sus colores funcionales; usar miel solo en llamadas a la acción y marcadores de foco.
+- Demo: canvas café, cuadrícula/edges arena con baja opacidad, nodos crema/miel; mantener colores funcionales de flota y usar miel en foco.
 - Arquitectura/Wi‑Fi: crema como fondo, arena para capas, cacao para etiquetas.
 - Inversión/ROI: miel para CAPEX/piloto, cacao para valores y líneas de lectura.
 - Sostenibilidad/ODS: conservar el color oficial del ODS cuando aplique; NestHive no debe competir con ese código.

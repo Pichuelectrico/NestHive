@@ -58,7 +58,7 @@ function drawDirectionArrow(
   ctx.save();
   ctx.translate(mx, my);
   ctx.rotate(angle);
-  ctx.fillStyle = "rgba(70, 85, 100, 0.55)";
+  ctx.fillStyle = "rgba(234, 211, 169, 0.55)";
   ctx.beginPath();
   ctx.moveTo(size, 0);
   ctx.lineTo(-size * 0.65, size * 0.55);
@@ -616,7 +616,7 @@ export function PlantMap({
     // Leyenda LiDAR (pitch)
     if (lidarMode) {
       ctx.save();
-      ctx.fillStyle = "rgba(15, 23, 42, 0.72)";
+      ctx.fillStyle = "rgba(36, 22, 9, 0.88)";
       ctx.fillRect(10, 10, 128, 22);
       ctx.fillStyle = "#7CFFB2";
       ctx.font = `bold ${11}px sans-serif`;
@@ -769,7 +769,7 @@ export function PlantMap({
         ctx.roundRect(s.x - w / 2, s.y - h / 2, w, h, 4 * spriteK * scale);
         ctx.fill();
 
-        ctx.fillStyle = "#1a1a2e";
+        ctx.fillStyle = "#5B3918";
         ctx.font = `bold ${8 * spriteK * scale}px sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "alphabetic";
@@ -785,7 +785,7 @@ export function PlantMap({
         ctx.fillText(`${cargoEmoji} ${getBatteryEmoji(amr)}`, s.x, s.y - 30 * spriteK * scale);
 
         const bw = 24 * spriteK * scale;
-        ctx.fillStyle = "#30363d";
+        ctx.fillStyle = "#5B3918";
         ctx.fillRect(s.x - bw / 2, s.y + 12 * spriteK * scale, bw, 4 * spriteK * scale);
         ctx.fillStyle = amr.bateria > 30 ? "#3fb950" : "#f85149";
         ctx.fillRect(

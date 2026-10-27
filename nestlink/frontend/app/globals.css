@@ -11,14 +11,17 @@
   --hive-crema: #fbfbf8;
   --hive-arena: #ead3a9;
   --hive-oro-claro: #fbc866;
-  --nest-bg: #f4f5f7;
-  --nest-bg-elevated: #ffffff;
-  --nest-panel: #ffffff;
-  --nest-panel-raised: #f0f1f4;
-  --nest-border: rgba(15, 23, 42, 0.08);
-  --nest-border-strong: rgba(15, 23, 42, 0.14);
-  --nest-text: #1b1f24;
-  --nest-muted: #6b7280;
+  --nh-cocoa-deep: #241609;
+  --nh-cocoa: #3b2413;
+  --nh-honey: #f9ae08;
+  --nest-bg: var(--hive-cream);
+  --nest-bg-elevated: #fffdf7;
+  --nest-panel: #fffdf7;
+  --nest-panel-raised: #f6e8c7;
+  --nest-border: rgba(91, 57, 24, 0.14);
+  --nest-border-strong: rgba(91, 57, 24, 0.24);
+  --nest-text: var(--hive-cacao);
+  --nest-muted: #674627;
   --nest-accent: var(--hive-miel);
   --nest-accent-warm: var(--hive-oro-claro);
   --nest-green: #059669;
@@ -52,19 +55,19 @@ body {
 
 @layer components {
   .nest-panel {
-    @apply rounded-xl border border-black/[0.08] bg-white/95 shadow-nest-panel backdrop-blur-sm;
+    @apply rounded-xl border border-[#5B3918]/[0.14] bg-[#FBFBF8]/95 shadow-nest-panel backdrop-blur-sm;
   }
 
   .nest-panel-header {
-    @apply flex items-center justify-between gap-2 border-b border-black/[0.06] bg-black/[0.02] px-3 py-2.5;
+    @apply flex items-center justify-between gap-2 border-b border-[#5B3918]/[0.12] bg-[#EAD3A9]/[0.22] px-3 py-2.5;
   }
 
   .nest-card {
-    @apply rounded-lg border border-black/[0.06] bg-black/[0.02] transition-colors duration-200;
+    @apply rounded-lg border border-[#5B3918]/[0.12] bg-[#EAD3A9]/[0.16] transition-colors duration-200;
   }
 
   .nest-card:hover {
-    @apply border-black/[0.1] bg-black/[0.04];
+    @apply border-[#5B3918]/[0.2] bg-[#EAD3A9]/[0.25];
   }
 
   .nest-label {
@@ -72,7 +75,7 @@ body {
   }
 
   .nest-select {
-    @apply rounded-lg border border-black/[0.1] bg-white px-3 py-1.5 text-sm text-nest-text
+    @apply rounded-lg border border-[#5B3918]/[0.16] bg-[#FBFBF8] px-3 py-1.5 text-sm text-nest-text
       transition-colors focus:border-nest-accent/50 focus:outline-none focus:ring-2 focus:ring-nest-accent/20
       disabled:opacity-50;
   }
@@ -83,8 +86,8 @@ body {
   }
 
   .nest-btn-ghost {
-    @apply nest-btn border-black/[0.1] bg-white text-nest-muted hover:border-black/[0.16]
-      hover:bg-black/[0.03] hover:text-nest-text;
+    @apply nest-btn border-[#5B3918]/[0.16] bg-[#FBFBF8] text-nest-muted hover:border-[#5B3918]/[0.24]
+      hover:bg-[#EAD3A9]/[0.2] hover:text-nest-text;
   }
 
   .nest-btn-primary {
@@ -109,11 +112,11 @@ body {
   }
 
   .nest-toolbar-group {
-    @apply flex flex-wrap items-center gap-1.5 rounded-xl border border-black/[0.08] bg-[#f0f1f4] p-1.5;
+    @apply flex flex-wrap items-center gap-1.5 rounded-xl border border-[#5B3918]/[0.14] bg-[#EAD3A9]/[0.25] p-1.5;
   }
 
   .nest-toolbar-solid {
-    @apply flex flex-wrap items-center gap-1.5 rounded-lg border border-black/[0.08] bg-[#f0f1f4] p-2;
+    @apply flex flex-wrap items-center gap-1.5 rounded-lg border border-[#5B3918]/[0.14] bg-[#EAD3A9]/[0.25] p-2;
   }
 
   .nest-hint {
