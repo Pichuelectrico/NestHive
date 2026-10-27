@@ -153,9 +153,11 @@ export function drawVisualV2ZoneTitles(
     if (row) row.push(n);
     else rows.push([n]);
   }
-  const target = rows[1] ?? rows[0];
+  // Anchor explicitly to the rightmost node of the second purple row (PALET_10)
+  // so the label remains stable after graph-space marker relocation.
+  const target = palet.find((n) => n.id === "PALET_10") ?? rows[1]?.[rows[1].length - 1] ?? rows[0]?.[rows[0].length - 1];
   if (target) {
-    const right = target.reduce((a, b) => (b.x > a.x ? b : a));
+    const right = target;
     const s = toScreen(right.x, right.y);
     ctx.save();
     ctx.textAlign = "left";
