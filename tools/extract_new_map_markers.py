@@ -27,7 +27,10 @@ def main():
    # Text strokes are wide/long low-density components; retain marker-sized blobs.
    fill=area/(w*h)
    if area>3000 or (max(w,h)>90 and fill<0.18) or w<7 or h<7 or fill<0.28: continue
-   points.append({"x_px":int(x0),"y_px":int(y0),"w":int(w),"h":int(h)})
+   point={"x_px":int(x0),"y_px":int(y0),"w":int(w),"h":int(h)}
+   if name=="amarillo": point["etiqueta"]="P1" if y0<300 else "P2" if y0<700 else "P3"
+   elif name=="naranja": point["etiqueta"]="R1" if y0<400 else "R2" if y0<700 else "R3"
+   points.append(point)
   result[name]={"color":hexv,"puntos":sorted(points,key=lambda p:(p["y_px"],p["x_px"]))}
  OUTPUT.parent.mkdir(parents=True,exist_ok=True); OUTPUT.write_text(json.dumps(result,ensure_ascii=False,indent=2)+"\n")
  print(json.dumps({k:len(v["puntos"]) for k,v in result.items()},ensure_ascii=False))
