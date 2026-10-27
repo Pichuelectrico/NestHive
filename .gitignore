@@ -1,3 +1,5 @@
 .DS_Store
 __pycache__/
 *.pyc
+# Briefing local de Codex (nunca se sube al repo)
+codex.md
