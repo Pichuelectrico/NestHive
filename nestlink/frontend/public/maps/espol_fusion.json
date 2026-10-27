@@ -1,1716 +1,1753 @@
 {
- "canvas": {
-  "w": 1000,
-  "h": 600,
-  "title": "Planta ESPOL · Fusión — NestHive"
- },
- "nodes": [
-  {
-   "id": "L1_OUT",
-   "x": 175.8,
-   "y": 524.21,
-   "type": "linea",
-   "label": "L1 Nescafé"
-  },
-  {
-   "id": "L2_OUT",
-   "x": 176.36,
-   "y": 493.71,
-   "type": "linea",
-   "label": "L2 Maggi"
-  },
-  {
-   "id": "E1_IN",
-   "x": 175.86,
-   "y": 467.68,
-   "type": "empacadora",
-   "label": "E1 Savoy"
-  },
-  {
-   "id": "E2_IN",
-   "x": 175.89,
-   "y": 437.62,
-   "type": "empacadora",
-   "label": "E2 Lechera"
-  },
-  {
-   "id": "WH_MP_1",
-   "x": 176.0,
-   "y": 407.53,
-   "type": "almacen",
-   "label": "MP Savoy"
-  },
-  {
-   "id": "WH_MP_2",
-   "x": 175.76,
-   "y": 377.34,
-   "type": "almacen",
-   "label": "MP Lechera"
-  },
-  {
-   "id": "WH_MP_3",
-   "x": 337.62,
-   "y": 529.24,
-   "type": "almacen",
-   "label": "MP Nescafé"
-  },
-  {
-   "id": "WH_MP_4",
-   "x": 338.2,
-   "y": 463.71,
-   "type": "almacen",
-   "label": "MP Maggi"
-  },
-  {
-   "id": "WH_MP_5",
-   "x": 406.92,
-   "y": 529.02,
-   "type": "almacen",
-   "label": "MP Nestum"
-  },
-  {
-   "id": "WH_PT_1",
-   "x": 406.31,
-   "y": 463.78,
-   "type": "almacen",
-   "label": "PT 1"
-  },
-  {
-   "id": "WH_PT_2",
-   "x": 337.58,
-   "y": 390.57,
-   "type": "almacen",
-   "label": "PT 2"
-  },
-  {
-   "id": "WH_PT_3",
-   "x": 398.0,
-   "y": 321.99,
-   "type": "almacen",
-   "label": "PT 3"
-  },
-  {
-   "id": "CHARGER_1",
-   "x": 338.8,
-   "y": 321.17,
-   "type": "carga",
-   "label": "Carga 1"
-  },
-  {
-   "id": "CHARGER_2",
-   "x": 557.52,
-   "y": 498.36,
-   "type": "carga",
-   "label": "Carga 2"
-  },
-  {
-   "id": "BUFFER_1",
-   "x": 950.0,
-   "y": 485.62,
-   "type": "buffer",
-   "label": "Buffer 1"
-  },
-  {
-   "id": "BUFFER_2",
-   "x": 533.23,
-   "y": 459.39,
-   "type": "buffer",
-   "label": "Buffer 2"
-  },
-  {
-   "id": "ControlPoint17",
-   "x": 546.43,
-   "y": 360.08,
-   "type": "cruce",
-   "label": "ControlPoint17"
-  },
-  {
-   "id": "ControlPoint18",
-   "x": 949.04,
-   "y": 355.27,
-   "type": "cruce",
-   "label": "ControlPoint18"
-  },
-  {
-   "id": "ControlPoint19",
-   "x": 503.05,
-   "y": 321.23,
-   "type": "cruce",
-   "label": "ControlPoint19"
-  },
-  {
-   "id": "ControlPoint20",
-   "x": 167.84,
-   "y": 279.19,
-   "type": "cruce",
-   "label": "ControlPoint20"
-  },
-  {
-   "id": "ControlPoint21",
-   "x": 142.8,
-   "y": 136.29,
-   "type": "cruce",
-   "label": "ControlPoint21"
-  },
-  {
-   "id": "ControlPoint22",
-   "x": 142.8,
-   "y": 79.12,
-   "type": "cruce",
-   "label": "ControlPoint22"
-  },
-  {
-   "id": "ControlPoint23",
-   "x": 142.8,
-   "y": 209.3,
-   "type": "cruce",
-   "label": "ControlPoint23"
-  },
-  {
-   "id": "ControlPoint24",
-   "x": 927.1,
-   "y": 211.06,
-   "type": "cruce",
-   "label": "ControlPoint24"
-  },
-  {
-   "id": "ControlPoint25",
-   "x": 927.27,
-   "y": 139.48,
-   "type": "cruce",
-   "label": "ControlPoint25"
-  },
-  {
-   "id": "ControlPoint26",
-   "x": 927.4,
-   "y": 82.48,
-   "type": "cruce",
-   "label": "ControlPoint26"
-  },
-  {
-   "id": "ControlPoint27",
-   "x": 394.37,
-   "y": 390.65,
-   "type": "cruce",
-   "label": "ControlPoint27"
-  },
-  {
-   "id": "ControlPoint29",
-   "x": 604.75,
-   "y": 408.14,
-   "type": "cruce",
-   "label": "ControlPoint29"
-  },
-  {
-   "id": "ControlPoint30",
-   "x": 604.66,
-   "y": 549.82,
-   "type": "cruce",
-   "label": "ControlPoint30"
-  },
-  {
-   "id": "ControlPoint31",
-   "x": 189.22,
-   "y": 301.74,
-   "type": "cruce",
-   "label": "ControlPoint31"
-  },
-  {
-   "id": "ControlPoint32",
-   "x": 73.34,
-   "y": 114.89,
-   "type": "cruce",
-   "label": "ControlPoint32"
-  },
-  {
-   "id": "X_Ruta13_1",
-   "x": 50.0,
-   "y": 550.0,
-   "type": "cruce",
-   "label": "X_Ruta13_1"
-  },
-  {
-   "id": "X_Ruta13_2",
-   "x": 289.16,
-   "y": 550.0,
-   "type": "cruce",
-   "label": "X_Ruta13_2"
-  },
-  {
-   "id": "X_Ruta14_1",
-   "x": 50.0,
-   "y": 343.7,
-   "type": "cruce",
-   "label": "X_Ruta14_1"
-  },
-  {
-   "id": "X_Ruta14_2",
-   "x": 50.0,
-   "y": 493.71,
-   "type": "cruce",
-   "label": "X_Ruta14_2"
-  },
-  {
-   "id": "X_Ruta14_3",
-   "x": 50.0,
-   "y": 407.53,
-   "type": "cruce",
-   "label": "X_Ruta14_3"
-  },
-  {
-   "id": "X_Ruta14_4",
-   "x": 50.0,
-   "y": 377.34,
-   "type": "cruce",
-   "label": "X_Ruta14_4"
-  },
-  {
-   "id": "X_Ruta14_5",
-   "x": 50.0,
-   "y": 467.68,
-   "type": "cruce",
-   "label": "X_Ruta14_5"
-  },
-  {
-   "id": "X_Ruta14_6",
-   "x": 50.0,
-   "y": 524.21,
-   "type": "cruce",
-   "label": "X_Ruta14_6"
-  },
-  {
-   "id": "X_Ruta14_7",
-   "x": 50.0,
-   "y": 437.62,
-   "type": "cruce",
-   "label": "X_Ruta14_7"
-  },
-  {
-   "id": "X_Ruta15_1",
-   "x": 289.72,
-   "y": 343.7,
-   "type": "cruce",
-   "label": "X_Ruta15_1"
-  },
-  {
-   "id": "X_Ruta15_2",
-   "x": 189.22,
-   "y": 343.7,
-   "type": "cruce",
-   "label": "X_Ruta15_2"
-  },
-  {
-   "id": "X_Ruta16_1",
-   "x": 289.31,
-   "y": 493.77,
-   "type": "cruce",
-   "label": "X_Ruta16_1"
-  },
-  {
-   "id": "X_Ruta16_2",
-   "x": 289.67,
-   "y": 360.58,
-   "type": "cruce",
-   "label": "X_Ruta16_2"
-  },
-  {
-   "id": "X_Ruta16_3",
-   "x": 289.55,
-   "y": 407.53,
-   "type": "cruce",
-   "label": "X_Ruta16_3"
-  },
-  {
-   "id": "X_Ruta16_4",
-   "x": 289.63,
-   "y": 377.34,
-   "type": "cruce",
-   "label": "X_Ruta16_4"
-  },
-  {
-   "id": "X_Ruta16_5",
-   "x": 289.38,
-   "y": 467.68,
-   "type": "cruce",
-   "label": "X_Ruta16_5"
-  },
-  {
-   "id": "X_Ruta16_6",
-   "x": 289.23,
-   "y": 524.21,
-   "type": "cruce",
-   "label": "X_Ruta16_6"
-  },
-  {
-   "id": "X_Ruta16_7",
-   "x": 289.47,
-   "y": 437.62,
-   "type": "cruce",
-   "label": "X_Ruta16_7"
-  },
-  {
-   "id": "X_Ruta1_1",
-   "x": 321.54,
-   "y": 360.15,
-   "type": "cruce",
-   "label": "X_Ruta1_1"
-  },
-  {
-   "id": "X_Ruta1_2",
-   "x": 321.54,
-   "y": 425.08,
-   "type": "cruce",
-   "label": "X_Ruta1_2"
-  },
-  {
-   "id": "X_Ruta1_3",
-   "x": 321.54,
-   "y": 493.77,
-   "type": "cruce",
-   "label": "X_Ruta1_3"
-  },
-  {
-   "id": "X_Ruta1_4",
-   "x": 321.54,
-   "y": 463.71,
-   "type": "cruce",
-   "label": "X_Ruta1_4"
-  },
-  {
-   "id": "X_Ruta1_5",
-   "x": 321.54,
-   "y": 529.24,
-   "type": "cruce",
-   "label": "X_Ruta1_5"
-  },
-  {
-   "id": "X_Ruta1_6",
-   "x": 321.54,
-   "y": 390.57,
-   "type": "cruce",
-   "label": "X_Ruta1_6"
-  },
-  {
-   "id": "X_Ruta1_7",
-   "x": 321.54,
-   "y": 321.17,
-   "type": "cruce",
-   "label": "X_Ruta1_7"
-  },
-  {
-   "id": "X_Ruta1_8",
-   "x": 321.54,
-   "y": 549.83,
-   "type": "cruce",
-   "label": "X_Ruta1_8"
-  },
-  {
-   "id": "X_Ruta26_1",
-   "x": 321.54,
-   "y": 295.72,
-   "type": "cruce",
-   "label": "X_Ruta26_1"
-  },
-  {
-   "id": "X_Ruta27_1",
-   "x": 559.96,
-   "y": 498.36,
-   "type": "cruce",
-   "label": "X_Ruta27_1"
-  },
-  {
-   "id": "X_Ruta29_1",
-   "x": 893.77,
-   "y": 498.39,
-   "type": "cruce",
-   "label": "X_Ruta29_1"
-  },
-  {
-   "id": "X_Ruta29_2",
-   "x": 604.66,
-   "y": 498.39,
-   "type": "cruce",
-   "label": "X_Ruta29_2"
-  },
-  {
-   "id": "X_Ruta30_1",
-   "x": 893.77,
-   "y": 515.61,
-   "type": "cruce",
-   "label": "X_Ruta30_1"
-  },
-  {
-   "id": "X_Ruta31_1",
-   "x": 950.0,
-   "y": 515.61,
-   "type": "cruce",
-   "label": "X_Ruta31_1"
-  },
-  {
-   "id": "X_Ruta32_1",
-   "x": 950.0,
-   "y": 449.61,
-   "type": "cruce",
-   "label": "X_Ruta32_1"
-  },
-  {
-   "id": "X_Ruta33_1",
-   "x": 533.23,
-   "y": 449.61,
-   "type": "cruce",
-   "label": "X_Ruta33_1"
-  },
-  {
-   "id": "X_Ruta34_1",
-   "x": 533.23,
-   "y": 490.24,
-   "type": "cruce",
-   "label": "X_Ruta34_1"
-  },
-  {
-   "id": "X_Ruta35_1",
-   "x": 868.51,
-   "y": 360.08,
-   "type": "cruce",
-   "label": "X_Ruta35_1"
-  },
-  {
-   "id": "X_Ruta35_2",
-   "x": 604.75,
-   "y": 360.08,
-   "type": "cruce",
-   "label": "X_Ruta35_2"
-  },
-  {
-   "id": "X_Ruta36_1",
-   "x": 868.51,
-   "y": 386.32,
-   "type": "cruce",
-   "label": "X_Ruta36_1"
-  },
-  {
-   "id": "X_Ruta37_1",
-   "x": 949.04,
-   "y": 386.32,
-   "type": "cruce",
-   "label": "X_Ruta37_1"
-  },
-  {
-   "id": "X_Ruta38_1",
-   "x": 949.04,
-   "y": 313.24,
-   "type": "cruce",
-   "label": "X_Ruta38_1"
-  },
-  {
-   "id": "X_Ruta39_1",
-   "x": 503.05,
-   "y": 313.24,
-   "type": "cruce",
-   "label": "X_Ruta39_1"
-  },
-  {
-   "id": "X_Ruta40_1",
-   "x": 503.05,
-   "y": 351.04,
-   "type": "cruce",
-   "label": "X_Ruta40_1"
-  },
-  {
-   "id": "X_Ruta42_1",
-   "x": 321.74,
-   "y": 279.19,
-   "type": "cruce",
-   "label": "X_Ruta42_1"
-  },
-  {
-   "id": "X_Ruta43_1",
-   "x": 112.5,
-   "y": 279.19,
-   "type": "cruce",
-   "label": "X_Ruta43_1"
-  },
-  {
-   "id": "X_Ruta44_1",
-   "x": 112.5,
-   "y": 231.43,
-   "type": "cruce",
-   "label": "X_Ruta44_1"
-  },
-  {
-   "id": "X_Ruta45_1",
-   "x": 927.47,
-   "y": 50.0,
-   "type": "cruce",
-   "label": "X_Ruta45_1"
-  },
-  {
-   "id": "X_Ruta46_1",
-   "x": 142.8,
-   "y": 50.0,
-   "type": "cruce",
-   "label": "X_Ruta46_1"
-  },
-  {
-   "id": "X_Ruta46_2",
-   "x": 142.8,
-   "y": 114.89,
-   "type": "cruce",
-   "label": "X_Ruta46_2"
-  },
-  {
-   "id": "X_Ruta47_1",
-   "x": 142.8,
-   "y": 231.43,
-   "type": "cruce",
-   "label": "X_Ruta47_1"
-  },
-  {
-   "id": "X_Ruta48_1",
-   "x": 926.95,
-   "y": 278.42,
-   "type": "cruce",
-   "label": "X_Ruta48_1"
-  },
-  {
-   "id": "X_Ruta49_1",
-   "x": 413.54,
-   "y": 278.42,
-   "type": "cruce",
-   "label": "X_Ruta49_1"
-  },
-  {
-   "id": "X_Ruta7_1",
-   "x": 413.18,
-   "y": 360.08,
-   "type": "cruce",
-   "label": "X_Ruta7_1"
-  },
-  {
-   "id": "X_Ruta7_10",
-   "x": 413.54,
-   "y": 390.65,
-   "type": "cruce",
-   "label": "X_Ruta7_10"
-  },
-  {
-   "id": "X_Ruta7_11",
-   "x": 413.54,
-   "y": 321.99,
-   "type": "cruce",
-   "label": "X_Ruta7_11"
-  },
-  {
-   "id": "X_Ruta7_12",
-   "x": 413.54,
-   "y": 549.94,
-   "type": "cruce",
-   "label": "X_Ruta7_12"
-  },
-  {
-   "id": "X_Ruta7_2",
-   "x": 413.54,
-   "y": 295.64,
-   "type": "cruce",
-   "label": "X_Ruta7_2"
-  },
-  {
-   "id": "X_Ruta7_3",
-   "x": 413.54,
-   "y": 425.08,
-   "type": "cruce",
-   "label": "X_Ruta7_3"
-  },
-  {
-   "id": "X_Ruta7_4",
-   "x": 413.54,
-   "y": 490.24,
-   "type": "cruce",
-   "label": "X_Ruta7_4"
-  },
-  {
-   "id": "X_Ruta7_5",
-   "x": 413.54,
-   "y": 493.96,
-   "type": "cruce",
-   "label": "X_Ruta7_5"
-  },
-  {
-   "id": "X_Ruta7_6",
-   "x": 413.54,
-   "y": 498.36,
-   "type": "cruce",
-   "label": "X_Ruta7_6"
-  },
-  {
-   "id": "X_Ruta7_7",
-   "x": 413.54,
-   "y": 463.78,
-   "type": "cruce",
-   "label": "X_Ruta7_7"
-  },
-  {
-   "id": "X_Ruta7_8",
-   "x": 413.54,
-   "y": 351.04,
-   "type": "cruce",
-   "label": "X_Ruta7_8"
-  },
-  {
-   "id": "X_Ruta7_9",
-   "x": 413.54,
-   "y": 529.02,
-   "type": "cruce",
-   "label": "X_Ruta7_9"
-  },
-  {
-   "id": "X_Ruta15_CP28",
-   "x": 94.55,
-   "y": 343.7,
-   "type": "cruce",
-   "label": "X_Ruta15_CP28"
-  },
-  {
-   "id": "ControlPoint28",
-   "x": 94.55,
-   "y": 301.74,
-   "type": "cruce",
-   "label": "ControlPoint28"
-  }
- ],
- "edges": [
-  {
-   "from": "X_Ruta1_5",
-   "to": "WH_MP_3",
-   "length": 10.3468,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "WH_MP_3",
-   "to": "X_Ruta1_5",
-   "length": 10.3468,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_4",
-   "to": "WH_MP_4",
-   "length": 10.5953,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "WH_MP_4",
-   "to": "X_Ruta1_4",
-   "length": 10.5953,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_6",
-   "to": "WH_PT_2",
-   "length": 10.3964,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "WH_PT_2",
-   "to": "X_Ruta1_6",
-   "length": 10.3964,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_7",
-   "to": "CHARGER_1",
-   "length": 11.2847,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "CHARGER_1",
-   "to": "X_Ruta1_7",
-   "length": 11.2847,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_11",
-   "to": "WH_PT_3",
-   "length": 9.6976,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "WH_PT_3",
-   "to": "X_Ruta7_11",
-   "length": 9.6976,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_10",
-   "to": "ControlPoint27",
-   "length": 12.249,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint27",
-   "to": "X_Ruta7_10",
-   "length": 12.249,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_7",
-   "to": "WH_PT_1",
-   "length": 4.5467,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "WH_PT_1",
-   "to": "X_Ruta7_7",
-   "length": 4.5467,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta13_2",
-   "to": "X_Ruta13_1",
-   "length": 148.5661,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta13_1",
-   "to": "X_Ruta14_6",
-   "length": 29.7957,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta14_6",
-   "to": "X_Ruta14_2",
-   "length": 35.444,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta14_2",
-   "to": "X_Ruta14_5",
-   "length": 30.2616,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta14_5",
-   "to": "X_Ruta14_7",
-   "length": 34.9315,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta14_7",
-   "to": "X_Ruta14_3",
-   "length": 34.9666,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta14_3",
-   "to": "X_Ruta14_4",
-   "length": 35.0913,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta14_4",
-   "to": "X_Ruta14_1",
-   "length": 39.086,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta14_1",
-   "to": "X_Ruta15_CP28",
-   "length": 27.8248,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta15_CP28",
-   "to": "X_Ruta15_2",
-   "length": 59.1276,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta15_2",
-   "to": "X_Ruta15_1",
-   "length": 62.4288,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta15_1",
-   "to": "X_Ruta16_2",
-   "length": 19.5931,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_2",
-   "to": "X_Ruta16_4",
-   "length": 19.4794,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_4",
-   "to": "X_Ruta16_3",
-   "length": 35.0908,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_3",
-   "to": "X_Ruta16_7",
-   "length": 34.9661,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_7",
-   "to": "X_Ruta16_5",
-   "length": 34.9325,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_5",
-   "to": "X_Ruta16_1",
-   "length": 30.3252,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_1",
-   "to": "X_Ruta16_6",
-   "length": 35.3804,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_6",
-   "to": "X_Ruta13_2",
-   "length": 29.9695,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_1",
-   "to": "L2_OUT",
-   "length": 69.9748,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "L2_OUT",
-   "to": "X_Ruta14_2",
-   "length": 78.4971,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_7",
-   "to": "E2_IN",
-   "length": 70.3871,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "E2_IN",
-   "to": "X_Ruta14_7",
-   "length": 78.2046,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_2",
-   "to": "X_Ruta1_1",
-   "length": 20.2558,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_1",
-   "to": "X_Ruta16_2",
-   "length": 20.2558,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_4",
-   "to": "WH_MP_2",
-   "length": 69.8365,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "WH_MP_2",
-   "to": "X_Ruta14_4",
-   "length": 78.1209,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta14_3",
-   "to": "WH_MP_1",
-   "length": 78.8889,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "WH_MP_1",
-   "to": "X_Ruta16_3",
-   "length": 70.5363,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta14_5",
-   "to": "E1_IN",
-   "length": 78.684,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "E1_IN",
-   "to": "X_Ruta16_5",
-   "length": 70.5238,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta14_6",
-   "to": "L1_OUT",
-   "length": 78.973,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "L1_OUT",
-   "to": "X_Ruta16_6",
-   "length": 70.4652,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_1",
-   "to": "X_Ruta1_1",
-   "length": 57.6426,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta26_1",
-   "to": "X_Ruta7_2",
-   "length": 57.5875,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_9",
-   "to": "WH_MP_5",
-   "length": 4.3409,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "WH_MP_5",
-   "to": "X_Ruta7_9",
-   "length": 4.3409,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_6",
-   "to": "CHARGER_2",
-   "length": 89.0118,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "CHARGER_2",
-   "to": "X_Ruta27_1",
-   "length": 1.5139,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta34_1",
-   "to": "X_Ruta7_4",
-   "length": 73.9394,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta27_1",
-   "to": "X_Ruta29_2",
-   "length": 27.7698,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta29_2",
-   "to": "X_Ruta29_1",
-   "length": 179.5916,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta29_1",
-   "to": "X_Ruta30_1",
-   "length": 19.806,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta30_1",
-   "to": "X_Ruta31_1",
-   "length": 35.0628,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta31_1",
-   "to": "BUFFER_1",
-   "length": 34.7652,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "BUFFER_1",
-   "to": "X_Ruta32_1",
-   "length": 41.8513,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta32_1",
-   "to": "X_Ruta33_1",
-   "length": 258.9418,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta33_1",
-   "to": "BUFFER_2",
-   "length": 11.4755,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "BUFFER_2",
-   "to": "X_Ruta34_1",
-   "length": 35.8483,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_1",
-   "to": "ControlPoint17",
-   "length": 82.2298,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint17",
-   "to": "X_Ruta35_2",
-   "length": 36.225,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta35_2",
-   "to": "X_Ruta35_1",
-   "length": 163.8479,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta35_1",
-   "to": "X_Ruta36_1",
-   "length": 30.1303,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta36_1",
-   "to": "X_Ruta37_1",
-   "length": 50.058,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta37_1",
-   "to": "ControlPoint18",
-   "length": 36.0101,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint18",
-   "to": "X_Ruta38_1",
-   "length": 48.8407,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta38_1",
-   "to": "X_Ruta39_1",
-   "length": 276.8547,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta39_1",
-   "to": "ControlPoint19",
-   "length": 9.0468,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint19",
-   "to": "X_Ruta40_1",
-   "length": 34.6349,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta40_1",
-   "to": "X_Ruta7_8",
-   "length": 55.0005,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_8",
-   "to": "X_Ruta1_5",
-   "length": 23.9369,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_5",
-   "to": "X_Ruta1_3",
-   "length": 41.2171,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_3",
-   "to": "X_Ruta1_4",
-   "length": 34.933,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_4",
-   "to": "X_Ruta1_2",
-   "length": 44.8956,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_2",
-   "to": "X_Ruta1_6",
-   "length": 40.1049,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_6",
-   "to": "X_Ruta1_1",
-   "length": 35.3588,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_1",
-   "to": "X_Ruta1_7",
-   "length": 45.2949,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_7",
-   "to": "X_Ruta26_1",
-   "length": 29.5793,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_2",
-   "to": "X_Ruta7_11",
-   "length": 30.6212,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_11",
-   "to": "X_Ruta7_8",
-   "length": 33.7588,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_8",
-   "to": "X_Ruta7_1",
-   "length": 10.5172,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_1",
-   "to": "X_Ruta7_10",
-   "length": 35.5227,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_10",
-   "to": "X_Ruta7_3",
-   "length": 40.0153,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_3",
-   "to": "X_Ruta7_7",
-   "length": 44.9703,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_7",
-   "to": "X_Ruta7_4",
-   "length": 30.75,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_4",
-   "to": "X_Ruta7_5",
-   "length": 4.3243,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_5",
-   "to": "X_Ruta7_6",
-   "length": 5.1198,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_6",
-   "to": "X_Ruta7_9",
-   "length": 35.6309,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_9",
-   "to": "X_Ruta7_12",
-   "length": 24.3137,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta26_1",
-   "to": "X_Ruta42_1",
-   "length": 19.6647,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta42_1",
-   "to": "ControlPoint20",
-   "length": 95.3535,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint20",
-   "to": "X_Ruta43_1",
-   "length": 34.3775,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta43_1",
-   "to": "X_Ruta44_1",
-   "length": 55.7199,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta47_1",
-   "to": "ControlPoint23",
-   "length": 25.7138,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint23",
-   "to": "ControlPoint21",
-   "length": 84.8513,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint21",
-   "to": "X_Ruta46_2",
-   "length": 24.8712,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta46_2",
-   "to": "ControlPoint22",
-   "length": 41.5697,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint22",
-   "to": "X_Ruta46_1",
-   "length": 33.8444,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta44_1",
-   "to": "X_Ruta47_1",
-   "length": 18.8231,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta46_1",
-   "to": "X_Ruta45_1",
-   "length": 488.0089,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta45_1",
-   "to": "ControlPoint26",
-   "length": 37.7424,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint26",
-   "to": "ControlPoint25",
-   "length": 66.2471,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint25",
-   "to": "ControlPoint24",
-   "length": 83.1906,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint24",
-   "to": "X_Ruta48_1",
-   "length": 78.2872,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta49_1",
-   "to": "X_Ruta7_2",
-   "length": 20.0194,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta48_1",
-   "to": "X_Ruta49_1",
-   "length": 318.9285,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta35_2",
-   "to": "ControlPoint29",
-   "length": 55.6518,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint29",
-   "to": "X_Ruta35_2",
-   "length": 55.6518,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta29_2",
-   "to": "ControlPoint30",
-   "length": 59.6505,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint30",
-   "to": "X_Ruta29_2",
-   "length": 59.6505,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta15_2",
-   "to": "ControlPoint31",
-   "length": 48.5466,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint31",
-   "to": "X_Ruta15_2",
-   "length": 48.5466,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta46_2",
-   "to": "ControlPoint32",
-   "length": 43.4534,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint32",
-   "to": "X_Ruta46_2",
-   "length": 43.4534,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_5",
-   "to": "X_Ruta1_3",
-   "length": 57.4648,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_2",
-   "to": "X_Ruta7_3",
-   "length": 57.3591,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta7_12",
-   "to": "X_Ruta1_8",
-   "length": 56.9984,
-   "max_speed": 1.5,
-   "direction": "one-way",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta1_3",
-   "to": "X_Ruta16_1",
-   "length": 19.7374,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta16_1",
-   "to": "X_Ruta1_3",
-   "length": 19.7374,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "X_Ruta15_CP28",
-   "to": "ControlPoint28",
-   "length": 48.5466,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  },
-  {
-   "from": "ControlPoint28",
-   "to": "X_Ruta15_CP28",
-   "length": 48.5466,
-   "max_speed": 1.5,
-   "direction": "bi",
-   "blocked": false
-  }
- ],
- "zones": [],
- "walls": [],
- "lines": [
-  {
-   "id": "L1_OUT",
-   "buffer_nodes": [
-    "BUFFER_1",
-    "BUFFER_2"
-   ]
-  },
-  {
-   "id": "L2_OUT",
-   "buffer_nodes": [
-    "BUFFER_1",
-    "BUFFER_2"
-   ]
-  },
-  {
-   "id": "E1_IN",
-   "buffer_nodes": [
-    "BUFFER_1",
-    "BUFFER_2"
-   ]
-  },
-  {
-   "id": "E2_IN",
-   "buffer_nodes": [
-    "BUFFER_1",
-    "BUFFER_2"
-   ]
-  }
- ],
- "pedestrians": []
+  "canvas": {
+    "w": 1000,
+    "h": 600,
+    "title": "Planta ESPOL · Fusión — NestHive"
+  },
+  "nodes": [
+    {
+      "id": "ControlPoint1",
+      "x": 175.8,
+      "y": 524.21,
+      "type": "cruce",
+      "label": "ControlPoint1"
+    },
+    {
+      "id": "ControlPoint2",
+      "x": 176.36,
+      "y": 493.71,
+      "type": "cruce",
+      "label": "ControlPoint2"
+    },
+    {
+      "id": "ControlPoint3",
+      "x": 175.86,
+      "y": 467.68,
+      "type": "cruce",
+      "label": "ControlPoint3"
+    },
+    {
+      "id": "ControlPoint4",
+      "x": 175.89,
+      "y": 437.62,
+      "type": "cruce",
+      "label": "ControlPoint4"
+    },
+    {
+      "id": "ControlPoint5",
+      "x": 176.0,
+      "y": 407.53,
+      "type": "cruce",
+      "label": "ControlPoint5"
+    },
+    {
+      "id": "ControlPoint6",
+      "x": 175.76,
+      "y": 377.34,
+      "type": "cruce",
+      "label": "ControlPoint6"
+    },
+    {
+      "id": "WH_MP_1",
+      "x": 337.62,
+      "y": 529.24,
+      "type": "almacen",
+      "label": "MP Savoy"
+    },
+    {
+      "id": "ControlPoint8",
+      "x": 338.2,
+      "y": 463.71,
+      "type": "cruce",
+      "label": "ControlPoint8"
+    },
+    {
+      "id": "WH_PT_2",
+      "x": 406.92,
+      "y": 529.02,
+      "type": "almacen",
+      "label": "PT 2"
+    },
+    {
+      "id": "ControlPoint10",
+      "x": 406.31,
+      "y": 463.78,
+      "type": "cruce",
+      "label": "ControlPoint10"
+    },
+    {
+      "id": "ControlPoint11",
+      "x": 337.58,
+      "y": 390.57,
+      "type": "cruce",
+      "label": "ControlPoint11"
+    },
+    {
+      "id": "ControlPoint12",
+      "x": 398.0,
+      "y": 321.99,
+      "type": "cruce",
+      "label": "ControlPoint12"
+    },
+    {
+      "id": "ControlPoint13",
+      "x": 338.8,
+      "y": 321.17,
+      "type": "cruce",
+      "label": "ControlPoint13"
+    },
+    {
+      "id": "ControlPoint14",
+      "x": 557.52,
+      "y": 498.36,
+      "type": "cruce",
+      "label": "ControlPoint14"
+    },
+    {
+      "id": "ControlPoint15",
+      "x": 950.0,
+      "y": 485.62,
+      "type": "cruce",
+      "label": "ControlPoint15"
+    },
+    {
+      "id": "ControlPoint16",
+      "x": 533.23,
+      "y": 459.39,
+      "type": "cruce",
+      "label": "ControlPoint16"
+    },
+    {
+      "id": "ControlPoint17",
+      "x": 546.43,
+      "y": 360.08,
+      "type": "cruce",
+      "label": "ControlPoint17"
+    },
+    {
+      "id": "E2_IN",
+      "x": 949.04,
+      "y": 355.27,
+      "type": "empacadora",
+      "label": "E2 Lechera"
+    },
+    {
+      "id": "ControlPoint19",
+      "x": 503.05,
+      "y": 321.23,
+      "type": "cruce",
+      "label": "ControlPoint19"
+    },
+    {
+      "id": "ControlPoint20",
+      "x": 167.84,
+      "y": 279.19,
+      "type": "cruce",
+      "label": "ControlPoint20"
+    },
+    {
+      "id": "ControlPoint21",
+      "x": 142.8,
+      "y": 136.29,
+      "type": "cruce",
+      "label": "ControlPoint21"
+    },
+    {
+      "id": "ControlPoint22",
+      "x": 142.8,
+      "y": 79.12,
+      "type": "cruce",
+      "label": "ControlPoint22"
+    },
+    {
+      "id": "ControlPoint23",
+      "x": 142.8,
+      "y": 209.3,
+      "type": "cruce",
+      "label": "ControlPoint23"
+    },
+    {
+      "id": "L1_OUT",
+      "x": 927.1,
+      "y": 211.06,
+      "type": "linea",
+      "label": "L1 Nescafé"
+    },
+    {
+      "id": "L2_OUT",
+      "x": 927.27,
+      "y": 139.48,
+      "type": "linea",
+      "label": "L2 Maggi"
+    },
+    {
+      "id": "E1_IN",
+      "x": 927.4,
+      "y": 82.48,
+      "type": "empacadora",
+      "label": "E1 Savoy"
+    },
+    {
+      "id": "ControlPoint27",
+      "x": 394.37,
+      "y": 390.65,
+      "type": "cruce",
+      "label": "ControlPoint27"
+    },
+    {
+      "id": "ControlPoint29",
+      "x": 604.75,
+      "y": 408.14,
+      "type": "cruce",
+      "label": "ControlPoint29"
+    },
+    {
+      "id": "ControlPoint30",
+      "x": 604.66,
+      "y": 549.82,
+      "type": "cruce",
+      "label": "ControlPoint30"
+    },
+    {
+      "id": "CHARGER_2",
+      "x": 189.22,
+      "y": 301.74,
+      "type": "carga",
+      "label": "Carga 2"
+    },
+    {
+      "id": "ControlPoint32",
+      "x": 73.34,
+      "y": 114.89,
+      "type": "cruce",
+      "label": "ControlPoint32"
+    },
+    {
+      "id": "X_Ruta13_1",
+      "x": 50.0,
+      "y": 550.0,
+      "type": "cruce",
+      "label": "X_Ruta13_1"
+    },
+    {
+      "id": "WH_MP_5",
+      "x": 289.16,
+      "y": 550.0,
+      "type": "almacen",
+      "label": "MP Nestum"
+    },
+    {
+      "id": "X_Ruta14_1",
+      "x": 50.0,
+      "y": 343.7,
+      "type": "cruce",
+      "label": "X_Ruta14_1"
+    },
+    {
+      "id": "X_Ruta14_2",
+      "x": 50.0,
+      "y": 493.71,
+      "type": "cruce",
+      "label": "X_Ruta14_2"
+    },
+    {
+      "id": "X_Ruta14_3",
+      "x": 50.0,
+      "y": 407.53,
+      "type": "cruce",
+      "label": "X_Ruta14_3"
+    },
+    {
+      "id": "X_Ruta14_4",
+      "x": 50.0,
+      "y": 377.34,
+      "type": "cruce",
+      "label": "X_Ruta14_4"
+    },
+    {
+      "id": "X_Ruta14_5",
+      "x": 50.0,
+      "y": 467.68,
+      "type": "cruce",
+      "label": "X_Ruta14_5"
+    },
+    {
+      "id": "X_Ruta14_6",
+      "x": 50.0,
+      "y": 524.21,
+      "type": "cruce",
+      "label": "X_Ruta14_6"
+    },
+    {
+      "id": "X_Ruta14_7",
+      "x": 50.0,
+      "y": 437.62,
+      "type": "cruce",
+      "label": "X_Ruta14_7"
+    },
+    {
+      "id": "X_Ruta15_1",
+      "x": 289.72,
+      "y": 343.7,
+      "type": "cruce",
+      "label": "X_Ruta15_1"
+    },
+    {
+      "id": "X_Ruta15_2",
+      "x": 189.22,
+      "y": 343.7,
+      "type": "cruce",
+      "label": "X_Ruta15_2"
+    },
+    {
+      "id": "X_Ruta16_1",
+      "x": 289.31,
+      "y": 493.77,
+      "type": "cruce",
+      "label": "X_Ruta16_1"
+    },
+    {
+      "id": "X_Ruta16_2",
+      "x": 289.67,
+      "y": 360.58,
+      "type": "cruce",
+      "label": "X_Ruta16_2"
+    },
+    {
+      "id": "X_Ruta16_3",
+      "x": 289.55,
+      "y": 407.53,
+      "type": "cruce",
+      "label": "X_Ruta16_3"
+    },
+    {
+      "id": "X_Ruta16_4",
+      "x": 289.63,
+      "y": 377.34,
+      "type": "cruce",
+      "label": "X_Ruta16_4"
+    },
+    {
+      "id": "X_Ruta16_5",
+      "x": 289.38,
+      "y": 467.68,
+      "type": "cruce",
+      "label": "X_Ruta16_5"
+    },
+    {
+      "id": "WH_MP_4",
+      "x": 289.23,
+      "y": 524.21,
+      "type": "almacen",
+      "label": "MP Maggi"
+    },
+    {
+      "id": "X_Ruta16_7",
+      "x": 289.47,
+      "y": 437.62,
+      "type": "cruce",
+      "label": "X_Ruta16_7"
+    },
+    {
+      "id": "X_Ruta1_1",
+      "x": 321.54,
+      "y": 360.15,
+      "type": "cruce",
+      "label": "X_Ruta1_1"
+    },
+    {
+      "id": "X_Ruta1_2",
+      "x": 321.54,
+      "y": 425.08,
+      "type": "cruce",
+      "label": "X_Ruta1_2"
+    },
+    {
+      "id": "WH_PT_1",
+      "x": 321.54,
+      "y": 493.77,
+      "type": "almacen",
+      "label": "PT 1"
+    },
+    {
+      "id": "X_Ruta1_4",
+      "x": 321.54,
+      "y": 463.71,
+      "type": "cruce",
+      "label": "X_Ruta1_4"
+    },
+    {
+      "id": "WH_MP_2",
+      "x": 321.54,
+      "y": 529.24,
+      "type": "almacen",
+      "label": "MP Lechera"
+    },
+    {
+      "id": "X_Ruta1_6",
+      "x": 321.54,
+      "y": 390.57,
+      "type": "cruce",
+      "label": "X_Ruta1_6"
+    },
+    {
+      "id": "X_Ruta1_7",
+      "x": 321.54,
+      "y": 321.17,
+      "type": "cruce",
+      "label": "X_Ruta1_7"
+    },
+    {
+      "id": "WH_MP_3",
+      "x": 321.54,
+      "y": 549.83,
+      "type": "almacen",
+      "label": "MP Nescafé"
+    },
+    {
+      "id": "X_Ruta26_1",
+      "x": 321.54,
+      "y": 295.72,
+      "type": "cruce",
+      "label": "X_Ruta26_1"
+    },
+    {
+      "id": "X_Ruta27_1",
+      "x": 559.96,
+      "y": 498.36,
+      "type": "cruce",
+      "label": "X_Ruta27_1"
+    },
+    {
+      "id": "X_Ruta29_1",
+      "x": 893.77,
+      "y": 498.39,
+      "type": "cruce",
+      "label": "X_Ruta29_1"
+    },
+    {
+      "id": "X_Ruta29_2",
+      "x": 604.66,
+      "y": 498.39,
+      "type": "cruce",
+      "label": "X_Ruta29_2"
+    },
+    {
+      "id": "X_Ruta30_1",
+      "x": 893.77,
+      "y": 515.61,
+      "type": "cruce",
+      "label": "X_Ruta30_1"
+    },
+    {
+      "id": "X_Ruta31_1",
+      "x": 950.0,
+      "y": 515.61,
+      "type": "cruce",
+      "label": "X_Ruta31_1"
+    },
+    {
+      "id": "X_Ruta32_1",
+      "x": 950.0,
+      "y": 449.61,
+      "type": "cruce",
+      "label": "X_Ruta32_1"
+    },
+    {
+      "id": "X_Ruta33_1",
+      "x": 533.23,
+      "y": 449.61,
+      "type": "cruce",
+      "label": "X_Ruta33_1"
+    },
+    {
+      "id": "X_Ruta34_1",
+      "x": 533.23,
+      "y": 490.24,
+      "type": "cruce",
+      "label": "X_Ruta34_1"
+    },
+    {
+      "id": "X_Ruta35_1",
+      "x": 868.51,
+      "y": 360.08,
+      "type": "cruce",
+      "label": "X_Ruta35_1"
+    },
+    {
+      "id": "X_Ruta35_2",
+      "x": 604.75,
+      "y": 360.08,
+      "type": "cruce",
+      "label": "X_Ruta35_2"
+    },
+    {
+      "id": "X_Ruta36_1",
+      "x": 868.51,
+      "y": 386.32,
+      "type": "cruce",
+      "label": "X_Ruta36_1"
+    },
+    {
+      "id": "X_Ruta37_1",
+      "x": 949.04,
+      "y": 386.32,
+      "type": "cruce",
+      "label": "X_Ruta37_1"
+    },
+    {
+      "id": "X_Ruta38_1",
+      "x": 949.04,
+      "y": 313.24,
+      "type": "cruce",
+      "label": "X_Ruta38_1"
+    },
+    {
+      "id": "X_Ruta39_1",
+      "x": 503.05,
+      "y": 313.24,
+      "type": "cruce",
+      "label": "X_Ruta39_1"
+    },
+    {
+      "id": "X_Ruta40_1",
+      "x": 503.05,
+      "y": 351.04,
+      "type": "cruce",
+      "label": "X_Ruta40_1"
+    },
+    {
+      "id": "X_Ruta42_1",
+      "x": 321.74,
+      "y": 279.19,
+      "type": "cruce",
+      "label": "X_Ruta42_1"
+    },
+    {
+      "id": "X_Ruta43_1",
+      "x": 112.5,
+      "y": 279.19,
+      "type": "cruce",
+      "label": "X_Ruta43_1"
+    },
+    {
+      "id": "X_Ruta44_1",
+      "x": 112.5,
+      "y": 231.43,
+      "type": "cruce",
+      "label": "X_Ruta44_1"
+    },
+    {
+      "id": "BUFFER_2",
+      "x": 927.47,
+      "y": 50.0,
+      "type": "buffer",
+      "label": "Buffer 2"
+    },
+    {
+      "id": "X_Ruta46_1",
+      "x": 142.8,
+      "y": 50.0,
+      "type": "cruce",
+      "label": "X_Ruta46_1"
+    },
+    {
+      "id": "X_Ruta46_2",
+      "x": 142.8,
+      "y": 114.89,
+      "type": "cruce",
+      "label": "X_Ruta46_2"
+    },
+    {
+      "id": "X_Ruta47_1",
+      "x": 142.8,
+      "y": 231.43,
+      "type": "cruce",
+      "label": "X_Ruta47_1"
+    },
+    {
+      "id": "BUFFER_1",
+      "x": 926.95,
+      "y": 278.42,
+      "type": "buffer",
+      "label": "Buffer 1"
+    },
+    {
+      "id": "X_Ruta49_1",
+      "x": 413.54,
+      "y": 278.42,
+      "type": "cruce",
+      "label": "X_Ruta49_1"
+    },
+    {
+      "id": "X_Ruta7_1",
+      "x": 413.18,
+      "y": 360.08,
+      "type": "cruce",
+      "label": "X_Ruta7_1"
+    },
+    {
+      "id": "X_Ruta7_10",
+      "x": 413.54,
+      "y": 390.65,
+      "type": "cruce",
+      "label": "X_Ruta7_10"
+    },
+    {
+      "id": "X_Ruta7_11",
+      "x": 413.54,
+      "y": 321.99,
+      "type": "cruce",
+      "label": "X_Ruta7_11"
+    },
+    {
+      "id": "X_Ruta7_12",
+      "x": 413.54,
+      "y": 549.94,
+      "type": "cruce",
+      "label": "X_Ruta7_12"
+    },
+    {
+      "id": "X_Ruta7_2",
+      "x": 413.54,
+      "y": 295.64,
+      "type": "cruce",
+      "label": "X_Ruta7_2"
+    },
+    {
+      "id": "X_Ruta7_3",
+      "x": 413.54,
+      "y": 425.08,
+      "type": "cruce",
+      "label": "X_Ruta7_3"
+    },
+    {
+      "id": "X_Ruta7_4",
+      "x": 413.54,
+      "y": 490.24,
+      "type": "cruce",
+      "label": "X_Ruta7_4"
+    },
+    {
+      "id": "X_Ruta7_5",
+      "x": 413.54,
+      "y": 493.96,
+      "type": "cruce",
+      "label": "X_Ruta7_5"
+    },
+    {
+      "id": "X_Ruta7_6",
+      "x": 413.54,
+      "y": 498.36,
+      "type": "cruce",
+      "label": "X_Ruta7_6"
+    },
+    {
+      "id": "X_Ruta7_7",
+      "x": 413.54,
+      "y": 463.78,
+      "type": "cruce",
+      "label": "X_Ruta7_7"
+    },
+    {
+      "id": "X_Ruta7_8",
+      "x": 413.54,
+      "y": 351.04,
+      "type": "cruce",
+      "label": "X_Ruta7_8"
+    },
+    {
+      "id": "WH_PT_3",
+      "x": 413.54,
+      "y": 529.02,
+      "type": "almacen",
+      "label": "PT 3"
+    },
+    {
+      "id": "X_Ruta15_CP28",
+      "x": 94.55,
+      "y": 343.7,
+      "type": "cruce",
+      "label": "X_Ruta15_CP28"
+    },
+    {
+      "id": "CHARGER_1",
+      "x": 94.55,
+      "y": 301.74,
+      "type": "carga",
+      "label": "Carga 1"
+    }
+  ],
+  "edges": [
+    {
+      "from": "WH_MP_2",
+      "to": "WH_MP_1",
+      "length": 1.5662,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_1",
+      "to": "WH_MP_2",
+      "length": 1.5662,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta1_4",
+      "to": "ControlPoint8",
+      "length": 1.6038,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint8",
+      "to": "X_Ruta1_4",
+      "length": 1.6038,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta1_6",
+      "to": "ControlPoint11",
+      "length": 1.5737,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint11",
+      "to": "X_Ruta1_6",
+      "length": 1.5737,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta1_7",
+      "to": "ControlPoint13",
+      "length": 1.7081,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint13",
+      "to": "X_Ruta1_7",
+      "length": 1.7081,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_11",
+      "to": "ControlPoint12",
+      "length": 1.4679,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint12",
+      "to": "X_Ruta7_11",
+      "length": 1.4679,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_10",
+      "to": "ControlPoint27",
+      "length": 1.8541,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint27",
+      "to": "X_Ruta7_10",
+      "length": 1.8541,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_7",
+      "to": "ControlPoint10",
+      "length": 0.6882,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint10",
+      "to": "X_Ruta7_7",
+      "length": 0.6882,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_5",
+      "to": "X_Ruta13_1",
+      "length": 22.4878,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta13_1",
+      "to": "X_Ruta14_6",
+      "length": 4.51,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta14_6",
+      "to": "X_Ruta14_2",
+      "length": 5.365,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta14_2",
+      "to": "X_Ruta14_5",
+      "length": 4.5806,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta14_5",
+      "to": "X_Ruta14_7",
+      "length": 5.2874,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta14_7",
+      "to": "X_Ruta14_3",
+      "length": 5.2927,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta14_3",
+      "to": "X_Ruta14_4",
+      "length": 5.3116,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta14_4",
+      "to": "X_Ruta14_1",
+      "length": 5.9163,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta14_1",
+      "to": "X_Ruta15_CP28",
+      "length": 4.2117,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta15_CP28",
+      "to": "X_Ruta15_2",
+      "length": 8.9499,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta15_2",
+      "to": "X_Ruta15_1",
+      "length": 9.4496,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta15_1",
+      "to": "X_Ruta16_2",
+      "length": 2.9657,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_2",
+      "to": "X_Ruta16_4",
+      "length": 2.9485,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_4",
+      "to": "X_Ruta16_3",
+      "length": 5.3116,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_3",
+      "to": "X_Ruta16_7",
+      "length": 5.2927,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_7",
+      "to": "X_Ruta16_5",
+      "length": 5.2876,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_5",
+      "to": "X_Ruta16_1",
+      "length": 4.5902,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_1",
+      "to": "WH_MP_4",
+      "length": 5.3554,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_4",
+      "to": "WH_MP_5",
+      "length": 4.5364,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_1",
+      "to": "ControlPoint2",
+      "length": 10.5918,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint2",
+      "to": "X_Ruta14_2",
+      "length": 11.8818,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_7",
+      "to": "ControlPoint4",
+      "length": 10.6542,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint4",
+      "to": "X_Ruta14_7",
+      "length": 11.8375,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_2",
+      "to": "X_Ruta1_1",
+      "length": 3.066,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta1_1",
+      "to": "X_Ruta16_2",
+      "length": 3.066,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_4",
+      "to": "ControlPoint6",
+      "length": 10.5709,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint6",
+      "to": "X_Ruta14_4",
+      "length": 11.8248,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta14_3",
+      "to": "ControlPoint5",
+      "length": 11.9411,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint5",
+      "to": "X_Ruta16_3",
+      "length": 10.6768,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta14_5",
+      "to": "ControlPoint3",
+      "length": 11.9101,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint3",
+      "to": "X_Ruta16_5",
+      "length": 10.6749,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta14_6",
+      "to": "ControlPoint1",
+      "length": 11.9538,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint1",
+      "to": "WH_MP_4",
+      "length": 10.666,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_1",
+      "to": "X_Ruta1_1",
+      "length": 8.7251,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta26_1",
+      "to": "X_Ruta7_2",
+      "length": 8.7168,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_3",
+      "to": "WH_PT_2",
+      "length": 0.6571,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_2",
+      "to": "WH_PT_3",
+      "length": 0.6571,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_6",
+      "to": "ControlPoint14",
+      "length": 13.4734,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint14",
+      "to": "X_Ruta27_1",
+      "length": 0.2292,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta34_1",
+      "to": "X_Ruta7_4",
+      "length": 11.1919,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta27_1",
+      "to": "X_Ruta29_2",
+      "length": 4.2034,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta29_2",
+      "to": "X_Ruta29_1",
+      "length": 27.184,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta29_1",
+      "to": "X_Ruta30_1",
+      "length": 2.998,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta30_1",
+      "to": "X_Ruta31_1",
+      "length": 5.3073,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta31_1",
+      "to": "ControlPoint15",
+      "length": 5.2623,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint15",
+      "to": "X_Ruta32_1",
+      "length": 6.3349,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta32_1",
+      "to": "X_Ruta33_1",
+      "length": 39.195,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta33_1",
+      "to": "ControlPoint16",
+      "length": 1.737,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint16",
+      "to": "X_Ruta34_1",
+      "length": 5.4262,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_1",
+      "to": "ControlPoint17",
+      "length": 12.4468,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint17",
+      "to": "X_Ruta35_2",
+      "length": 5.4832,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta35_2",
+      "to": "X_Ruta35_1",
+      "length": 24.801,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta35_1",
+      "to": "X_Ruta36_1",
+      "length": 4.5607,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta36_1",
+      "to": "X_Ruta37_1",
+      "length": 7.5771,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta37_1",
+      "to": "E2_IN",
+      "length": 5.4507,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "E2_IN",
+      "to": "X_Ruta38_1",
+      "length": 7.3928,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta38_1",
+      "to": "X_Ruta39_1",
+      "length": 41.9064,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta39_1",
+      "to": "ControlPoint19",
+      "length": 1.3694,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint19",
+      "to": "X_Ruta40_1",
+      "length": 5.2425,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta40_1",
+      "to": "X_Ruta7_8",
+      "length": 8.3252,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_3",
+      "to": "WH_MP_2",
+      "length": 3.6232,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_2",
+      "to": "WH_PT_1",
+      "length": 6.2389,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_1",
+      "to": "X_Ruta1_4",
+      "length": 5.2877,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta1_4",
+      "to": "X_Ruta1_2",
+      "length": 6.7957,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta1_2",
+      "to": "X_Ruta1_6",
+      "length": 6.0705,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta1_6",
+      "to": "X_Ruta1_1",
+      "length": 5.3521,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta1_1",
+      "to": "X_Ruta1_7",
+      "length": 6.8561,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta1_7",
+      "to": "X_Ruta26_1",
+      "length": 4.4773,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_2",
+      "to": "X_Ruta7_11",
+      "length": 4.635,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_11",
+      "to": "X_Ruta7_8",
+      "length": 5.1099,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_8",
+      "to": "X_Ruta7_1",
+      "length": 1.5919,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_1",
+      "to": "X_Ruta7_10",
+      "length": 5.3769,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_10",
+      "to": "X_Ruta7_3",
+      "length": 6.057,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_3",
+      "to": "X_Ruta7_7",
+      "length": 6.807,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_7",
+      "to": "X_Ruta7_4",
+      "length": 4.6545,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_4",
+      "to": "X_Ruta7_5",
+      "length": 0.6546,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_5",
+      "to": "X_Ruta7_6",
+      "length": 0.775,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_6",
+      "to": "WH_PT_3",
+      "length": 5.3933,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_3",
+      "to": "X_Ruta7_12",
+      "length": 3.6803,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta26_1",
+      "to": "X_Ruta42_1",
+      "length": 2.9766,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta42_1",
+      "to": "ControlPoint20",
+      "length": 14.4333,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint20",
+      "to": "X_Ruta43_1",
+      "length": 5.2036,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta43_1",
+      "to": "X_Ruta44_1",
+      "length": 8.4341,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta47_1",
+      "to": "ControlPoint23",
+      "length": 3.8922,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint23",
+      "to": "ControlPoint21",
+      "length": 12.8436,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint21",
+      "to": "X_Ruta46_2",
+      "length": 3.7647,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta46_2",
+      "to": "ControlPoint22",
+      "length": 6.2922,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint22",
+      "to": "X_Ruta46_1",
+      "length": 5.1229,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta44_1",
+      "to": "X_Ruta47_1",
+      "length": 2.8492,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta46_1",
+      "to": "BUFFER_2",
+      "length": 73.8679,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "BUFFER_2",
+      "to": "E1_IN",
+      "length": 5.7129,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "E1_IN",
+      "to": "L2_OUT",
+      "length": 10.0276,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "L2_OUT",
+      "to": "L1_OUT",
+      "length": 12.5922,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "L1_OUT",
+      "to": "BUFFER_1",
+      "length": 11.85,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta49_1",
+      "to": "X_Ruta7_2",
+      "length": 3.0303,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "BUFFER_1",
+      "to": "X_Ruta49_1",
+      "length": 48.2749,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta35_2",
+      "to": "ControlPoint29",
+      "length": 8.4238,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint29",
+      "to": "X_Ruta35_2",
+      "length": 8.4238,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta29_2",
+      "to": "ControlPoint30",
+      "length": 9.029,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint30",
+      "to": "X_Ruta29_2",
+      "length": 9.029,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta15_2",
+      "to": "CHARGER_2",
+      "length": 7.3483,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "CHARGER_2",
+      "to": "X_Ruta15_2",
+      "length": 7.3483,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta46_2",
+      "to": "ControlPoint32",
+      "length": 6.5774,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "ControlPoint32",
+      "to": "X_Ruta46_2",
+      "length": 6.5774,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_5",
+      "to": "WH_PT_1",
+      "length": 8.6982,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta1_2",
+      "to": "X_Ruta7_3",
+      "length": 8.6822,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta7_12",
+      "to": "WH_MP_3",
+      "length": 8.6276,
+      "max_speed": 1.5,
+      "direction": "one-way",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_1",
+      "to": "X_Ruta16_1",
+      "length": 2.9876,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta16_1",
+      "to": "WH_PT_1",
+      "length": 2.9876,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "X_Ruta15_CP28",
+      "to": "CHARGER_1",
+      "length": 7.3483,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "CHARGER_1",
+      "to": "X_Ruta15_CP28",
+      "length": 7.3483,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    }
+  ],
+  "zones": [
+    {
+      "id": "ZONE_MP",
+      "label": "MP · Almacén",
+      "x": 60,
+      "y": 60,
+      "w": 320,
+      "h": 220,
+      "color": "#EAD3A9"
+    },
+    {
+      "id": "ZONE_LINES",
+      "label": "Líneas",
+      "x": 360,
+      "y": 60,
+      "w": 300,
+      "h": 220,
+      "color": "#FBC866"
+    },
+    {
+      "id": "ZONE_PT",
+      "label": "Producto terminado",
+      "x": 660,
+      "y": 60,
+      "w": 280,
+      "h": 220,
+      "color": "#FBFBF8"
+    },
+    {
+      "id": "ZONE_CHARGE",
+      "label": "Carga",
+      "x": 660,
+      "y": 340,
+      "w": 280,
+      "h": 180,
+      "color": "#EAD3A9"
+    }
+  ],
+  "walls": [],
+  "lines": [
+    {
+      "id": "L1_OUT",
+      "buffer_nodes": [
+        "BUFFER_1",
+        "BUFFER_2"
+      ]
+    },
+    {
+      "id": "L2_OUT",
+      "buffer_nodes": [
+        "BUFFER_1",
+        "BUFFER_2"
+      ]
+    },
+    {
+      "id": "E1_IN",
+      "buffer_nodes": [
+        "BUFFER_1",
+        "BUFFER_2"
+      ]
+    },
+    {
+      "id": "E2_IN",
+      "buffer_nodes": [
+        "BUFFER_1",
+        "BUFFER_2"
+      ]
+    }
+  ],
+  "pedestrians": []
 }

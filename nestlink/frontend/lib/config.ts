@@ -34,6 +34,7 @@ export const BACKEND_TIMEOUT_MS = 1500;
 export const LAYOUT_FALLBACK_PATHS: Record<string, string> = {
   quito: `${BASE_PATH}/maps/plant_layout.json`,
   realistic: `${BASE_PATH}/maps/realistic_layout.json`,
+  espol_fusion: `${BASE_PATH}/maps/espol_fusion.json`,
 };
 
 export const DEFAULT_PLANT_ID = "realistic";
@@ -54,6 +55,10 @@ export interface WifiAp {
  * (tasksR/wifi_industrial_fase2.md). Solo visual local; no hay API.
  */
 export const WIFI_APS_BY_PLANT: Record<string, WifiAp[]> = {
+  espol_fusion: [
+    { id: "AP_E1", x: 180, y: 120 }, { id: "AP_E2", x: 420, y: 120 },
+    { id: "AP_E3", x: 680, y: 220 }, { id: "AP_E4", x: 820, y: 420 },
+  ],
   // Canvas 1000×600 — pasillos X_T (y≈55), X_M (x≈400), racks X_R (x≈740), OUT (x≈530)
   realistic: [
     { id: "AP_T1", x: 200, y: 55 },
