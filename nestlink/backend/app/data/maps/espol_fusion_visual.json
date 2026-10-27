@@ -42,7 +42,8 @@
           257
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -55,7 +56,8 @@
           278
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -68,7 +70,8 @@
           377
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -81,7 +84,8 @@
           407
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -94,7 +98,8 @@
           489
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -107,7 +112,8 @@
           553
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -120,7 +126,8 @@
           565
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -133,7 +140,8 @@
           642
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -146,7 +154,8 @@
           718
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -159,7 +168,8 @@
           747
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -172,7 +182,8 @@
           786
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -185,7 +196,8 @@
           800
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -198,7 +210,8 @@
           878
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -211,7 +224,8 @@
           1045
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -224,7 +238,8 @@
           1045
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -237,7 +252,8 @@
           1045
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     },
     {
       "path": [
@@ -250,10 +266,990 @@
           1045
         ]
       ],
-      "width": 4
+      "width": 24,
+      "width_source": "measured_band"
     }
   ],
   "zones": [
+    {
+      "rect": [
+        392,
+        496,
+        39,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        446,
+        496,
+        39,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        558,
+        499,
+        39,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        612,
+        499,
+        40,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        501,
+        500,
+        40,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        392,
+        576,
+        40,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        451,
+        576,
+        40,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        503,
+        576,
+        40,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        559,
+        576,
+        39,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        616,
+        576,
+        40,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        392,
+        653,
+        40,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        451,
+        653,
+        40,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        559,
+        653,
+        40,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        618,
+        653,
+        39,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        504,
+        654,
+        40,
+        40
+      ],
+      "color": "#B96BD4",
+      "label": "morado",
+      "semantic": "morado"
+    },
+    {
+      "rect": [
+        599,
+        380,
+        39,
+        39
+      ],
+      "color": "#6DCC62",
+      "label": "verde",
+      "semantic": "verde"
+    },
+    {
+      "rect": [
+        424,
+        383,
+        39,
+        40
+      ],
+      "color": "#6DCC62",
+      "label": "verde",
+      "semantic": "verde"
+    },
+    {
+      "rect": [
+        840,
+        238,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        881,
+        238,
+        41,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1270,
+        238,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1285,
+        356,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1140,
+        357,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        840,
+        358,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        882,
+        358,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1014,
+        358,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1286,
+        386,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        841,
+        388,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        881,
+        388,
+        31,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1015,
+        388,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1141,
+        388,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1015,
+        415,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1101,
+        416,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        599,
+        468,
+        39,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        777,
+        469,
+        38,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        424,
+        470,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        335,
+        471,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1101,
+        506,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        882,
+        532,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        841,
+        534,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1012,
+        534,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        503,
+        541,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        615,
+        543,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        393,
+        545,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        449,
+        545,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        559,
+        545,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        778,
+        545,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        334,
+        548,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        842,
+        611,
+        39,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        503,
+        620,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        559,
+        620,
+        39,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        616,
+        620,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        392,
+        621,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        451,
+        621,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        776,
+        623,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        337,
+        626,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        841,
+        691,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        338,
+        697,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        451,
+        697,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        559,
+        697,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        618,
+        697,
+        39,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        392,
+        698,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        504,
+        698,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        776,
+        698,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1015,
+        728,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1324,
+        728,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1016,
+        767,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1325,
+        767,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        841,
+        777,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        641,
+        779,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        778,
+        779,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        467,
+        781,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        340,
+        783,
+        39,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        776,
+        860,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        840,
+        860,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        881,
+        860,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1017,
+        861,
+        35,
+        35
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1017,
+        910,
+        38,
+        37
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1170,
+        910,
+        39,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        840,
+        937,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        882,
+        993,
+        40,
+        39
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        840,
+        994,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1015,
+        994,
+        40,
+        40
+      ],
+      "color": "#536FF0",
+      "label": "azul",
+      "semantic": "azul"
+    },
+    {
+      "rect": [
+        1270,
+        94,
+        40,
+        40
+      ],
+      "color": "#FFC45A",
+      "label": "P1",
+      "semantic": "amarillo"
+    },
+    {
+      "rect": [
+        1286,
+        508,
+        40,
+        40
+      ],
+      "color": "#FFC45A",
+      "label": "P2",
+      "semantic": "amarillo"
+    },
+    {
+      "rect": [
+        1325,
+        837,
+        40,
+        40
+      ],
+      "color": "#FFC45A",
+      "label": "P3",
+      "semantic": "amarillo"
+    },
+    {
+      "rect": [
+        747,
+        926,
+        62,
+        62
+      ],
+      "color": "#7A3E0B",
+      "label": "cafe",
+      "semantic": "cafe"
+    },
+    {
+      "rect": [
+        552,
+        238,
+        39,
+        40
+      ],
+      "color": "#FF6B21",
+      "label": "R1",
+      "semantic": "naranja"
+    },
+    {
+      "rect": [
+        1143,
+        513,
+        39,
+        39
+      ],
+      "color": "#FF6B21",
+      "label": "R2",
+      "semantic": "naranja"
+    },
+    {
+      "rect": [
+        1170,
+        860,
+        39,
+        40
+      ],
+      "color": "#FF6B21",
+      "label": "R3",
+      "semantic": "naranja"
+    },
     {
       "rect": [
         325,
@@ -896,6 +1892,7 @@
   ],
   "extraction": {
     "method": "dark-line projections + semantic color components",
+    "corridor_width_px": 24,
     "max_position_error_px": 0
   }
 }
