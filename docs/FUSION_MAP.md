@@ -24,11 +24,11 @@
 | `app/models/` (agv, bateria, mision, pallet, solicitud) | Modelo de dominio AGV | — |
 | `app/services/simulador_flota.py`, `gestor_flota.py` | Simulador/gestor de flota AGV propia | models |
 | `app/services/nestor.py`, `preguntas_nestor.py` | **Panel Néstor**: preguntas prefijadas + respuestas | services |
-| `app/services/conector_wms.py` + `wms_mock.py` | **Conector WMS (mock)** — lectura de órdenes | — |
+| `app/services/conector_wms.py` + `wms_mock.py` | **Conector WMS (mock)** — envío idempotente de movimientos de pallet por HTTP y consulta de salud/listado | — |
 | `app/services/indicadores_capacidad.py` | Indicadores de capacidad (equivalente a nuestro techo/Sakasegawa) | — |
 | `app/services/{bateria_flota,alertas_linea,inventario_transito,escenarios,analizador_operativo,estado_visual,exportacion_nestor}.py` | Batería, alertas de línea, inventario en tránsito, escenarios, análisis | services |
 | `flexsim/` (`.fsm` + `tcp_bridge`) | **Simulación FlexSim de AGVs con puente TCP** | FlexSim (propietario) |
-| `tests/` | **17 suites** | pytest |
+| `tests/` | **15 módulos / 171 funciones de prueba** (la ejecución completa requiere las dependencias de `requirements.txt`) | pytest |
 | `CALCULO_FLOTA.md`, `RENTABILIDAD_AGV.md`, `RESULTADOS_215_PT.md` | Cálculo de flota y rentabilidad (215 PT ✓ coincide con nuestras 215 salidas/turno) | — |
 
 ## 2 · Mapa de fusión
@@ -38,7 +38,7 @@
 | F1 | **Néstor ↔ chatbot de intents** | Extraer preguntas de `preguntas_nestor.py` que aporten (inventario en tránsito, alertas de línea) → añadir como intents en `chatbot.py` | **S** (2-3 h) | Medio | 🔴 hoy |
 | F2 | **conector_wms ↔ capa EWM read-only** | Adaptar `wms_mock.py` como fuente alternativa de órdenes → endpoint `GET /api/v1/wms/orders` (read-only) en `api.py`; el panel puede mostrar "órdenes WMS recibidas" | **S-M** (3-4 h) | **Alto** (evidencia visible de "integración") | 🔴 hoy si hay tiempo |
 | F3 | **flexsim/tcp_bridge ↔ adaptador WCS (AGVs)** | Opción A (riesgosa): backend acepta "AGVs" externos vía TCP. **Opción B (recomendada):** AGV = "AMR restringido" en el motor propio (allowed_types + zonas) — el puente FlexSim queda como referencia documentada | M-L | Alto pero **no para mañana** | 🟡 día 2 |
-| F4 | **tests ESPOL + nestlink** | `pytest tests/` (17) junto a los 89 → cifra combinada "106 tests" en README/Q&A | **S** (30 min) | Medio (credibilidad) | 🔴 hoy |
+| F4 | **tests ESPOL + nestlink** | Ejecutar los 15 módulos ESPOL junto a los 89 de NestLink; publicar la cifra solo después de instalar dependencias y obtener un resultado verde (171 funciones descubiertas localmente). | **S** (30 min) | Medio (credibilidad) | 🔴 hoy |
 | F5 | **RENTABILIDAD/CALCULO_FLOTA ↔ bloque ROI** | Cruzar números con el informe (215 PT ✓); detectar discrepancias antes del jurado | **S** (1 h) | Medio | 🟡 |
 
 ## 3 · Orden de ejecución recomendado (hoy)
