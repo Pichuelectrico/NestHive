@@ -151,8 +151,11 @@ export function PlantMap({
   const [panning, setPanning] = useState(false);
   // Mapa visual v2 (New_map.png) — `?visual=v1` vuelve al renderer clásico sin rebuild
   const [visualV2On, setVisualV2On] = useState(VISUAL_V2_DEFAULT);
-  useEffect(() => setVisualV2On(isVisualV2Enabled()), []);
-  const v2 = visualV2On && VISUAL_V2_PLANTS.includes(plantId ?? "");
+  const [v2FallbackFailed, setV2FallbackFailed] = useState(false);
+  const offscreenV2Ref = useRef<HTMLCanvasElement | null>(null);
+  const offscreenKeyRef = useRef<string>("");
+  useEffect(() => setVisualV2On(isVisualV2Enabled(plantId)), [plantId]);
+  const v2 = visualV2On && !v2FallbackFailed && VISUAL_V2_PLANTS.includes(plantId ?? "");
 
   const resize = useCallback(() => {
     const canvas = canvasRef.current;
@@ -242,35 +245,68 @@ export function PlantMap({
     const bgW = bounds.width * scale;
     const bgH = bounds.height * scale;
 
-    if (!v2) {
-    ctx.fillStyle = "#e8f4fc";
-    ctx.fillRect(bgX, bgY, bgW, bgH);
+    let v2Ok = false;
+    if (v2) {
+      try {
+        const v2Key = `${canvas.width}x${canvas.height}_${scale}_${offsetX}_${offsetY}_${layoutKey}_${plantId}`;
+        if (!offscreenV2Ref.current) {
+          offscreenV2Ref.current = document.createElement("canvas");
+        }
+        const oCanvas = offscreenV2Ref.current;
+        if (
+          offscreenKeyRef.current !== v2Key ||
+          oCanvas.width !== canvas.width ||
+          oCanvas.height !== canvas.height
+        ) {
+          oCanvas.width = canvas.width;
+          oCanvas.height = canvas.height;
+          const oCtx = oCanvas.getContext("2d");
+          if (oCtx) {
+            oCtx.clearRect(0, 0, oCanvas.width, oCanvas.height);
+            drawVisualV2Underlay(oCtx, layout, toScreen, scale);
+            drawVisualV2Nodes(oCtx, layout, toScreen, scale);
+            drawVisualV2ZoneTitles(oCtx, layout, toScreen, scale);
+            offscreenKeyRef.current = v2Key;
+          }
+        }
+        ctx.drawImage(oCanvas, 0, 0);
+        v2Ok = true;
+      } catch (err) {
+        console.error("Visual V2 render failed, falling back to V1:", err);
+        setV2FallbackFailed(true);
+        v2Ok = false;
+      }
+    }
 
-    ctx.strokeStyle = "#c5dce8";
-    ctx.lineWidth = 0.5;
-    const gridStep = 40;
-    for (
-      let x = Math.floor(bounds.minX / gridStep) * gridStep;
-      x <= bounds.maxX;
-      x += gridStep
-    ) {
-      const s = toScreen(x, bounds.minY);
-      ctx.beginPath();
-      ctx.moveTo(s.x, bgY);
-      ctx.lineTo(s.x, bgY + bgH);
-      ctx.stroke();
-    }
-    for (
-      let y = Math.floor(bounds.minY / gridStep) * gridStep;
-      y <= bounds.maxY;
-      y += gridStep
-    ) {
-      const s = toScreen(bounds.minX, y);
-      ctx.beginPath();
-      ctx.moveTo(bgX, s.y);
-      ctx.lineTo(bgX + bgW, s.y);
-      ctx.stroke();
-    }
+    if (!v2Ok) {
+      ctx.fillStyle = "#e8f4fc";
+      ctx.fillRect(bgX, bgY, bgW, bgH);
+
+      ctx.strokeStyle = "#c5dce8";
+      ctx.lineWidth = 0.5;
+      const gridStep = 40;
+      for (
+        let x = Math.floor(bounds.minX / gridStep) * gridStep;
+        x <= bounds.maxX;
+        x += gridStep
+      ) {
+        const s = toScreen(x, bounds.minY);
+        ctx.beginPath();
+        ctx.moveTo(s.x, bgY);
+        ctx.lineTo(s.x, bgY + bgH);
+        ctx.stroke();
+      }
+      for (
+        let y = Math.floor(bounds.minY / gridStep) * gridStep;
+        y <= bounds.maxY;
+        y += gridStep
+      ) {
+        const s = toScreen(bounds.minX, y);
+        ctx.beginPath();
+        ctx.moveTo(bgX, s.y);
+        ctx.lineTo(bgX + bgW, s.y);
+        ctx.stroke();
+      }
     }
 
     // Lookup O(1) para mapas grandes (~500 nodos/aristas)
@@ -284,7 +320,7 @@ export function PlantMap({
 
     // Capas de fondo (zonas) — impermeable si ausente/vacío
     const zones = layout.zones;
-    if (!v2 && zones && zones.length > 0) {
+    if (!v2Ok && zones && zones.length > 0) {
       for (const zone of zones) {
         try {
           const tl = toScreen(zone.x, zone.y);
@@ -340,7 +376,7 @@ export function PlantMap({
     // Muros/paredes físicas (no transpirables) — dibujados como barras sólidas oscuras
     // justo debajo de aristas/nodos para que se vean como obstáculos reales del piso.
     const walls = layout.walls;
-    if (!v2 && walls && walls.length > 0) {
+    if (!v2Ok && walls && walls.length > 0) {
       for (const wl of walls) {
         try {
           const tl = toScreen(wl.x, wl.y);
@@ -371,10 +407,6 @@ export function PlantMap({
       }
     }
 
-    // v2: corredores, muros y zonas salen del grafo real; el bucle de aristas solo
-    // superpone bloqueos / hover / selección (interacción de derrame intacta).
-    if (v2) drawVisualV2Underlay(ctx, layout, toScreen, scale);
-
     layout.edges.forEach((e: LayoutEdge) => {
       const na = nodeById.get(e.from);
       const nb = nodeById.get(e.to);
@@ -385,7 +417,7 @@ export function PlantMap({
       const blocked = blockedEdges.has(key);
       const isHover = hover && edgeKey(hover.from, hover.to) === key;
       const isSel = sel && edgeKey(sel.from, sel.to) === key;
-      if (v2 && !blocked && !isHover && !isSel) return;
+      if (v2Ok && !blocked && !isHover && !isSel) return;
 
       ctx.beginPath();
       ctx.moveTo(sa.x, sa.y);
@@ -423,7 +455,7 @@ export function PlantMap({
 
       // Flecha de sentido en aristas unidireccionales (entre zonas y nodos)
       const dir = (e.direction || "bi").toLowerCase();
-      if (dir !== "bi" && !v2) {
+      if (dir !== "bi" && !v2Ok) {
         drawDirectionArrow(ctx, sa, sb, scale);
       }
 
@@ -445,11 +477,7 @@ export function PlantMap({
       }
     });
 
-    if (v2) {
-      drawVisualV2Nodes(ctx, layout, toScreen, scale);
-      drawVisualV2ZoneTitles(ctx, layout, toScreen, scale);
-    }
-    else layout.nodes.forEach((n) => {
+    if (!v2Ok) layout.nodes.forEach((n) => {
       try {
         const s = toScreen(n.x, n.y);
         const landmark = !dense || isDenseLandmark(n);
