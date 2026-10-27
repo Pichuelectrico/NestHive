@@ -1,6 +1,7 @@
 "use client";
 
 import { AMR_STATE_COLORS } from "@/lib/amrColors";
+import { FLEET_PRESENTATION, tipoDeAmr } from "@/lib/config";
 import { nearestNodeId } from "@/lib/layoutBounds";
 import type { AMRState, PlantLayout } from "@/lib/types";
 
@@ -33,6 +34,8 @@ export function FleetDetailView({
         <p className="text-sm text-nest-muted">Sin AMRs en snapshot</p>
       )}
       {amrs.map((amr) => {
+        const fleetType = tipoDeAmr(amr.id);
+        const displayName = FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre;
         const ring = AMR_STATE_COLORS[amr.estado] ?? "#8b949e";
         const barColor = batteryBarColor(amr.bateria);
         const nodeId = nearestNodeId(layout, amr.x, amr.y);
@@ -53,7 +56,9 @@ export function FleetDetailView({
                       boxShadow: `0 0 8px ${ring}`,
                     }}
                   />
-                  <span className="font-bold text-base">{amr.nombre}</span>
+                  <span className="mr-1 inline-block h-2 w-2 rounded-full" style={{ backgroundColor: fleetType === "AMR" ? FLEET_PRESENTATION.AMR_COLOR : FLEET_PRESENTATION.AGV_COLOR }} />
+                  <span className="font-bold text-base">{displayName}</span>
+                  <span className="ml-1 rounded px-1.5 py-0.5 text-[0.6rem] font-bold" style={{ color: fleetType === "AMR" ? FLEET_PRESENTATION.AMR_COLOR : FLEET_PRESENTATION.AGV_COLOR, backgroundColor: fleetType === "AMR" ? "#DBEAFE" : "#FEE2E2" }}>{fleetType}</span>
                   <span className="font-mono text-xs text-nest-muted">
                     {amr.id}
                   </span>

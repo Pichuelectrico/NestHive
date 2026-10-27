@@ -40,6 +40,15 @@ export const LAYOUT_FALLBACK_PATHS: Record<string, string> = {
 export const DEFAULT_PLANT_ID = "realistic";
 export const DEFAULT_PLANT_NAME = "Planta Realistic";
 
+export const FLEET_PRESENTATION = {
+  AGV_IDS: ["AMR_01", "AMR_02", "AMR_03", "AMR_06"],
+  AMR_IDS: ["AMR_04", "AMR_05"],
+  AGV_COLOR: "#E4032E",
+  AMR_COLOR: "#2563EB",
+  NAME_OVERRIDES: { AMR_01: "AGV 1 · Nestlé", AMR_02: "AGV 2 · Maggi", AMR_03: "AGV 3 · Savoy", AMR_06: "AGV 6 · Expedición", AMR_04: "AMR 4 · Apoyo", AMR_05: "AMR 5 · Apoyo" } as Record<string, string>,
+} as const;
+export function tipoDeAmr(id: string): "AGV" | "AMR" { return (FLEET_PRESENTATION.AMR_IDS as readonly string[]).includes(id) ? "AMR" : "AGV"; }
+
 export const CANVAS_W = 800;
 export const CANVAS_H = 500;
 

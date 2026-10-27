@@ -1,8 +1,9 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { AMR_STATE_COLORS, getAmrColor } from "@/lib/amrColors";
+import { AMR_STATE_COLORS } from "@/lib/amrColors";
 import { getBatteryEmoji, resolveAmrCargoVisual } from "@/lib/amrCargo";
+import { FLEET_PRESENTATION, tipoDeAmr } from "@/lib/config";
 import { WIFI_APS_BY_PLANT } from "@/lib/config";
 import { edgeKey, findEdgeAtScreenPoint } from "@/lib/edgeHit";
 import { getAmrAnchor } from "@/lib/mapGeometry";
@@ -759,7 +760,9 @@ export function PlantMap({
         ctx.lineWidth = 3 * spriteK * scale;
         ctx.stroke();
 
-        ctx.fillStyle = getAmrColor(i, plantId);
+        const fleetType = tipoDeAmr(amr.id);
+        const typeColor = fleetType === "AMR" ? FLEET_PRESENTATION.AMR_COLOR : FLEET_PRESENTATION.AGV_COLOR;
+        ctx.fillStyle = typeColor;
         const w = 20 * spriteK * scale;
         const h = 16 * spriteK * scale;
         ctx.beginPath();
@@ -770,8 +773,11 @@ export function PlantMap({
         ctx.font = `bold ${8 * spriteK * scale}px sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "alphabetic";
-        const amrLabel = amr.nombre.startsWith("AMR ") ? amr.nombre : amr.nombre.split(" ")[0];
+        const amrLabel = FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre;
         ctx.fillText(amrLabel, s.x, s.y - 22 * spriteK * scale);
+        ctx.font = `${Math.max(8, 9 * spriteK * scale)}px Arial, sans-serif`;
+        ctx.fillStyle = typeColor;
+        ctx.fillText(fleetType, s.x + ctx.measureText(amrLabel).width / 2 + 5, s.y - 22 * spriteK * scale);
 
         ctx.font = `${11 * spriteK * scale}px sans-serif`;
         ctx.textAlign = "center";
