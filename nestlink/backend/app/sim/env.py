@@ -9,7 +9,7 @@ from app.models import SimulationSnapshot, NoticeItem
 from app.data_maps import load_layout_raw, load_seeds_raw, build_plant_graph, PLANT_CONFIGS, TEST_PLANTS, DEFAULT_PLANT_ID, get_plant_config
 from app.metrics import KPIManager
 from app.sim.routing import block_edge, unblock_edge, find_shortest_path
-from app.sim.assignment import MissionQueue, compute_hungarian_assignment
+from app.sim.assignment import MissionQueue, compute_hungarian_assignment, POLICY
 from app.sim.obstacles import ObstacleManager
 from app.sim.generators import PlantDemandGenerator
 from app.sim.agents import AMRAgent
@@ -54,6 +54,11 @@ class SimulationEnvironment:
         self.layout_raw = load_layout_raw(plant_id)
         self.seeds_raw = load_seeds_raw(plant_id)
         self.G, self.node_positions = build_plant_graph(self.layout_raw)
+        # Transport/muro links remain available for EXPORT, but are not a cheap
+        # shortcut for recovery traffic through the plant.
+        for u, v, attrs in self.G.edges(data=True):
+            if self.plant_id == "espol_fusion" and "TRANSPORTE" in (u, v):
+                attrs["weight"] = 1_000_000.0
         
         # Mapeo de tipos de nodo {id: type} (linea, empacadora, almacen, cruce, carga)
         self.node_types = {n["id"]: n.get("type", "cruce") for n in self.layout_raw.get("nodes", [])}
@@ -71,6 +76,7 @@ class SimulationEnvironment:
         # cuánto espera cada paquete en el buffer antes de la entrega exclusiva al muro).
         self._out_pkg_arrivals: Dict[str, List[float]] = {out: [] for out in self.out_nodes}
         self.delivery_amr_id: Optional[str] = None
+        self.delivery_amr_ids: set[str] = set()
 
         self.metrics = KPIManager()
         self.hourly_reports = []
@@ -93,8 +99,9 @@ class SimulationEnvironment:
 
         for amr_data in self.seeds_raw.get("amrs", []):
             aid = amr_data["id"]
-            if amr_data.get("entrega_exclusiva") or amr_data.get("tipo") == "delivery" or (self.wall_node and aid == "AMR_06"):
-                self.delivery_amr_id = aid
+            if amr_data.get("delivery_amr_ids") or amr_data.get("entrega_exclusiva"):
+                self.delivery_amr_ids.update(amr_data.get("delivery_amr_ids", [aid]))
+            if aid in self.delivery_amr_ids: self.delivery_amr_id = aid
             hz = amr_data.get("home_zone", home_zones_map.get(aid))
             if not hz and aid == self.delivery_amr_id:
                 hz = self.wall_node
@@ -111,6 +118,7 @@ class SimulationEnvironment:
                     node_positions=self.node_positions,
                     node_types=self.node_types,
                     charger_resolver=lambda aid: self.find_best_charger(aid)
+                    , clase=amr_data.get("clase", "AGV")
                 )
             )
 
@@ -158,7 +166,7 @@ class SimulationEnvironment:
 
             # 2. Reubicación preventiva para AMRs ociosos (umbral reducido a 2.0s para flujo continuo)
             for amr in self.amrs:
-                if amr.estado == "IDLE" and amr.idle_timer > 2.0 and amr.id != self.delivery_amr_id:
+                if amr.estado == "IDLE" and amr.idle_timer > 2.0 and amr.id not in self.delivery_amr_ids:
                     is_on_operational_node = self.node_types.get(amr.posicion_nodo) in ["linea", "empacadora", "almacen"]
                     target_hub = amr.home_zone if (amr.home_zone and self.node_types.get(amr.home_zone) not in ["linea", "empacadora", "almacen"]) else ("X_02" if "X_02" in self.node_positions else list(self.node_positions.keys())[0])
                     if amr.posicion_nodo != target_hub or is_on_operational_node:
@@ -169,7 +177,7 @@ class SimulationEnvironment:
             self._dispatch_exports()
 
             # 3b. Asignación Húngara con validación de ruta (EXPORT fuera del pool; AMR exclusivo reservado)
-            idle_amrs = [a for a in self.amrs if a.estado == "IDLE" and a.id != self.delivery_amr_id]
+            idle_amrs = [a for a in self.amrs if a.estado == "IDLE" and a.id not in self.delivery_amr_ids]
             pending_missions = [m for m in self.mission_queue.get_pending_missions() if m.tipo != "EXPORT"]
             if idle_amrs and pending_missions:
                 assignments = compute_hungarian_assignment(idle_amrs, pending_missions, self.node_positions)
@@ -306,8 +314,16 @@ class SimulationEnvironment:
         self.generator.step(dt_sim, self.mission_queue, self.sim_time, self.metrics)
         self._auto_recharge_check()
 
+        # Emergency fallback is data-driven by fleet_policy.json.
+        wait_limit = float(POLICY.get("emergency", {}).get("trigger", {}).get("wait_exceeded_seconds", 120))
+        for mission in self.mission_queue.get_pending_missions():
+            if (mission.origen.startswith("RECO_") and not mission.emergency
+                    and self.sim_time - mission.created_at_sim > wait_limit):
+                mission.emergency = True
+                self.add_notice("WARN", None, f"Emergencia activada: {mission.id} supera {wait_limit:.0f}s de espera")
+
         for amr in self.amrs:
-            if amr.estado == "IDLE" and amr.idle_timer > 2.0 and amr.id != self.delivery_amr_id:
+            if amr.estado == "IDLE" and amr.idle_timer > 2.0 and amr.id not in self.delivery_amr_ids:
                 is_on_operational_node = self.node_types.get(amr.posicion_nodo) in ["linea", "empacadora", "almacen"]
                 target_hub = amr.home_zone if (amr.home_zone and self.node_types.get(amr.home_zone) not in ["linea", "empacadora", "almacen"]) else ("X_02" if "X_02" in self.node_positions else list(self.node_positions.keys())[0])
                 if amr.posicion_nodo != target_hub or is_on_operational_node:
@@ -317,7 +333,7 @@ class SimulationEnvironment:
         # Entrega exclusiva al muro (EXPORT): solo el AMR designado, solo si hay stock en OUT
         self._dispatch_exports()
 
-        idle_amrs = [a for a in self.amrs if a.estado == "IDLE" and a.id != self.delivery_amr_id]
+        idle_amrs = [a for a in self.amrs if a.estado == "IDLE" and a.id not in self.delivery_amr_ids]
         pending_missions = [m for m in self.mission_queue.get_pending_missions() if m.tipo != "EXPORT"]
         if idle_amrs and pending_missions:
             assignments = compute_hungarian_assignment(idle_amrs, pending_missions, self.node_positions)
@@ -478,7 +494,7 @@ class SimulationEnvironment:
         ejecuta misiones EXPORT, y solo existe una si hay stock (paquete terminado) en algún OUT."""
         if not self.delivery_amr_id or not self.wall_node or not self.out_nodes:
             return
-        amr = next((a for a in self.amrs if a.id == self.delivery_amr_id), None)
+        amr = next((a for a in self.amrs if a.id in self.delivery_amr_ids and a.estado == "IDLE"), None)
         if not amr or amr.estado != "IDLE":
             return
         for m in self.mission_queue.get_pending_missions():
@@ -683,6 +699,15 @@ class SimulationEnvironment:
         label = line_id if line_id else "todas las empacadoras"
         self.add_notice("INFO", line_id, f"Relleno activado: objetivo {target_pct:.0f}% de insumos en {label}")
         return affected
+
+    def trigger_emergency_pickup(self, line: str = "R2") -> Dict[str, Any]:
+        amr = next((a for a in self.amrs if a.id == "AMR_04" and a.clase == "AMR"), None)
+        if not amr: return {"status": "unavailable", "line": line}
+        mission = self.mission_queue.add_mission(f"RECO_{line}", f"RECO_{line}", "PALET_01", prioridad=10, sim_time=self.sim_time)
+        mission.emergency = True
+        self.metrics.amr_emergency_assists += 1
+        self.add_notice("WARNING", amr.id, f"🚨 Emergencia: AMR 4 apoya {line} → Paletizaje (AGVs ocupados)")
+        return {"status": "emergency_queued", "line": line, "amr_id": amr.id, "mission_id": mission.id, "emergency": True}
 
     def get_snapshot(self) -> SimulationSnapshot:
         return SimulationSnapshot(

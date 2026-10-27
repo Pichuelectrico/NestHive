@@ -15,6 +15,7 @@ class KPIManager:
         # paquete en el buffer OUT (arribo → entrega en el muro) y nº de paquetes medidos.
         self.total_out_wait_sec: float = 0.0
         self.out_pkgs_measured: int = 0
+        self.amr_emergency_assists: int = 0
 
     def record_trip_completed(self, duration_min: float, distance_km: float, was_empty_prevented: bool = False):
         self.viajes_completados += 1
@@ -57,4 +58,5 @@ class KPIManager:
             km_evitados=round(self.km_evitados, 2),
             roi_km_pct=roi_pct,
             tiempo_medio_en_out_min=avg_out_wait_min
+            , amr_emergency_assists=self.amr_emergency_assists
         )

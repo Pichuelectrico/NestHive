@@ -49,6 +49,7 @@ class AMRState(BaseModel):
     tarea_asignada: Optional[str] = None
     path: List[str] = []
     tipo: TipoAMR = "pallet_lifter"
+    clase: Optional[Literal["AGV", "AMR"]] = None
     cediendo_paso: bool = False
 
 class LineaState(BaseModel):
@@ -75,6 +76,7 @@ class KPIsState(BaseModel):
     km_evitados: float = 0.0
     roi_km_pct: float = 0.0
     tiempo_medio_en_out_min: float = 0.0
+    amr_emergency_assists: int = 0
 
 class SimulationSnapshot(BaseModel):
     sim_time: float

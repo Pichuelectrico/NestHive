@@ -11,6 +11,26 @@ from app.models import Tarea
 
 POLICY = json.loads((Path(__file__).resolve().parents[1] / "data" / "fleet_policy.json").read_text())
 
+def default_eligible(amr: Any, task: Tarea) -> bool:
+    """Fleet-domain gate; conservative defaults preserve legacy callers."""
+    clase = getattr(amr, "clase", None)
+    if clase not in ("AGV", "AMR"):
+        clase = "AMR" if getattr(amr, "id", "") in {"AMR_04", "AMR_05"} else "AGV"
+    tipo = task.tipo
+    emergency = bool(getattr(task, "emergency", False))
+    is_reco = tipo.startswith("RECO_") or getattr(task, "origen", "").startswith("RECO_")
+    if tipo in ("RECHARGE", "RELOCATION"):
+        return True
+    if is_reco:
+        return clase == "AGV" or emergency
+    if tipo == "PICKUP_PT":
+        return clase == "AGV" or emergency
+    if tipo in ("EXPORT", "EXPEDITION"):
+        return clase in ("AGV", "AMR")
+    if tipo == "SUPPLY_REQUEST":
+        return clase == "AGV"
+    return True
+
 class MissionQueue:
     def __init__(self):
         self.missions: List[Tarea] = []
@@ -52,7 +72,8 @@ class MissionQueue:
 def compute_hungarian_assignment(
     idle_amrs: List[Any],
     pending_missions: List[Tarea],
-    node_positions: Dict[str, Tuple[float, float]]
+    node_positions: Dict[str, Tuple[float, float]],
+    eligible: Optional[Any] = None
 ) -> List[Tuple[Any, Tarea]]:
     """
     Asigna AMRs libres a misiones pendientes usando el Método Húngaro (Scipy)
@@ -67,6 +88,14 @@ def compute_hungarian_assignment(
 
     for i, amr in enumerate(idle_amrs):
         for j, task in enumerate(pending_missions):
+            gate = eligible or default_eligible
+            if not gate(amr, task):
+                cost_matrix[i, j] = np.inf
+                continue
+            clase = getattr(amr, "clase", None) or ("AMR" if getattr(amr, "id", "") in {"AMR_04", "AMR_05"} else "AGV")
+            if (task.tipo.startswith("RECO_") or task.origen.startswith("RECO_")) and clase == "AMR" and not getattr(task, "emergency", False):
+                cost_matrix[i, j] = np.inf
+                continue
             target_pos = node_positions.get(task.origen, (amr.x, amr.y))
             dx = amr.x - target_pos[0]
             dy = amr.y - target_pos[1]
@@ -88,15 +117,18 @@ def compute_hungarian_assignment(
 
             # AMRs are reserved for transport and cannot take pallet-recovery
             # routes unless the mission is explicitly marked emergency.
-            if getattr(amr, "tipo", "").lower() in ("unit_load", "pallet_lifter") and task.tipo.startswith("RECO_") and not task.emergency:
+            if getattr(amr, "tipo", "").lower() in ("unit_load", "pallet_lifter") and (task.tipo.startswith("RECO_") or task.origen.startswith("RECO_")) and not task.emergency:
                 cost_matrix[i, j] = np.inf
             else:
                 cost_matrix[i, j] = dist * prio_factor * affinity_factor
 
-    row_ind, col_ind = linear_sum_assignment(cost_matrix)
+    if not np.isfinite(cost_matrix).any(axis=0).all():
+        return []
+    row_ind, col_ind = linear_sum_assignment(np.where(np.isfinite(cost_matrix), cost_matrix, 1e12))
 
     assignments = []
     for r, c in zip(row_ind, col_ind):
-        assignments.append((idle_amrs[r], pending_missions[c]))
+        if np.isfinite(cost_matrix[r, c]):
+            assignments.append((idle_amrs[r], pending_missions[c]))
 
     return assignments

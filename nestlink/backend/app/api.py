@@ -35,6 +35,10 @@ def get_chat_answer(q: str = Query(..., min_length=1)) -> Dict[str, Any]:
 def get_chat_report() -> Dict[str, Any]:
     return sim_env.last_hourly_report or {"event": "hourly_report_ready", "status": "pending", "sim_hour": 0}
 
+@router.post("/api/v1/emergency/pickup")
+def emergency_pickup(line: str = Query("R2", min_length=1)) -> Dict[str, Any]:
+    return sim_env.trigger_emergency_pickup(line)
+
 @router.get("/health")
 def get_health():
     return {

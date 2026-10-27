@@ -21,10 +21,12 @@ class AMRAgent:
         node_positions: Dict[str, Tuple[float, float]] = None,
         node_types: Dict[str, str] = None,
         charger_resolver: Optional[Any] = None
+        , clase: str = "AGV"
     ):
         self.id = id_str
         self.nombre = nombre
         self.tipo = tipo
+        self.clase = clase if clase in ("AGV", "AMR") else "AGV"
         self.velocidad_ms = velocidad_ms
         self.carga_kg = carga_kg
         self.bateria = bateria_inicial
@@ -369,5 +371,6 @@ class AMRAgent:
             tarea_asignada=self.tarea_actual.id if self.tarea_actual else None,
             path=remaining_path,
             tipo=self.tipo,
+            clase=self.clase,
             cediendo_paso=self.cediendo_paso
         )
