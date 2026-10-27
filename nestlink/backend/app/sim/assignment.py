@@ -9,7 +9,7 @@ from scipy.optimize import linear_sum_assignment
 from typing import List, Tuple, Dict, Optional, Any
 from app.models import Tarea
 
-POLICY = json.loads((Path(__file__).resolve().parents[1] / "data_maps" / "fleet_policy.json").read_text())
+POLICY = json.loads((Path(__file__).resolve().parents[1] / "data" / "fleet_policy.json").read_text())
 
 class MissionQueue:
     def __init__(self):

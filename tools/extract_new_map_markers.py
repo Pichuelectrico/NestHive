@@ -7,7 +7,7 @@ from PIL import Image
 from scipy import ndimage
 
 ROOT=Path(__file__).resolve().parents[1]
-IMAGE=ROOT/"assets/New_map.png"; OUTPUT=ROOT/"nestlink/backend/app/data_maps/new_map_markers.json"
+IMAGE=ROOT/"assets/New_map.png"; OUTPUT=ROOT/"nestlink/backend/app/data/new_map_markers.json"
 # Reference hues sampled from the drawing; tolerances intentionally exclude near-white canvas/text.
 PALETTE={"morado":"#b96bd4","verde":"#6dcc62","azul":"#536ff0","amarillo":"#ffc45a","cafe":"#7a3e0b","naranja":"#ff6b21","rojo":"#ff302c"}
 def rgb(hexv): return np.array([int(hexv[i:i+2],16) for i in (1,3,5)],dtype=np.int16)

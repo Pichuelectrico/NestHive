@@ -12,7 +12,7 @@ def main():
  nodes=[]
  for n in raw['nodos']:
   nid=renamed.get(n['id'],n['id']); typ='linea' if nid.startswith('L') else 'empacadora' if nid.startswith('E') else 'almacen' if nid.startswith('WH_') else 'carga' if nid.startswith('CHARGER') else 'buffer' if nid.startswith('BUFFER') else 'cruce'; p=pos(n); assert 40<=p[0]<=960 and 40<=p[1]<=560; nodes.append({'id':nid,'x':p[0],'y':p[1],'type':typ,'label':FRIENDLY.get(nid,nid)})
- markers=json.loads((ROOT/'nestlink/backend/app/data_maps/new_map_markers.json').read_text())
+ markers=json.loads((ROOT/'nestlink/backend/app/data/new_map_markers.json').read_text())
  def marker(nid,p,typ,label): nodes.append({'id':nid,'x':round(p['x_px']/1452*1000,2),'y':round(p['y_px']/1100*600,2),'type':typ,'label':label})
  for i,p in enumerate(markers['morado']['puntos'],1): marker(f'PALET_{i:02d}',p,'buffer','Paletizaje')
  for k in ('P1','P2','P3'): marker(f'INSUMO_{k}',next(p for p in markers['amarillo']['puntos'] if p.get('etiqueta')==k),'almacen',f'Insumo {k}')
