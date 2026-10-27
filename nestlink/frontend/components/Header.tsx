@@ -39,15 +39,15 @@ export function Header({
       <div className="flex items-center justify-between gap-4 px-5 py-3 flex-wrap">
         <div className="flex items-center gap-3 min-w-0">
           <div
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-nest-accent/30 bg-nest-accent shadow-nest-glow"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#5B3918]/25 bg-[#F9AE08] shadow-nest-glow"
             aria-hidden
           >
-            <span className="text-sm font-bold tracking-tighter text-white">NH</span>
+            <span className="text-sm font-bold tracking-tighter text-[#5B3918]">NH</span>
           </div>
           <div className="min-w-0">
             <div className="text-lg font-semibold tracking-tight leading-none">
-              <span className="text-nest-text">Nest</span>
-              <span className="text-nest-accent">Hive</span>
+              <span className="text-[#5B3918]">Nest</span>
+              <span className="text-[#F9AE08]">Hive</span>
             </div>
             <div className="nest-label mt-0.5 normal-case tracking-wide text-[0.6rem]">
               Centro de operaciones intralogísticas

@@ -5,7 +5,12 @@
 :root {
   color-scheme: light;
 
-  /* Nestlé brand — Rojo #E4032E + Blanco */
+  /* NestHive MVP tokens — honey/cacao brand; fleet + status colors stay semantic. */
+  --hive-miel: #f9ae08;
+  --hive-cacao: #5b3918;
+  --hive-crema: #fbfbf8;
+  --hive-arena: #ead3a9;
+  --hive-oro-claro: #fbc866;
   --nest-bg: #f4f5f7;
   --nest-bg-elevated: #ffffff;
   --nest-panel: #ffffff;
@@ -14,15 +19,15 @@
   --nest-border-strong: rgba(15, 23, 42, 0.14);
   --nest-text: #1b1f24;
   --nest-muted: #6b7280;
-  --nest-accent: #e4032e;
-  --nest-accent-warm: #d97706;
+  --nest-accent: var(--hive-miel);
+  --nest-accent-warm: var(--hive-oro-claro);
   --nest-green: #059669;
   --nest-red: #e4032e;
   --nest-amber: #d97706;
 
   --nest-shadow-panel: 0 4px 20px rgba(15, 23, 42, 0.06),
     0 0 0 1px rgba(15, 23, 42, 0.04);
-  --nest-shadow-glow: 0 0 28px rgba(228, 3, 46, 0.08);
+  --nest-shadow-glow: 0 0 28px rgba(249, 174, 8, 0.18);
 }
 
 html,
@@ -40,8 +45,8 @@ body {
 /* Ambient shell — soft Nestlé wash */
 .nest-shell {
   background:
-    radial-gradient(ellipse 80% 50% at 15% -10%, rgba(228, 3, 46, 0.06), transparent 55%),
-    radial-gradient(ellipse 50% 40% at 95% 100%, rgba(228, 3, 46, 0.04), transparent 50%),
+    radial-gradient(ellipse 80% 50% at 15% -10%, rgba(249, 174, 8, 0.08), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 95% 100%, rgba(234, 211, 169, 0.16), transparent 50%),
     var(--nest-bg);
 }
 
