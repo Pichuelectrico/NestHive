@@ -9,4 +9,5 @@ for rel in ("nestlink/backend/app/data/maps/espol_fusion.json", "nestlink/fronte
     for edge in data["edges"]:
         if "TRANSPORTE" in (edge.get("from"), edge.get("to")) and edge.get("to", "").startswith("PALET_"):
             edge["domain"] = "AMR"
+            edge["length"] = 150
     path.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n")

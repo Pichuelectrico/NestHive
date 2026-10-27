@@ -117,8 +117,6 @@ def compute_hungarian_assignment(
 
             cost_matrix[i, j] = dist * prio_factor * affinity_factor
 
-    if not np.isfinite(cost_matrix).any(axis=0).all():
-        return []
     row_ind, col_ind = linear_sum_assignment(np.where(np.isfinite(cost_matrix), cost_matrix, 1e12))
 
     assignments = []
