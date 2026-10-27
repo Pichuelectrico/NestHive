@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
 import { FleetBatteryPanel } from "@/components/FleetBatteryPanel";
-import { FleetChatPanel } from "@/components/FleetChatPanel";
+import { FleetChatWidget } from "@/components/FleetChatWidget";
 import { FleetDetailView } from "@/components/FleetDetailView";
 import { FloatingDetailModal } from "@/components/FloatingDetailModal";
 import { FloatingLinesBar } from "@/components/FloatingLinesBar";
@@ -314,6 +314,7 @@ export function Dashboard() {
             loading={actionLoading}
           />
         </div>
+        <FleetChatWidget />
       </div>
     );
   }
@@ -359,7 +360,6 @@ export function Dashboard() {
             showWifiNetwork={showWifiNetwork}
             onShowWifiNetworkChange={setShowWifiNetwork}
           />
-          <FleetChatPanel />
           <div className="nest-panel relative flex-1 min-h-0 min-w-0 overflow-hidden shadow-nest-glow">
             {mapEl}
             <button
@@ -422,6 +422,8 @@ export function Dashboard() {
       >
         <KanbanDetailView missions={missions} />
       </FloatingDetailModal>
+
+      <FleetChatWidget />
     </div>
   );
 }
