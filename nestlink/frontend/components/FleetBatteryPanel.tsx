@@ -90,7 +90,7 @@ export function FleetBatteryPanel({
               <div className="mt-1 flex justify-between text-[0.65rem] text-nest-muted font-mono tabular-nums">
                 <span>{batteryEmoji(amr)} {amr.bateria}%</span>
                 {amr.tarea_asignada && (
-                  <span className="truncate ml-2 text-nest-accent">
+                  <span className="truncate ml-2 text-nest-ink">
                     {amr.tarea_asignada}
                   </span>
                 )}

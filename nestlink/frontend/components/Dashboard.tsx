@@ -243,7 +243,7 @@ export function Dashboard() {
 
   if (layoutError && !layout) {
     return (
-      <div className="p-8 text-nest-accent">
+      <div className="p-8 text-nest-red">
         Error cargando layout: {layoutError}
       </div>
     );

@@ -230,7 +230,7 @@ export function ControlPanel({
           <span>Clic en pasillo bloqueado (rojo)</span>
           {selectedEdge && (
             <>
-              <span className="font-mono text-nest-accent">
+              <span className="font-mono text-nest-ink">
                 {selectedEdge.from} → {selectedEdge.to}
               </span>
               <button

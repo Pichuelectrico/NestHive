@@ -104,7 +104,7 @@ export function Header({
           <div className="nest-card flex items-center gap-3 px-3 py-1.5 text-sm">
             <div className="text-right">
               <div className="nest-label leading-none">Sim time</div>
-              <div className="font-mono text-sm font-medium text-nest-accent tabular-nums">
+              <div className="font-mono text-sm font-medium text-nest-ink tabular-nums">
                 {formatSimTime(simTime)}
               </div>
             </div>

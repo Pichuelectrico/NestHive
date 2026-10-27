@@ -20,7 +20,7 @@ const STATUS_LABEL: Record<string, string> = {
 
 const STATUS_STYLE: Record<string, string> = {
   pendiente: "text-amber-700/90",
-  asignada: "text-nest-accent",
+  asignada: "text-nest-ink",
   en_curso: "text-purple-700",
   completada: "text-emerald-700",
 };
@@ -68,7 +68,7 @@ export function KanbanPanel({
               {STATUS_LABEL[m.estado] ?? m.estado}
             </div>
             {m.amr_asignado && (
-              <span className="mt-1.5 inline-block rounded-md border border-black/[0.08] bg-black/[0.03] px-1.5 py-0.5 font-mono text-[0.6rem] text-nest-accent">
+              <span className="mt-1.5 inline-block rounded-md border border-black/[0.08] bg-black/[0.03] px-1.5 py-0.5 font-mono text-[0.6rem] text-nest-ink">
                 {m.amr_asignado}
               </span>
             )}

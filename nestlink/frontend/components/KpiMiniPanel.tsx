@@ -11,7 +11,7 @@ export function KpiMiniPanel({ kpis }: KpiMiniPanelProps) {
     {
       label: "Viajes",
       value: String(kpis.viajes_completados),
-      accent: "text-nest-accent",
+      accent: "text-nest-ink",
     },
     {
       label: "Vacíos evit.",

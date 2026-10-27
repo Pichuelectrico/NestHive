@@ -21,6 +21,8 @@ const config: Config = {
           text: "#5b3918",
           muted: "#8a6d4f",
           accent: "#f9ae08",
+          // Miel oscuro para texto pequeño sobre crema (≈5:1, legible en proyector)
+          ink: "#8a5a00",
           warm: "#fbc866",
           green: "#059669",
           // Rojo SOLO semántico (alertas / stock crítico / error)

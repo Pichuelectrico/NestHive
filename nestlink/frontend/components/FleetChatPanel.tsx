@@ -227,7 +227,7 @@ export function FleetChatPanel() {
                   {highlights.map((h) => (
                     <span
                       key={h}
-                      className="rounded bg-nest-accent/10 px-1.5 py-0.5 text-[0.6rem] text-nest-accent font-mono"
+                      className="rounded bg-nest-accent/10 px-1.5 py-0.5 text-[0.6rem] text-nest-ink font-mono"
                     >
                       {h}
                     </span>

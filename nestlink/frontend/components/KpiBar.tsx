@@ -11,7 +11,7 @@ export function KpiBar({ kpis }: KpiBarProps) {
     {
       label: "Viajes completados",
       value: kpis.viajes_completados,
-      accent: "text-nest-accent",
+      accent: "text-nest-ink",
     },
     {
       label: "Vacíos evitados",
