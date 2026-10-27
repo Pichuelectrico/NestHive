@@ -110,7 +110,7 @@ export function FloatingLinesBar({
                     </span>
                     <span
                       className={`font-mono text-xs font-semibold tabular-nums ${
-                        low ? "text-nest-accent" : "text-nest-muted"
+                        low ? "text-nest-red" : "text-nest-muted"
                       }`}
                     >
                       {line.nivel_pct.toFixed(0)}%

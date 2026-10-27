@@ -11,22 +11,26 @@ const config: Config = {
         sans: ["var(--font-outfit)", "system-ui", "sans-serif"],
         mono: ["var(--font-jetbrains)", "ui-monospace", "monospace"],
       },
+      // Paleta NestHive (espejo de los tokens --hive-* / --nest-* de globals.css).
+      // Hex estáticos para que funcionen los modificadores de opacidad (/40, /[0.1]).
       colors: {
         nest: {
-          bg: "#f4f5f7",
+          bg: "#fbfbf8",
           panel: "#ffffff",
-          border: "rgba(15,23,42,0.08)",
-          text: "#1b1f24",
-          muted: "#6b7280",
-          accent: "#e4032e",
-          warm: "#d97706",
+          border: "rgba(91,57,24,0.12)",
+          text: "#5b3918",
+          muted: "#8a6d4f",
+          accent: "#f9ae08",
+          warm: "#fbc866",
           green: "#059669",
+          // Rojo SOLO semántico (alertas / stock crítico / error)
+          red: "#e4032e",
         },
       },
       boxShadow: {
         "nest-panel":
-          "0 4px 20px rgba(15,23,42,0.06), 0 0 0 1px rgba(15,23,42,0.04)",
-        "nest-glow": "0 0 28px rgba(228,3,46,0.1)",
+          "0 4px 20px rgba(91,57,24,0.06), 0 0 0 1px rgba(91,57,24,0.04)",
+        "nest-glow": "0 0 28px rgba(249,174,8,0.12)",
       },
       borderRadius: {
         xl: "0.875rem",

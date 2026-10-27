@@ -15,7 +15,7 @@ export function ToastStack() {
           role="status"
           className={`pointer-events-auto rounded-xl border px-4 py-3 text-sm shadow-nest-panel backdrop-blur-xl animate-in slide-in-from-right ${
             t.type === "error"
-              ? "border-nest-accent/40 bg-red-50 text-[#8b001c]"
+              ? "border-nest-red/40 bg-red-50 text-[#8b001c]"
               : t.type === "success"
                 ? "border-emerald-600/35 bg-emerald-50 text-emerald-900"
                 : "border-black/[0.1] bg-white/95 text-nest-text"
