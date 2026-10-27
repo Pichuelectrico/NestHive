@@ -154,6 +154,9 @@ class ProductionLine:
 
 class PlantDemandGenerator:
     def __init__(self, seeds_data: Dict[str, Any]):
+        self.fleet_rules = seeds_data.get("fleet_rules", {})
+        self._next_reco_sim = 110.0
+        self._reco_index = 0
         self.lines: List[ProductionLine] = []
         for line in seeds_data.get("lines", []):
             self.lines.append(
@@ -222,6 +225,16 @@ class PlantDemandGenerator:
     def step(self, dt_sim: float, mission_queue: MissionQueue, sim_time: float, metrics_manager: Any):
         for line in self.lines:
             line.step(dt_sim, mission_queue, sim_time, metrics_manager)
+        if self.fleet_rules.get("enabled") and sim_time >= self._next_reco_sim:
+            origins = ("RECO_R1", "RECO_R2", "RECO_R3")
+            origin = origins[self._reco_index % len(origins)]
+            if not any(m.origen == origin and m.estado in ("pendiente", "asignada", "en_curso")
+                       for m in mission_queue.get_all_missions()):
+                destination = f"PALET_{(self._reco_index % 15) + 1:02d}"
+                mission_queue.add_mission("PICKUP_PT", origin, destination, prioridad=6,
+                                          peso_kg=480.0, sim_time=sim_time)
+                self._reco_index += 1
+            self._next_reco_sim += 110.0
 
     def inject_peak(self, line_id: str, drain_pct: float = 30.0, mission_queue: MissionQueue = None, sim_time: float = 0.0) -> bool:
         for line in self.lines:

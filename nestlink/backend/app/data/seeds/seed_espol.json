@@ -142,6 +142,13 @@
     }
   ],
   "fleet_rules": {
-    "enabled": true
+    "enabled": true,
+    "pickup_node": {
+      "E1_IN": "RECO_R1",
+      "L2_OUT": "RECO_R1",
+      "L1_OUT": "RECO_R2",
+      "E2_IN": "RECO_R3"
+    },
+    "palet_nodes": "PALET_*"
   }
 }

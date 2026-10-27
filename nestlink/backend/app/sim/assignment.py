@@ -115,12 +115,7 @@ def compute_hungarian_assignment(
                 # Comodín (Nestlé Runner): neutral, pero muy veloz para emergencias
                 affinity_factor = 0.65 if task.prioridad >= 8 else 0.85
 
-            # AMRs are reserved for transport and cannot take pallet-recovery
-            # routes unless the mission is explicitly marked emergency.
-            if getattr(amr, "tipo", "").lower() in ("unit_load", "pallet_lifter") and (task.tipo.startswith("RECO_") or task.origen.startswith("RECO_")) and not task.emergency:
-                cost_matrix[i, j] = np.inf
-            else:
-                cost_matrix[i, j] = dist * prio_factor * affinity_factor
+            cost_matrix[i, j] = dist * prio_factor * affinity_factor
 
     if not np.isfinite(cost_matrix).any(axis=0).all():
         return []
