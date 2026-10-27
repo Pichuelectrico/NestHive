@@ -26,7 +26,7 @@ def default_eligible(amr: Any, task: Tarea) -> bool:
     if tipo == "PICKUP_PT":
         return clase == "AGV" or emergency
     if tipo in ("EXPORT", "EXPEDITION"):
-        return clase in ("AGV", "AMR")
+        return clase == "AMR"
     if tipo == "SUPPLY_REQUEST":
         return clase == "AGV"
     return True

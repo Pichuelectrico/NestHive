@@ -174,6 +174,7 @@ class SimulationEnvironment:
                         amr.idle_timer = 0.0
 
             # 3. Entrega exclusiva al muro (EXPORT): solo el AMR designado, solo si hay stock en OUT
+            self._mark_emergencies()
             self._dispatch_exports()
 
             # 3b. Asignación Húngara con validación de ruta (EXPORT fuera del pool; AMR exclusivo reservado)
@@ -488,6 +489,13 @@ class SimulationEnvironment:
                 and not (amr.tarea_actual and amr.tarea_actual.tipo == "RECHARGE")
             ):
                 self.trigger_low_battery(amr.id)
+
+    def _mark_emergencies(self) -> None:
+        wait_limit = float(POLICY.get("emergency", {}).get("trigger", {}).get("wait_exceeded_seconds", 120))
+        for mission in self.mission_queue.get_pending_missions():
+            if mission.origen.startswith("RECO_") and not mission.emergency and self.sim_time - mission.created_at_sim > wait_limit:
+                mission.emergency = True
+                self.add_notice("WARN", None, f"Emergencia activada: {mission.id} supera {wait_limit:.0f}s de espera")
 
     def _dispatch_exports(self) -> None:
         """Entrega EXCLUSIVA al muro externo (ruta rosada): solo el AMR designado (delivery_amr_id)
