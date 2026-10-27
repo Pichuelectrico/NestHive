@@ -107,6 +107,12 @@ export async function fetchMissions(): Promise<Mission[]> {
   return [];
 }
 
+export async function postEmergencyPickup(line: string) {
+  const res = await fetch(`${API_BASE}/api/v1/emergency/pickup?line=${encodeURIComponent(line)}`, { method: "POST" });
+  if (!res.ok) throw new Error("emergency pickup failed");
+  return res.json();
+}
+
 export async function blockEdge(from: string, to: string, tipo = "SPILL") {
   const res = await fetch(`${API_BASE}/api/v1/obstacles/block`, {
     method: "POST",

@@ -44,6 +44,7 @@ export function KpiMiniPanel({ kpis }: KpiMiniPanelProps) {
       accent: "text-emerald-700",
       highlight: true,
     },
+    { label: "Asistencias AMR", value: String(kpis.amr_emergency_assists ?? 0), accent: "text-red-700" },
   ];
 
   return (

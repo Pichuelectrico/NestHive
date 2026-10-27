@@ -19,6 +19,7 @@ import { usePlantLayout } from "@/hooks/usePlantLayout";
 import { useLerpAmrs, useSimulation } from "@/hooks/useSimulation";
 import { useToast } from "@/hooks/useToast";
 import type { KPIsState, SelectedEdge, SpillMode } from "@/lib/types";
+import { postEmergencyPickup } from "@/lib/api";
 
 const EMPTY_KPIS: KPIsState = {
   viajes_completados: 0,
@@ -28,6 +29,7 @@ const EMPTY_KPIS: KPIsState = {
   km_evitados: 0,
   roi_km_pct: 0,
   tiempo_medio_en_out_min: 0,
+  amr_emergency_assists: 0,
 };
 
 export function Dashboard() {
@@ -359,6 +361,7 @@ export function Dashboard() {
             onLidarModeChange={setLidarMode}
             showWifiNetwork={showWifiNetwork}
             onShowWifiNetworkChange={setShowWifiNetwork}
+            onEmergencyPickup={async (line) => { await postEmergencyPickup(line); }}
           />
           <div className="nest-panel relative flex-1 min-h-0 min-w-0 overflow-hidden shadow-nest-glow">
             {mapEl}

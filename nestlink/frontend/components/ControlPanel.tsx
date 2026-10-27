@@ -22,6 +22,7 @@ interface ControlPanelProps {
   /** Capa APs Wi-Fi en el mapa (default OFF) */
   showWifiNetwork?: boolean;
   onShowWifiNetworkChange?: (on: boolean) => void;
+  onEmergencyPickup?: (line: string) => Promise<void>;
 }
 
 export function ControlPanel({
@@ -42,6 +43,7 @@ export function ControlPanel({
   onLidarModeChange,
   showWifiNetwork = false,
   onShowWifiNetworkChange,
+  onEmergencyPickup,
 }: ControlPanelProps) {
   const [peakLineId, setPeakLineId] = useState("");
   const packingLines = lines.filter(
@@ -203,6 +205,10 @@ export function ControlPanel({
           </span>
         )}
       </div>
+      {onEmergencyPickup && <div className="flex items-center gap-1 border border-red-500/30 rounded px-1.5 py-1">
+        <span className="text-[0.65rem] text-red-700">🚨 Emergencia</span>
+        {(["R1", "R2", "R3"] as const).map((line) => <button key={line} type="button" disabled={loading || offline} onClick={() => void onEmergencyPickup(line)} aria-label={`Disparar emergencia de recolección ${line}`} className="nest-btn nest-btn-ghost border-red-500/40 text-red-700 px-2 py-0.5">{line}</button>)}
+      </div>}
 
       {needsConfirm && spillMode === "block" && (
         <div className="nest-hint nest-hint-warm text-xs py-1.5">
