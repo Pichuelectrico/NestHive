@@ -315,13 +315,7 @@ class SimulationEnvironment:
         self.generator.step(dt_sim, self.mission_queue, self.sim_time, self.metrics)
         self._auto_recharge_check()
 
-        # Emergency fallback is data-driven by fleet_policy.json.
-        wait_limit = float(POLICY.get("emergency", {}).get("trigger", {}).get("wait_exceeded_seconds", 120))
-        for mission in self.mission_queue.get_pending_missions():
-            if (mission.origen.startswith("RECO_") and not mission.emergency
-                    and self.sim_time - mission.created_at_sim > wait_limit):
-                mission.emergency = True
-                self.add_notice("WARN", None, f"Emergencia activada: {mission.id} supera {wait_limit:.0f}s de espera")
+        self._mark_emergencies()
 
         for amr in self.amrs:
             if amr.estado == "IDLE" and amr.idle_timer > 2.0:
