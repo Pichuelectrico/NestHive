@@ -1,1898 +1,470 @@
 {
+  "version": 1,
   "source": "New_map.png",
   "canvas": {
-    "w": 1452,
-    "h": 1100
+    "w": 1000,
+    "h": 600
+  },
+  "warp": {
+    "x": [
+      [
+        0,
+        0
+      ],
+      [
+        347,
+        50
+      ],
+      [
+        436,
+        95
+      ],
+      [
+        611,
+        189
+      ],
+      [
+        853,
+        322
+      ],
+      [
+        893,
+        414
+      ],
+      [
+        1100,
+        605
+      ],
+      [
+        1280,
+        869
+      ],
+      [
+        1452,
+        950
+      ]
+    ],
+    "y": [
+      [
+        0,
+        0
+      ],
+      [
+        258,
+        120
+      ],
+      [
+        395,
+        302
+      ],
+      [
+        483,
+        344
+      ],
+      [
+        600,
+        410
+      ],
+      [
+        795,
+        550
+      ],
+      [
+        1100,
+        600
+      ]
+    ]
   },
   "walls": [
-    [
-      325,
-      48,
-      1380,
-      48
-    ],
-    [
-      1380,
-      48,
-      1380,
-      1045
-    ],
-    [
-      1380,
-      1045,
-      325,
-      1045
-    ],
-    [
-      325,
-      1045,
-      325,
-      48
-    ]
+    {
+      "points": [
+        [
+          0,
+          0
+        ],
+        [
+          1000,
+          0
+        ],
+        [
+          1000,
+          600
+        ],
+        [
+          0,
+          600
+        ]
+      ],
+      "dash": [
+        6,
+        4
+      ]
+    }
   ],
   "corridors": [
     {
-      "path": [
+      "points": [
         [
-          325,
-          257
+          50,
+          120
         ],
         [
-          1380,
-          257
+          950,
+          120
         ]
       ],
-      "width": 24,
-      "width_source": "measured_band"
+      "width": 10,
+      "oneway": true
     },
     {
-      "path": [
+      "points": [
         [
-          325,
-          278
+          50,
+          300
         ],
         [
-          1380,
-          278
+          950,
+          300
         ]
       ],
-      "width": 24,
-      "width_source": "measured_band"
+      "width": 10,
+      "oneway": true
     },
     {
-      "path": [
+      "points": [
         [
-          325,
-          377
+          50,
+          344
         ],
         [
-          1380,
-          377
+          950,
+          344
         ]
       ],
-      "width": 24,
-      "width_source": "measured_band"
+      "width": 10,
+      "oneway": true
     },
     {
-      "path": [
+      "points": [
         [
-          325,
-          407
+          50,
+          410
         ],
         [
-          1380,
-          407
+          950,
+          410
         ]
       ],
-      "width": 24,
-      "width_source": "measured_band"
+      "width": 10,
+      "oneway": true
     },
     {
-      "path": [
+      "points": [
         [
-          325,
-          489
+          50,
+          550
         ],
         [
-          1380,
-          489
+          950,
+          550
         ]
       ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          325,
-          553
-        ],
-        [
-          1380,
-          553
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          325,
-          565
-        ],
-        [
-          1380,
-          565
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          325,
-          642
-        ],
-        [
-          1380,
-          642
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          325,
-          718
-        ],
-        [
-          1380,
-          718
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          325,
-          747
-        ],
-        [
-          1380,
-          747
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          325,
-          786
-        ],
-        [
-          1380,
-          786
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          325,
-          800
-        ],
-        [
-          1380,
-          800
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          325,
-          878
-        ],
-        [
-          1380,
-          878
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          795,
-          48
-        ],
-        [
-          795,
-          1045
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          859,
-          48
-        ],
-        [
-          859,
-          1045
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          901,
-          48
-        ],
-        [
-          901,
-          1045
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
-    },
-    {
-      "path": [
-        [
-          1034,
-          48
-        ],
-        [
-          1034,
-          1045
-        ]
-      ],
-      "width": 24,
-      "width_source": "measured_band"
+      "width": 10,
+      "oneway": true
     }
   ],
   "zones": [
     {
+      "id": "Z_PALET",
+      "role": "paletizaje",
       "rect": [
-        392,
-        496,
-        39,
-        40
+        50,
+        275,
+        300,
+        100
       ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
+      "color": "#b96bd4",
+      "label": "Paletizaje"
     },
     {
+      "id": "Z_CHARGE",
+      "role": "carga",
       "rect": [
-        446,
-        496,
-        39,
-        40
+        70,
+        270,
+        160,
+        50
       ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        558,
-        499,
-        39,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        612,
-        499,
-        40,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        501,
-        500,
-        40,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        392,
-        576,
-        40,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        451,
-        576,
-        40,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        503,
-        576,
-        40,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        559,
-        576,
-        39,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        616,
-        576,
-        40,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        392,
-        653,
-        40,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        451,
-        653,
-        40,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        559,
-        653,
-        40,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        618,
-        653,
-        39,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        504,
-        654,
-        40,
-        40
-      ],
-      "color": "#B96BD4",
-      "label": "morado",
-      "semantic": "morado"
-    },
-    {
-      "rect": [
-        599,
-        380,
-        39,
-        39
-      ],
-      "color": "#6DCC62",
-      "label": "verde",
-      "semantic": "verde"
-    },
-    {
-      "rect": [
-        424,
-        383,
-        39,
-        40
-      ],
-      "color": "#6DCC62",
-      "label": "verde",
-      "semantic": "verde"
-    },
-    {
-      "rect": [
-        840,
-        238,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        881,
-        238,
-        41,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1270,
-        238,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1285,
-        356,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1140,
-        357,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        840,
-        358,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        882,
-        358,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1014,
-        358,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1286,
-        386,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        841,
-        388,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        881,
-        388,
-        31,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1015,
-        388,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1141,
-        388,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1015,
-        415,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1101,
-        416,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        599,
-        468,
-        39,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        777,
-        469,
-        38,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        424,
-        470,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        335,
-        471,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1101,
-        506,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        882,
-        532,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        841,
-        534,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1012,
-        534,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        503,
-        541,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        615,
-        543,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        393,
-        545,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        449,
-        545,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        559,
-        545,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        778,
-        545,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        334,
-        548,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        842,
-        611,
-        39,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        503,
-        620,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        559,
-        620,
-        39,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        616,
-        620,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        392,
-        621,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        451,
-        621,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        776,
-        623,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        337,
-        626,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        841,
-        691,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        338,
-        697,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        451,
-        697,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        559,
-        697,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        618,
-        697,
-        39,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        392,
-        698,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        504,
-        698,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        776,
-        698,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1015,
-        728,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1324,
-        728,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1016,
-        767,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1325,
-        767,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        841,
-        777,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        641,
-        779,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        778,
-        779,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        467,
-        781,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        340,
-        783,
-        39,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        776,
-        860,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        840,
-        860,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        881,
-        860,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1017,
-        861,
-        35,
-        35
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1017,
-        910,
-        38,
-        37
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1170,
-        910,
-        39,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        840,
-        937,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        882,
-        993,
-        40,
-        39
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        840,
-        994,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1015,
-        994,
-        40,
-        40
-      ],
-      "color": "#536FF0",
-      "label": "azul",
-      "semantic": "azul"
-    },
-    {
-      "rect": [
-        1270,
-        94,
-        40,
-        40
-      ],
-      "color": "#FFC45A",
-      "label": "P1",
-      "semantic": "amarillo"
-    },
-    {
-      "rect": [
-        1286,
-        508,
-        40,
-        40
-      ],
-      "color": "#FFC45A",
-      "label": "P2",
-      "semantic": "amarillo"
-    },
-    {
-      "rect": [
-        1325,
-        837,
-        40,
-        40
-      ],
-      "color": "#FFC45A",
-      "label": "P3",
-      "semantic": "amarillo"
-    },
-    {
-      "rect": [
-        747,
-        926,
-        62,
-        62
-      ],
-      "color": "#7A3E0B",
-      "label": "cafe",
-      "semantic": "cafe"
-    },
-    {
-      "rect": [
-        552,
-        238,
-        39,
-        40
-      ],
-      "color": "#FF6B21",
-      "label": "R1",
-      "semantic": "naranja"
-    },
-    {
-      "rect": [
-        1143,
-        513,
-        39,
-        39
-      ],
-      "color": "#FF6B21",
-      "label": "R2",
-      "semantic": "naranja"
-    },
-    {
-      "rect": [
-        1170,
-        860,
-        39,
-        40
-      ],
-      "color": "#FF6B21",
-      "label": "R3",
-      "semantic": "naranja"
-    },
-    {
-      "rect": [
-        325,
-        48,
-        1380,
-        1045
-      ],
-      "color": "#ffffff",
-      "label": "Planta ESPOL"
+      "color": "#6dcc62",
+      "label": "Carga"
     }
   ],
-  "markers": {
-    "morado": {
+  "markers": [
+    {
+      "node_id": "PALET_01",
+      "role": "paletizaje",
       "color": "#b96bd4",
-      "puntos": [
-        {
-          "x_px": 404,
-          "y_px": 508,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 458,
-          "y_px": 508,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 570,
-          "y_px": 511,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 624,
-          "y_px": 511,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 513,
-          "y_px": 512,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 404,
-          "y_px": 588,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 463,
-          "y_px": 588,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 515,
-          "y_px": 588,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 571,
-          "y_px": 588,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 628,
-          "y_px": 588,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 404,
-          "y_px": 665,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 463,
-          "y_px": 665,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 571,
-          "y_px": 665,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 630,
-          "y_px": 665,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 516,
-          "y_px": 666,
-          "w": 16,
-          "h": 16
-        }
-      ]
+      "r": 6,
+      "label": null
     },
-    "verde": {
+    {
+      "node_id": "PALET_02",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_03",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_04",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_05",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_06",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_07",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_08",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_09",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_10",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_11",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_12",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_13",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_14",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "PALET_15",
+      "role": "paletizaje",
+      "color": "#b96bd4",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "CHARGER_1",
+      "role": "carga",
       "color": "#6dcc62",
-      "puntos": [
-        {
-          "x_px": 611,
-          "y_px": 392,
-          "w": 15,
-          "h": 15
-        },
-        {
-          "x_px": 436,
-          "y_px": 395,
-          "w": 15,
-          "h": 16
-        }
-      ]
+      "r": 6,
+      "label": null
     },
-    "azul": {
-      "color": "#536ff0",
-      "puntos": [
-        {
-          "x_px": 852,
-          "y_px": 250,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 893,
-          "y_px": 250,
-          "w": 17,
-          "h": 16
-        },
-        {
-          "x_px": 1282,
-          "y_px": 250,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1297,
-          "y_px": 368,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1152,
-          "y_px": 369,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 852,
-          "y_px": 370,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 894,
-          "y_px": 370,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1026,
-          "y_px": 370,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 1298,
-          "y_px": 398,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 853,
-          "y_px": 400,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 893,
-          "y_px": 400,
-          "w": 7,
-          "h": 16
-        },
-        {
-          "x_px": 1027,
-          "y_px": 400,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1153,
-          "y_px": 400,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1027,
-          "y_px": 427,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1113,
-          "y_px": 428,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 611,
-          "y_px": 480,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 789,
-          "y_px": 481,
-          "w": 14,
-          "h": 15
-        },
-        {
-          "x_px": 436,
-          "y_px": 482,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 347,
-          "y_px": 483,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1113,
-          "y_px": 518,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 894,
-          "y_px": 544,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 853,
-          "y_px": 546,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1024,
-          "y_px": 546,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 515,
-          "y_px": 553,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 627,
-          "y_px": 555,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 405,
-          "y_px": 557,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 461,
-          "y_px": 557,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 571,
-          "y_px": 557,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 790,
-          "y_px": 557,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 346,
-          "y_px": 560,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 854,
-          "y_px": 623,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 515,
-          "y_px": 632,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 571,
-          "y_px": 632,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 628,
-          "y_px": 632,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 404,
-          "y_px": 633,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 463,
-          "y_px": 633,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 788,
-          "y_px": 635,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 349,
-          "y_px": 638,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 853,
-          "y_px": 703,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 350,
-          "y_px": 709,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 463,
-          "y_px": 709,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 571,
-          "y_px": 709,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 630,
-          "y_px": 709,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 404,
-          "y_px": 710,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 516,
-          "y_px": 710,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 788,
-          "y_px": 710,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1027,
-          "y_px": 740,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1336,
-          "y_px": 740,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1028,
-          "y_px": 779,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1337,
-          "y_px": 779,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 853,
-          "y_px": 789,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 653,
-          "y_px": 791,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 790,
-          "y_px": 791,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 479,
-          "y_px": 793,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 352,
-          "y_px": 795,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 788,
-          "y_px": 872,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 852,
-          "y_px": 872,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 893,
-          "y_px": 872,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1029,
-          "y_px": 873,
-          "w": 11,
-          "h": 11
-        },
-        {
-          "x_px": 1029,
-          "y_px": 922,
-          "w": 14,
-          "h": 13
-        },
-        {
-          "x_px": 1182,
-          "y_px": 922,
-          "w": 15,
-          "h": 16
-        },
-        {
-          "x_px": 852,
-          "y_px": 949,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 894,
-          "y_px": 1005,
-          "w": 16,
-          "h": 15
-        },
-        {
-          "x_px": 852,
-          "y_px": 1006,
-          "w": 16,
-          "h": 16
-        },
-        {
-          "x_px": 1027,
-          "y_px": 1006,
-          "w": 16,
-          "h": 16
-        }
-      ]
+    {
+      "node_id": "CHARGER_1",
+      "role": "carga",
+      "color": "#6dcc62",
+      "r": 6,
+      "label": null
     },
-    "amarillo": {
+    {
+      "node_id": "INSUMO_P1",
+      "role": "insumos",
       "color": "#ffc45a",
-      "puntos": [
-        {
-          "x_px": 1282,
-          "y_px": 106,
-          "w": 16,
-          "h": 16,
-          "etiqueta": "P1"
-        },
-        {
-          "x_px": 1298,
-          "y_px": 520,
-          "w": 16,
-          "h": 16,
-          "etiqueta": "P2"
-        },
-        {
-          "x_px": 1337,
-          "y_px": 849,
-          "w": 16,
-          "h": 16,
-          "etiqueta": "P3"
-        }
-      ]
+      "r": 6,
+      "label": null
     },
-    "cafe": {
+    {
+      "node_id": "INSUMO_P2",
+      "role": "insumos",
+      "color": "#ffc45a",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "INSUMO_P3",
+      "role": "insumos",
+      "color": "#ffc45a",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "FUENTE_INSUMOS",
+      "role": "fuente_insumos",
       "color": "#7a3e0b",
-      "puntos": [
-        {
-          "x_px": 759,
-          "y_px": 938,
-          "w": 38,
-          "h": 38
-        }
-      ]
+      "r": 6,
+      "label": null
     },
-    "naranja": {
+    {
+      "node_id": "RECO_R1",
+      "role": "recoleccion",
       "color": "#ff6b21",
-      "puntos": [
-        {
-          "x_px": 564,
-          "y_px": 250,
-          "w": 15,
-          "h": 16,
-          "etiqueta": "R1"
-        },
-        {
-          "x_px": 1155,
-          "y_px": 525,
-          "w": 15,
-          "h": 15,
-          "etiqueta": "R2"
-        },
-        {
-          "x_px": 1182,
-          "y_px": 872,
-          "w": 15,
-          "h": 16,
-          "etiqueta": "R3"
-        }
-      ]
+      "r": 6,
+      "label": null
     },
-    "rojo": {
-      "color": "#ff302c",
-      "puntos": []
+    {
+      "node_id": "RECO_R2",
+      "role": "recoleccion",
+      "color": "#ff6b21",
+      "r": 6,
+      "label": null
+    },
+    {
+      "node_id": "RECO_R3",
+      "role": "recoleccion",
+      "color": "#ff6b21",
+      "r": 6,
+      "label": null
     }
-  },
+  ],
   "labels": [
     {
-      "text": "P1",
-      "x": 1282,
-      "y": 96,
-      "semantic": "amarillo"
+      "text": "CARGADOR",
+      "x": 95,
+      "y": 295,
+      "size": 12
     },
     {
-      "text": "P2",
-      "x": 1298,
-      "y": 510,
-      "semantic": "amarillo"
+      "text": "CARGADOR",
+      "x": 189,
+      "y": 295,
+      "size": 12
     },
     {
-      "text": "P3",
-      "x": 1337,
-      "y": 839,
-      "semantic": "amarillo"
-    },
-    {
-      "text": "R1",
-      "x": 564,
-      "y": 240,
-      "semantic": "naranja"
-    },
-    {
-      "text": "R2",
-      "x": 1155,
-      "y": 515,
-      "semantic": "naranja"
-    },
-    {
-      "text": "R3",
-      "x": 1182,
-      "y": 862,
-      "semantic": "naranja"
-    },
-    {
-      "text": "Paletizaje",
-      "x": 650,
-      "y": 600
+      "text": "Punto de Entrega",
+      "x": 430,
+      "y": 350,
+      "size": 12
     },
     {
       "text": "Transporte afuera",
-      "x": 80,
-      "y": 505
+      "x": 50,
+      "y": 300,
+      "size": 12
     },
     {
-      "text": "Fuente de insumos",
-      "x": 778,
-      "y": 995
+      "text": "Insumos",
+      "x": 500,
+      "y": 540,
+      "size": 12
+    },
+    {
+      "text": "P1",
+      "x": 890,
+      "y": 60,
+      "size": 12
+    },
+    {
+      "text": "P2",
+      "x": 920,
+      "y": 300,
+      "size": 12
+    },
+    {
+      "text": "P3",
+      "x": 930,
+      "y": 550,
+      "size": 12
+    },
+    {
+      "text": "R1",
+      "x": 250,
+      "y": 120,
+      "size": 12
+    },
+    {
+      "text": "R2",
+      "x": 800,
+      "y": 300,
+      "size": 12
+    },
+    {
+      "text": "R3",
+      "x": 800,
+      "y": 500,
+      "size": 12
     }
   ],
-  "extraction": {
-    "method": "dark-line projections + semantic color components",
-    "corridor_width_px": 24,
-    "max_position_error_px": 0
+  "red_arrows": [
+    {
+      "from": [
+        50,
+        330
+      ],
+      "to": [
+        0,
+        315
+      ],
+      "bidir": true
+    },
+    {
+      "from": [
+        50,
+        360
+      ],
+      "to": [
+        0,
+        345
+      ],
+      "bidir": true
+    }
+  ],
+  "transport": {
+    "x": 35,
+    "y": 330,
+    "r": 28,
+    "label": "Transporte afuera"
   }
 }
