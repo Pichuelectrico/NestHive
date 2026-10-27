@@ -28,6 +28,8 @@ class SimulationEnvironment:
         self.sim_time: float = 0.0
         self.tick_id: int = 0
         self.notices: List[NoticeItem] = []
+        self.utilization_seconds: Dict[str, float] = {}
+        self.hourly_reports: List[Dict[str, Any]] = []
         self.last_hourly_report: Optional[Dict[str, Any]] = None
         self._last_report_sim_hour: int = 0
 
@@ -71,6 +73,7 @@ class SimulationEnvironment:
         self.delivery_amr_id: Optional[str] = None
 
         self.metrics = KPIManager()
+        self.hourly_reports = []
         self.last_hourly_report = None
         self._last_report_sim_hour = 0
         self.mission_queue = MissionQueue()
@@ -111,6 +114,7 @@ class SimulationEnvironment:
                 )
             )
 
+        self.utilization_seconds = {a.id: 0.0 for a in self.amrs}
         # Misiones iniciales para activación inmediata con orígenes por marca
         self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_1", "E1_IN", prioridad=10, sim_time=0.0)
         self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_3", "L1_OUT", prioridad=8, sim_time=0.0)
@@ -145,6 +149,9 @@ class SimulationEnvironment:
 
             # 1. Demanda IoT y consumo continuo
             self.generator.step(dt_sim, self.mission_queue, self.sim_time, self.metrics)
+            for amr in self.amrs:
+                if amr.estado in ("MOVING_TO_PICKUP", "LOADING", "MOVING_TO_DELIVERY", "UNLOADING", "WAITING_OBSTACLE", "REROUTING"):
+                    self.utilization_seconds[amr.id] = self.utilization_seconds.get(amr.id, 0.0) + dt_sim
 
             # 1b. Autocarga orgánica: si la batería cae ≤15%, el AMR prioriza ir al cargador más cercano
             self._auto_recharge_check()
@@ -193,6 +200,7 @@ class SimulationEnvironment:
             sim_hour = int(self.sim_time // 3600)
             if sim_hour > self._last_report_sim_hour:
                 self.last_hourly_report = hourly_report(self, self.last_hourly_report)
+                self.hourly_reports.append(self.last_hourly_report)
                 self._last_report_sim_hour = sim_hour
                 await self.bridge.broadcast_snapshot(self.last_hourly_report)
 
