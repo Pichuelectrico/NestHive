@@ -100,8 +100,9 @@ class SimulationEnvironment:
 
         for amr_data in self.seeds_raw.get("amrs", []):
             aid = amr_data["id"]
-            if amr_data.get("delivery_amr_ids") or amr_data.get("entrega_exclusiva"):
-                self.delivery_amr_ids.update(amr_data.get("delivery_amr_ids", [aid]))
+            legacy_delivery = amr_data.get("delivery_amr_id")
+            if amr_data.get("delivery_amr_ids") or amr_data.get("entrega_exclusiva") or legacy_delivery:
+                self.delivery_amr_ids.update(amr_data.get("delivery_amr_ids", [legacy_delivery or aid]))
             if aid in self.delivery_amr_ids: self.delivery_amr_id = aid
             hz = amr_data.get("home_zone", home_zones_map.get(aid))
             if not hz and aid == self.delivery_amr_id:
