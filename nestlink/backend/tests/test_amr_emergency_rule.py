@@ -8,7 +8,7 @@ import networkx as nx
 
 from app.data_maps import PLANT_CONFIGS, DEFAULT_PLANT_ID, load_layout_raw
 from app.models import Tarea
-from app.sim.assignment import compute_hungarian_assignment
+from app.sim.assignment import compute_hungarian_assignment, default_eligible
 from app.sim.env import SimulationEnvironment
 
 POLICY_PATH = Path(__file__).resolve().parents[1] / "app" / "data" / "fleet_policy.json"
@@ -20,8 +20,8 @@ WAIT_THRESHOLD_S = float(POLICY["emergency"]["trigger"]["wait_exceeded_seconds"]
 AMR_IDS = set(POLICY.get("amr_ids", ["AMR_04", "AMR_05"]))
 
 
-def _vehicle(vid, tipo, x, y):
-    return SimpleNamespace(id=vid, tipo=tipo, x=x, y=y, home_zone=None)
+def _vehicle(vid, tipo, x, y, clase):
+    return SimpleNamespace(id=vid, tipo=tipo, clase=clase, x=x, y=y, home_zone=None)
 
 
 def _reco_to_palet(mid="TSK_R1", emergency=False):
@@ -44,8 +44,8 @@ class TestAmrEmergencyRule(unittest.TestCase):
         self.pos = {n["id"]: (n["x"], n["y"]) for n in self.layout["nodes"]}
         rx, ry = self.pos["RECO_R1"]
         # El AMR está pegado al origen y el AGV lejos: si la regla no actúa, gana el AMR.
-        self.amr = _vehicle("AMR_04", "pallet_lifter", rx, ry)
-        self.agv = _vehicle("AMR_02", "towing_tug", rx + 300, ry + 200)
+        self.amr = _vehicle("AMR_04", "pallet_lifter", rx, ry, "AMR")
+        self.agv = _vehicle("AMR_02", "towing_tug", rx + 300, ry + 200, "AGV")
 
     def test_00_policy_threshold_is_numeric(self):
         self.assertGreater(WAIT_THRESHOLD_S, 0)
@@ -127,6 +127,37 @@ class TestAmrEmergencyRule(unittest.TestCase):
         self.assertEqual(crossing, 0, f"{crossing} rutas entre nodos originales cruzan TRANSPORTE")
 
 
+class TestFleetClassEligibility(unittest.TestCase):
+    """F3-F: la regla híbrida depende de la clase que cada planta asigna a sus vehículos
+    (vehículos reales del env, no fixtures)."""
+
+    def _vehicles(self, plant):
+        random.seed(42)
+        env = SimulationEnvironment(plant)
+        return {v.id: v for v in env.amrs}
+
+    def _task(self, tipo):
+        return Tarea(id="TSK_X", tipo=tipo, origen="X", destino="Y", prioridad=5)
+
+    def test_08a_realistic_amr04_eligible_supply(self):
+        v = self._vehicles("realistic")
+        self.assertTrue(default_eligible(v["AMR_04"], self._task("SUPPLY_REQUEST")))
+
+    def test_08b_realistic_amr01_eligible_expedition(self):
+        v = self._vehicles("realistic")
+        self.assertTrue(default_eligible(v["AMR_01"], self._task("EXPEDITION")))
+
+    def test_08c_espol_amr04_not_eligible_supply(self):
+        v = self._vehicles("espol_fusion")
+        self.assertEqual(v["AMR_04"].clase, "AMR")
+        self.assertFalse(default_eligible(v["AMR_04"], self._task("SUPPLY_REQUEST")))
+
+    def test_08d_espol_amr01_not_eligible_expedition(self):
+        v = self._vehicles("espol_fusion")
+        self.assertEqual(v["AMR_01"].clase, "AGV")
+        self.assertFalse(default_eligible(v["AMR_01"], self._task("EXPEDITION")))
+
+
 class TestAmrEmergencyRunLoop(unittest.TestCase):
     TICKS = 1500  # ≈ 20 min de sim a 0,8 s/tick
 
@@ -164,6 +195,61 @@ class TestAmrEmergencyRunLoop(unittest.TestCase):
         a = self._run()
         b = self._run()
         self.assertEqual((a[2], a[3]), (b[2], b[3]))
+
+
+def _run_plant(plant, ticks=3000):
+    random.seed(42)
+    env = SimulationEnvironment(plant)
+    agv_on_transport = set()
+    for _ in range(ticks):
+        env.step_tick()
+        for v in env.amrs:
+            if v.posicion_nodo == "TRANSPORTE" and v.clase != "AMR":
+                agv_on_transport.add(v.id)
+    return env, env.mission_queue.get_all_missions(), agv_on_transport
+
+
+class TestRedChainBehaviour(unittest.TestCase):
+    """Cadena roja de espol_fusion (seed 42, 3000 ticks): paletizaje → EXPORT → AMR → TRANSPORTE."""
+
+    @classmethod
+    def setUpClass(cls):
+        cls.env, cls.missions, cls.agv_on_transport = _run_plant("espol_fusion")
+        cls.clase = {v.id: v.clase for v in cls.env.amrs}
+
+    def test_09a_exports_go_palet_to_transport_by_amr_only(self):
+        exports = [m for m in self.missions if m.tipo == "EXPORT" and m.estado == "completada"]
+        self.assertGreater(len(exports), 0, "la cadena roja no entregó ningún EXPORT")
+        for m in exports:
+            self.assertTrue(m.origen.startswith("PALET_"), m.origen)
+            self.assertEqual(m.destino, "TRANSPORTE")
+            self.assertEqual(self.clase.get(m.amr_asignado), "AMR", f"{m.id} entregado por {m.amr_asignado}")
+
+    def test_09b_agvs_never_reach_transport(self):
+        self.assertEqual(self.agv_on_transport, set())
+
+    def test_09c_chain_is_fed_and_drains(self):
+        """Encadenado: hay pallets que llegan a paletizaje (RECO/EXPEDITION) y salen por EXPORT,
+        sin EXPORT colgadas más que el umbral de la política."""
+        fed = [m for m in self.missions if m.estado == "completada" and m.destino.startswith("PALET_")]
+        self.assertGreater(len(fed), 0)
+        stale = [m for m in self.missions if m.tipo == "EXPORT" and m.estado != "completada"
+                 and self.env.sim_time - m.created_at_sim > 2 * WAIT_THRESHOLD_S]
+        self.assertEqual(stale, [])
+
+
+class TestRealisticOutboundRegression(unittest.TestCase):
+    """Guardia de la regresión 18→0: realistic (sin clase en su seed) conserva la salida
+    PICKUP_PT → EXPEDITION → OUT → EXPORT al muro (baseline 4cadf58: 19 EXPEDITION / 18 EXPORT)."""
+
+    def test_10_realistic_expedition_and_export_flow(self):
+        env, missions, _ = _run_plant("realistic")
+        done = [m for m in missions if m.estado == "completada"]
+        self.assertGreaterEqual(sum(1 for m in done if m.tipo == "EXPEDITION"), 15)
+        self.assertGreaterEqual(sum(1 for m in done if m.tipo == "EXPORT"), 12)
+        stale = [m for m in missions if m.tipo in ("EXPEDITION", "EXPORT") and m.estado != "completada"
+                 and env.sim_time - m.created_at_sim > 300]
+        self.assertEqual(stale, [])
 
 
 class TestAmrEmergencyRegression(unittest.TestCase):
