@@ -1,0 +1,137 @@
+{
+  "lines": [
+    {
+      "id": "L1_OUT",
+      "nombre": "L1 Nescafé",
+      "material": "Frasco Vidrio 200g",
+      "tasa_consumo_kg_min": 4.2,
+      "umbral_critico_pct": 25,
+      "nivel_inicial_pct": 68,
+      "capacidad_pallet_unidades": 480
+    },
+    {
+      "id": "L2_OUT",
+      "nombre": "L2 Maggi",
+      "material": "Sobre Sopas 50g",
+      "tasa_consumo_kg_min": 3.5,
+      "umbral_critico_pct": 20,
+      "nivel_inicial_pct": 70,
+      "capacidad_pallet_unidades": 960
+    },
+    {
+      "id": "E1_IN",
+      "nombre": "E1 Savoy",
+      "material": "Film Laminado",
+      "tasa_consumo_kg_min": 2.8,
+      "umbral_critico_pct": 30,
+      "nivel_inicial_pct": 40,
+      "capacidad_pallet_unidades": 12
+    },
+    {
+      "id": "E2_IN",
+      "nombre": "E2 Lechera",
+      "material": "Lata 395g",
+      "tasa_consumo_kg_min": 5.1,
+      "umbral_critico_pct": 25,
+      "nivel_inicial_pct": 35,
+      "capacidad_pallet_unidades": 600
+    }
+  ],
+  "skus": [
+    {
+      "id": "SKU_NES_200",
+      "nombre": "Nescafé 200g",
+      "categoria": "Producto Terminado",
+      "material_empaque": "Frasco Vidrio",
+      "packaging": "Caja x24",
+      "peso_unitario_kg": 4.8
+    },
+    {
+      "id": "SKU_MAG_050",
+      "nombre": "Maggi 50g",
+      "categoria": "Producto Terminado",
+      "material_empaque": "Sobre Laminado",
+      "packaging": "Display x48",
+      "peso_unitario_kg": 2.4
+    },
+    {
+      "id": "SKU_SAV_130",
+      "nombre": "Savoy 130g",
+      "categoria": "Insumo",
+      "material_empaque": "Film Laminado",
+      "packaging": "Bobina 250m",
+      "peso_unitario_kg": 18
+    },
+    {
+      "id": "SKU_LCH_395",
+      "nombre": "La Lechera 395g",
+      "categoria": "Insumo",
+      "material_empaque": "Lata Hojalata",
+      "packaging": "Pallet x400",
+      "peso_unitario_kg": 160
+    }
+  ],
+  "amrs": [
+    {
+      "id": "AMR_01",
+      "nombre": "AMR 1",
+      "tipo": "pallet_lifter",
+      "velocidad_ms": 1.5,
+      "carga_kg": 500,
+      "bateria_inicial": 95,
+      "posicion_nodo": "CHARGER_1",
+      "home_zone": "ControlPoint17"
+    },
+    {
+      "id": "AMR_02",
+      "nombre": "AMR 2",
+      "tipo": "towing_tug",
+      "velocidad_ms": 0.9,
+      "carga_kg": 350,
+      "bateria_inicial": 88,
+      "posicion_nodo": "CHARGER_2",
+      "home_zone": "ControlPoint18"
+    },
+    {
+      "id": "AMR_03",
+      "nombre": "AMR 3",
+      "tipo": "unit_load",
+      "velocidad_ms": 1.5,
+      "carga_kg": 400,
+      "bateria_inicial": 85,
+      "posicion_nodo": "CHARGER_1",
+      "home_zone": "ControlPoint19"
+    },
+    {
+      "id": "AMR_04",
+      "nombre": "AMR 4",
+      "tipo": "pallet_lifter",
+      "velocidad_ms": 1.5,
+      "carga_kg": 500,
+      "bateria_inicial": 90,
+      "posicion_nodo": "CHARGER_2",
+      "home_zone": "ControlPoint20"
+    },
+    {
+      "id": "AMR_05",
+      "nombre": "AMR 5",
+      "tipo": "unit_load",
+      "velocidad_ms": 1.5,
+      "carga_kg": 400,
+      "bateria_inicial": 82,
+      "posicion_nodo": "CHARGER_1",
+      "home_zone": "ControlPoint21"
+    },
+    {
+      "id": "AMR_06",
+      "nombre": "AMR 6",
+      "tipo": "pallet_lifter",
+      "velocidad_ms": 1.5,
+      "carga_kg": 480,
+      "bateria_inicial": 92,
+      "posicion_nodo": "CHARGER_2",
+      "home_zone": "ControlPoint22",
+      "entrega_exclusiva": true
+    }
+  ]
+}

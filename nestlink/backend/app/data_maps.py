@@ -20,6 +20,7 @@ PLANT_CONFIGS = {
         "seed_file": "seed.json"
     },
     "realistic": {"id": "realistic", "nombre": "Planta Realistic", "map_file": "realistic.json", "seed_file": "seed_realistic.json"},
+    "espol_fusion": {"id": "espol_fusion", "nombre": "Planta ESPOL Fusion", "map_file": "espol_fusion.json", "seed_file": "seed_espol.json"},
     "cd_guayaquil": {
         "id": "cd_guayaquil",
         "nombre": "CD Guayaquil",
