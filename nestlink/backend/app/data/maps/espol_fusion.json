@@ -676,13 +676,174 @@
       "y": 301.74,
       "type": "carga",
       "label": "Carga 1"
+    },
+    {
+      "id": "PALET_01",
+      "x": 278.24,
+      "y": 277.09,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_02",
+      "x": 315.43,
+      "y": 277.09,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_03",
+      "x": 392.56,
+      "y": 278.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_04",
+      "x": 429.75,
+      "y": 278.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_05",
+      "x": 353.31,
+      "y": 279.27,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_06",
+      "x": 278.24,
+      "y": 320.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_07",
+      "x": 318.87,
+      "y": 320.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_08",
+      "x": 354.68,
+      "y": 320.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_09",
+      "x": 393.25,
+      "y": 320.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_10",
+      "x": 432.51,
+      "y": 320.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_11",
+      "x": 278.24,
+      "y": 362.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_12",
+      "x": 318.87,
+      "y": 362.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_13",
+      "x": 393.25,
+      "y": 362.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_14",
+      "x": 433.88,
+      "y": 362.73,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "PALET_15",
+      "x": 355.37,
+      "y": 363.27,
+      "type": "buffer",
+      "label": "Paletizaje"
+    },
+    {
+      "id": "INSUMO_P1",
+      "x": 882.92,
+      "y": 57.82,
+      "type": "almacen",
+      "label": "Insumo P1"
+    },
+    {
+      "id": "INSUMO_P2",
+      "x": 893.94,
+      "y": 283.64,
+      "type": "almacen",
+      "label": "Insumo P2"
+    },
+    {
+      "id": "INSUMO_P3",
+      "x": 920.8,
+      "y": 463.09,
+      "type": "almacen",
+      "label": "Insumo P3"
+    },
+    {
+      "id": "FUENTE_INSUMOS",
+      "x": 522.73,
+      "y": 511.64,
+      "type": "almacen",
+      "label": "Fuente de insumos"
+    },
+    {
+      "id": "RECO_R1",
+      "x": 388.43,
+      "y": 136.36,
+      "type": "almacen",
+      "label": "Recolección R1"
+    },
+    {
+      "id": "RECO_R2",
+      "x": 795.45,
+      "y": 286.36,
+      "type": "almacen",
+      "label": "Recolección R2"
+    },
+    {
+      "id": "RECO_R3",
+      "x": 814.05,
+      "y": 475.64,
+      "type": "almacen",
+      "label": "Recolección R3"
+    },
+    {
+      "id": "TRANSPORTE",
+      "x": 80,
+      "y": 330,
+      "type": "buffer",
+      "label": "Transporte externo"
     }
   ],
   "edges": [
     {
       "from": "WH_MP_2",
       "to": "WH_MP_1",
-      "length": 1.5662,
+      "length": 1.7206,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -690,7 +851,7 @@
     {
       "from": "WH_MP_1",
       "to": "WH_MP_2",
-      "length": 1.5662,
+      "length": 1.7206,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -698,7 +859,7 @@
     {
       "from": "X_Ruta1_4",
       "to": "ControlPoint8",
-      "length": 1.6038,
+      "length": 1.762,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -706,7 +867,7 @@
     {
       "from": "ControlPoint8",
       "to": "X_Ruta1_4",
-      "length": 1.6038,
+      "length": 1.762,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -714,7 +875,7 @@
     {
       "from": "X_Ruta1_6",
       "to": "ControlPoint11",
-      "length": 1.5737,
+      "length": 1.7289,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -722,7 +883,7 @@
     {
       "from": "ControlPoint11",
       "to": "X_Ruta1_6",
-      "length": 1.5737,
+      "length": 1.7289,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -730,7 +891,7 @@
     {
       "from": "X_Ruta1_7",
       "to": "ControlPoint13",
-      "length": 1.7081,
+      "length": 1.8766,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -738,7 +899,7 @@
     {
       "from": "ControlPoint13",
       "to": "X_Ruta1_7",
-      "length": 1.7081,
+      "length": 1.8766,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -746,7 +907,7 @@
     {
       "from": "X_Ruta7_11",
       "to": "ControlPoint12",
-      "length": 1.4679,
+      "length": 1.6127,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -754,7 +915,7 @@
     {
       "from": "ControlPoint12",
       "to": "X_Ruta7_11",
-      "length": 1.4679,
+      "length": 1.6127,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -762,7 +923,7 @@
     {
       "from": "X_Ruta7_10",
       "to": "ControlPoint27",
-      "length": 1.8541,
+      "length": 2.037,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -770,7 +931,7 @@
     {
       "from": "ControlPoint27",
       "to": "X_Ruta7_10",
-      "length": 1.8541,
+      "length": 2.037,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -778,7 +939,7 @@
     {
       "from": "X_Ruta7_7",
       "to": "ControlPoint10",
-      "length": 0.6882,
+      "length": 0.7561,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -786,7 +947,7 @@
     {
       "from": "ControlPoint10",
       "to": "X_Ruta7_7",
-      "length": 0.6882,
+      "length": 0.7561,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -794,7 +955,7 @@
     {
       "from": "WH_MP_5",
       "to": "X_Ruta13_1",
-      "length": 22.4878,
+      "length": 24.706,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -802,7 +963,7 @@
     {
       "from": "X_Ruta13_1",
       "to": "X_Ruta14_6",
-      "length": 4.51,
+      "length": 4.9549,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -810,7 +971,7 @@
     {
       "from": "X_Ruta14_6",
       "to": "X_Ruta14_2",
-      "length": 5.365,
+      "length": 5.8942,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -818,7 +979,7 @@
     {
       "from": "X_Ruta14_2",
       "to": "X_Ruta14_5",
-      "length": 4.5806,
+      "length": 5.0324,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -826,7 +987,7 @@
     {
       "from": "X_Ruta14_5",
       "to": "X_Ruta14_7",
-      "length": 5.2874,
+      "length": 5.809,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -834,7 +995,7 @@
     {
       "from": "X_Ruta14_7",
       "to": "X_Ruta14_3",
-      "length": 5.2927,
+      "length": 5.8148,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -842,7 +1003,7 @@
     {
       "from": "X_Ruta14_3",
       "to": "X_Ruta14_4",
-      "length": 5.3116,
+      "length": 5.8356,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -850,7 +1011,7 @@
     {
       "from": "X_Ruta14_4",
       "to": "X_Ruta14_1",
-      "length": 5.9163,
+      "length": 6.4999,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -858,7 +1019,7 @@
     {
       "from": "X_Ruta14_1",
       "to": "X_Ruta15_CP28",
-      "length": 4.2117,
+      "length": 4.6272,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -866,7 +1027,7 @@
     {
       "from": "X_Ruta15_CP28",
       "to": "X_Ruta15_2",
-      "length": 8.9499,
+      "length": 9.8327,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -874,7 +1035,7 @@
     {
       "from": "X_Ruta15_2",
       "to": "X_Ruta15_1",
-      "length": 9.4496,
+      "length": 10.3817,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -882,7 +1043,7 @@
     {
       "from": "X_Ruta15_1",
       "to": "X_Ruta16_2",
-      "length": 2.9657,
+      "length": 3.2583,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -890,7 +1051,7 @@
     {
       "from": "X_Ruta16_2",
       "to": "X_Ruta16_4",
-      "length": 2.9485,
+      "length": 3.2393,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -898,7 +1059,7 @@
     {
       "from": "X_Ruta16_4",
       "to": "X_Ruta16_3",
-      "length": 5.3116,
+      "length": 5.8355,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -906,7 +1067,7 @@
     {
       "from": "X_Ruta16_3",
       "to": "X_Ruta16_7",
-      "length": 5.2927,
+      "length": 5.8147,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -914,7 +1075,7 @@
     {
       "from": "X_Ruta16_7",
       "to": "X_Ruta16_5",
-      "length": 5.2876,
+      "length": 5.8092,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -922,7 +1083,7 @@
     {
       "from": "X_Ruta16_5",
       "to": "X_Ruta16_1",
-      "length": 4.5902,
+      "length": 5.043,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -930,7 +1091,7 @@
     {
       "from": "X_Ruta16_1",
       "to": "WH_MP_4",
-      "length": 5.3554,
+      "length": 5.8836,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -938,7 +1099,7 @@
     {
       "from": "WH_MP_4",
       "to": "WH_MP_5",
-      "length": 4.5364,
+      "length": 4.9838,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -946,7 +1107,7 @@
     {
       "from": "X_Ruta16_1",
       "to": "ControlPoint2",
-      "length": 10.5918,
+      "length": 11.6366,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -954,7 +1115,7 @@
     {
       "from": "ControlPoint2",
       "to": "X_Ruta14_2",
-      "length": 11.8818,
+      "length": 13.0538,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -962,7 +1123,7 @@
     {
       "from": "X_Ruta16_7",
       "to": "ControlPoint4",
-      "length": 10.6542,
+      "length": 11.7051,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -970,7 +1131,7 @@
     {
       "from": "ControlPoint4",
       "to": "X_Ruta14_7",
-      "length": 11.8375,
+      "length": 13.0051,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -978,7 +1139,7 @@
     {
       "from": "X_Ruta16_2",
       "to": "X_Ruta1_1",
-      "length": 3.066,
+      "length": 3.3685,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -986,7 +1147,7 @@
     {
       "from": "X_Ruta1_1",
       "to": "X_Ruta16_2",
-      "length": 3.066,
+      "length": 3.3685,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -994,7 +1155,7 @@
     {
       "from": "X_Ruta16_4",
       "to": "ControlPoint6",
-      "length": 10.5709,
+      "length": 11.6136,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1002,7 +1163,7 @@
     {
       "from": "ControlPoint6",
       "to": "X_Ruta14_4",
-      "length": 11.8248,
+      "length": 12.9912,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1010,7 +1171,7 @@
     {
       "from": "X_Ruta14_3",
       "to": "ControlPoint5",
-      "length": 11.9411,
+      "length": 13.1189,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1018,7 +1179,7 @@
     {
       "from": "ControlPoint5",
       "to": "X_Ruta16_3",
-      "length": 10.6768,
+      "length": 11.7299,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1026,7 +1187,7 @@
     {
       "from": "X_Ruta14_5",
       "to": "ControlPoint3",
-      "length": 11.9101,
+      "length": 13.0849,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1034,7 +1195,7 @@
     {
       "from": "ControlPoint3",
       "to": "X_Ruta16_5",
-      "length": 10.6749,
+      "length": 11.7279,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1042,7 +1203,7 @@
     {
       "from": "X_Ruta14_6",
       "to": "ControlPoint1",
-      "length": 11.9538,
+      "length": 13.1329,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1050,7 +1211,7 @@
     {
       "from": "ControlPoint1",
       "to": "WH_MP_4",
-      "length": 10.666,
+      "length": 11.7181,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1058,7 +1219,7 @@
     {
       "from": "X_Ruta7_1",
       "to": "X_Ruta1_1",
-      "length": 8.7251,
+      "length": 9.5858,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1066,7 +1227,7 @@
     {
       "from": "X_Ruta26_1",
       "to": "X_Ruta7_2",
-      "length": 8.7168,
+      "length": 9.5766,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1074,7 +1235,7 @@
     {
       "from": "WH_PT_3",
       "to": "WH_PT_2",
-      "length": 0.6571,
+      "length": 0.7219,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1082,7 +1243,7 @@
     {
       "from": "WH_PT_2",
       "to": "WH_PT_3",
-      "length": 0.6571,
+      "length": 0.7219,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1090,7 +1251,7 @@
     {
       "from": "X_Ruta7_6",
       "to": "ControlPoint14",
-      "length": 13.4734,
+      "length": 14.8023,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1098,7 +1259,7 @@
     {
       "from": "ControlPoint14",
       "to": "X_Ruta27_1",
-      "length": 0.2292,
+      "length": 0.2518,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1106,7 +1267,7 @@
     {
       "from": "X_Ruta34_1",
       "to": "X_Ruta7_4",
-      "length": 11.1919,
+      "length": 12.2958,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1114,7 +1275,7 @@
     {
       "from": "X_Ruta27_1",
       "to": "X_Ruta29_2",
-      "length": 4.2034,
+      "length": 4.618,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1122,7 +1283,7 @@
     {
       "from": "X_Ruta29_2",
       "to": "X_Ruta29_1",
-      "length": 27.184,
+      "length": 29.8654,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1130,7 +1291,7 @@
     {
       "from": "X_Ruta29_1",
       "to": "X_Ruta30_1",
-      "length": 2.998,
+      "length": 3.2937,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1138,7 +1299,7 @@
     {
       "from": "X_Ruta30_1",
       "to": "X_Ruta31_1",
-      "length": 5.3073,
+      "length": 5.8308,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1146,7 +1307,7 @@
     {
       "from": "X_Ruta31_1",
       "to": "ControlPoint15",
-      "length": 5.2623,
+      "length": 5.7813,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1154,7 +1315,7 @@
     {
       "from": "ControlPoint15",
       "to": "X_Ruta32_1",
-      "length": 6.3349,
+      "length": 6.9597,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1162,7 +1323,7 @@
     {
       "from": "X_Ruta32_1",
       "to": "X_Ruta33_1",
-      "length": 39.195,
+      "length": 43.0611,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1170,7 +1331,7 @@
     {
       "from": "X_Ruta33_1",
       "to": "ControlPoint16",
-      "length": 1.737,
+      "length": 1.9083,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1178,7 +1339,7 @@
     {
       "from": "ControlPoint16",
       "to": "X_Ruta34_1",
-      "length": 5.4262,
+      "length": 5.9614,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1186,7 +1347,7 @@
     {
       "from": "X_Ruta7_1",
       "to": "ControlPoint17",
-      "length": 12.4468,
+      "length": 13.6745,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1194,7 +1355,7 @@
     {
       "from": "ControlPoint17",
       "to": "X_Ruta35_2",
-      "length": 5.4832,
+      "length": 6.0241,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1202,7 +1363,7 @@
     {
       "from": "X_Ruta35_2",
       "to": "X_Ruta35_1",
-      "length": 24.801,
+      "length": 27.2473,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1210,7 +1371,7 @@
     {
       "from": "X_Ruta35_1",
       "to": "X_Ruta36_1",
-      "length": 4.5607,
+      "length": 5.0106,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1218,7 +1379,7 @@
     {
       "from": "X_Ruta36_1",
       "to": "X_Ruta37_1",
-      "length": 7.5771,
+      "length": 8.3245,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1226,7 +1387,7 @@
     {
       "from": "X_Ruta37_1",
       "to": "E2_IN",
-      "length": 5.4507,
+      "length": 5.9883,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1234,7 +1395,7 @@
     {
       "from": "E2_IN",
       "to": "X_Ruta38_1",
-      "length": 7.3928,
+      "length": 8.122,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1242,7 +1403,7 @@
     {
       "from": "X_Ruta38_1",
       "to": "X_Ruta39_1",
-      "length": 41.9064,
+      "length": 46.0399,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1250,7 +1411,7 @@
     {
       "from": "X_Ruta39_1",
       "to": "ControlPoint19",
-      "length": 1.3694,
+      "length": 1.5045,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1258,7 +1419,7 @@
     {
       "from": "ControlPoint19",
       "to": "X_Ruta40_1",
-      "length": 5.2425,
+      "length": 5.7597,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1266,7 +1427,7 @@
     {
       "from": "X_Ruta40_1",
       "to": "X_Ruta7_8",
-      "length": 8.3252,
+      "length": 9.1464,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1274,7 +1435,7 @@
     {
       "from": "WH_MP_3",
       "to": "WH_MP_2",
-      "length": 3.6232,
+      "length": 3.9806,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1282,7 +1443,7 @@
     {
       "from": "WH_MP_2",
       "to": "WH_PT_1",
-      "length": 6.2389,
+      "length": 6.8543,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1290,7 +1451,7 @@
     {
       "from": "WH_PT_1",
       "to": "X_Ruta1_4",
-      "length": 5.2877,
+      "length": 5.8092,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1298,7 +1459,7 @@
     {
       "from": "X_Ruta1_4",
       "to": "X_Ruta1_2",
-      "length": 6.7957,
+      "length": 7.466,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1306,7 +1467,7 @@
     {
       "from": "X_Ruta1_2",
       "to": "X_Ruta1_6",
-      "length": 6.0705,
+      "length": 6.6693,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1314,7 +1475,7 @@
     {
       "from": "X_Ruta1_6",
       "to": "X_Ruta1_1",
-      "length": 5.3521,
+      "length": 5.88,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1322,7 +1483,7 @@
     {
       "from": "X_Ruta1_1",
       "to": "X_Ruta1_7",
-      "length": 6.8561,
+      "length": 7.5324,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1330,7 +1491,7 @@
     {
       "from": "X_Ruta1_7",
       "to": "X_Ruta26_1",
-      "length": 4.4773,
+      "length": 4.9189,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1338,7 +1499,7 @@
     {
       "from": "X_Ruta7_2",
       "to": "X_Ruta7_11",
-      "length": 4.635,
+      "length": 5.0922,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1346,7 +1507,7 @@
     {
       "from": "X_Ruta7_11",
       "to": "X_Ruta7_8",
-      "length": 5.1099,
+      "length": 5.614,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1354,7 +1515,7 @@
     {
       "from": "X_Ruta7_8",
       "to": "X_Ruta7_1",
-      "length": 1.5919,
+      "length": 1.749,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1362,7 +1523,7 @@
     {
       "from": "X_Ruta7_1",
       "to": "X_Ruta7_10",
-      "length": 5.3769,
+      "length": 5.9073,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1370,7 +1531,7 @@
     {
       "from": "X_Ruta7_10",
       "to": "X_Ruta7_3",
-      "length": 6.057,
+      "length": 6.6544,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1378,7 +1539,7 @@
     {
       "from": "X_Ruta7_3",
       "to": "X_Ruta7_7",
-      "length": 6.807,
+      "length": 7.4784,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1386,7 +1547,7 @@
     {
       "from": "X_Ruta7_7",
       "to": "X_Ruta7_4",
-      "length": 4.6545,
+      "length": 5.1136,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1394,7 +1555,7 @@
     {
       "from": "X_Ruta7_4",
       "to": "X_Ruta7_5",
-      "length": 0.6546,
+      "length": 0.7191,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1402,7 +1563,7 @@
     {
       "from": "X_Ruta7_5",
       "to": "X_Ruta7_6",
-      "length": 0.775,
+      "length": 0.8514,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1410,7 +1571,7 @@
     {
       "from": "X_Ruta7_6",
       "to": "WH_PT_3",
-      "length": 5.3933,
+      "length": 5.9253,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1418,7 +1579,7 @@
     {
       "from": "WH_PT_3",
       "to": "X_Ruta7_12",
-      "length": 3.6803,
+      "length": 4.0433,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1426,7 +1587,7 @@
     {
       "from": "X_Ruta26_1",
       "to": "X_Ruta42_1",
-      "length": 2.9766,
+      "length": 3.2702,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1434,7 +1595,7 @@
     {
       "from": "X_Ruta42_1",
       "to": "ControlPoint20",
-      "length": 14.4333,
+      "length": 15.8569,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1442,7 +1603,7 @@
     {
       "from": "ControlPoint20",
       "to": "X_Ruta43_1",
-      "length": 5.2036,
+      "length": 5.7168,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1450,7 +1611,7 @@
     {
       "from": "X_Ruta43_1",
       "to": "X_Ruta44_1",
-      "length": 8.4341,
+      "length": 9.266,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1458,7 +1619,7 @@
     {
       "from": "X_Ruta47_1",
       "to": "ControlPoint23",
-      "length": 3.8922,
+      "length": 4.2761,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1466,7 +1627,7 @@
     {
       "from": "ControlPoint23",
       "to": "ControlPoint21",
-      "length": 12.8436,
+      "length": 14.1105,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1474,7 +1635,7 @@
     {
       "from": "ControlPoint21",
       "to": "X_Ruta46_2",
-      "length": 3.7647,
+      "length": 4.136,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1482,7 +1643,7 @@
     {
       "from": "X_Ruta46_2",
       "to": "ControlPoint22",
-      "length": 6.2922,
+      "length": 6.9129,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1490,7 +1651,7 @@
     {
       "from": "ControlPoint22",
       "to": "X_Ruta46_1",
-      "length": 5.1229,
+      "length": 5.6282,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1498,7 +1659,7 @@
     {
       "from": "X_Ruta44_1",
       "to": "X_Ruta47_1",
-      "length": 2.8492,
+      "length": 3.1302,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1506,7 +1667,7 @@
     {
       "from": "X_Ruta46_1",
       "to": "BUFFER_2",
-      "length": 73.8679,
+      "length": 81.1541,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1514,7 +1675,7 @@
     {
       "from": "BUFFER_2",
       "to": "E1_IN",
-      "length": 5.7129,
+      "length": 6.2764,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1522,7 +1683,7 @@
     {
       "from": "E1_IN",
       "to": "L2_OUT",
-      "length": 10.0276,
+      "length": 11.0167,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1530,7 +1691,7 @@
     {
       "from": "L2_OUT",
       "to": "L1_OUT",
-      "length": 12.5922,
+      "length": 13.8343,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1538,7 +1699,7 @@
     {
       "from": "L1_OUT",
       "to": "BUFFER_1",
-      "length": 11.85,
+      "length": 13.0189,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1546,7 +1707,7 @@
     {
       "from": "X_Ruta49_1",
       "to": "X_Ruta7_2",
-      "length": 3.0303,
+      "length": 3.3292,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1554,7 +1715,7 @@
     {
       "from": "BUFFER_1",
       "to": "X_Ruta49_1",
-      "length": 48.2749,
+      "length": 53.0366,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1562,7 +1723,7 @@
     {
       "from": "X_Ruta35_2",
       "to": "ControlPoint29",
-      "length": 8.4238,
+      "length": 9.2547,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1570,7 +1731,7 @@
     {
       "from": "ControlPoint29",
       "to": "X_Ruta35_2",
-      "length": 8.4238,
+      "length": 9.2547,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1578,7 +1739,7 @@
     {
       "from": "X_Ruta29_2",
       "to": "ControlPoint30",
-      "length": 9.029,
+      "length": 9.9197,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1586,7 +1747,7 @@
     {
       "from": "ControlPoint30",
       "to": "X_Ruta29_2",
-      "length": 9.029,
+      "length": 9.9197,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1594,7 +1755,7 @@
     {
       "from": "X_Ruta15_2",
       "to": "CHARGER_2",
-      "length": 7.3483,
+      "length": 8.0731,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1602,7 +1763,7 @@
     {
       "from": "CHARGER_2",
       "to": "X_Ruta15_2",
-      "length": 7.3483,
+      "length": 8.0731,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1610,7 +1771,7 @@
     {
       "from": "X_Ruta46_2",
       "to": "ControlPoint32",
-      "length": 6.5774,
+      "length": 7.2261,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1618,7 +1779,7 @@
     {
       "from": "ControlPoint32",
       "to": "X_Ruta46_2",
-      "length": 6.5774,
+      "length": 7.2261,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1626,7 +1787,7 @@
     {
       "from": "X_Ruta7_5",
       "to": "WH_PT_1",
-      "length": 8.6982,
+      "length": 9.5562,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1634,7 +1795,7 @@
     {
       "from": "X_Ruta1_2",
       "to": "X_Ruta7_3",
-      "length": 8.6822,
+      "length": 9.5386,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1642,7 +1803,7 @@
     {
       "from": "X_Ruta7_12",
       "to": "WH_MP_3",
-      "length": 8.6276,
+      "length": 9.4786,
       "max_speed": 1.5,
       "direction": "one-way",
       "blocked": false
@@ -1650,7 +1811,7 @@
     {
       "from": "WH_PT_1",
       "to": "X_Ruta16_1",
-      "length": 2.9876,
+      "length": 3.2823,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1658,7 +1819,7 @@
     {
       "from": "X_Ruta16_1",
       "to": "WH_PT_1",
-      "length": 2.9876,
+      "length": 3.2823,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1666,7 +1827,7 @@
     {
       "from": "X_Ruta15_CP28",
       "to": "CHARGER_1",
-      "length": 7.3483,
+      "length": 8.0731,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1674,10 +1835,479 @@
     {
       "from": "CHARGER_1",
       "to": "X_Ruta15_CP28",
-      "length": 7.3483,
+      "length": 8.0731,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
+    },
+    {
+      "from": "WH_MP_1",
+      "to": "X_Ruta16_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_2",
+      "to": "X_Ruta7_12",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "E2_IN",
+      "to": "X_Ruta37_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "L1_OUT",
+      "to": "X_Ruta38_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "L2_OUT",
+      "to": "X_Ruta38_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "E1_IN",
+      "to": "X_Ruta38_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "CHARGER_2",
+      "to": "ControlPoint20",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_5",
+      "to": "X_Ruta16_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_4",
+      "to": "X_Ruta16_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_1",
+      "to": "X_Ruta1_4",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_2",
+      "to": "X_Ruta16_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_MP_3",
+      "to": "X_Ruta16_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "BUFFER_2",
+      "to": "X_Ruta38_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "BUFFER_1",
+      "to": "X_Ruta38_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "WH_PT_3",
+      "to": "X_Ruta7_12",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "CHARGER_1",
+      "to": "X_Ruta43_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_01",
+      "to": "X_Ruta42_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_02",
+      "to": "X_Ruta42_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_03",
+      "to": "X_Ruta49_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_04",
+      "to": "X_Ruta49_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_05",
+      "to": "X_Ruta42_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_06",
+      "to": "X_Ruta15_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_07",
+      "to": "X_Ruta1_7",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_08",
+      "to": "ControlPoint13",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_09",
+      "to": "ControlPoint12",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_10",
+      "to": "X_Ruta7_11",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_11",
+      "to": "X_Ruta16_2",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_12",
+      "to": "X_Ruta1_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_13",
+      "to": "X_Ruta7_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_14",
+      "to": "X_Ruta7_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "PALET_15",
+      "to": "ControlPoint11",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "INSUMO_P1",
+      "to": "X_Ruta38_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "INSUMO_P2",
+      "to": "X_Ruta38_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "INSUMO_P3",
+      "to": "X_Ruta32_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "FUENTE_INSUMOS",
+      "to": "X_Ruta34_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "RECO_R1",
+      "to": "X_Ruta49_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "RECO_R2",
+      "to": "X_Ruta35_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "RECO_R3",
+      "to": "X_Ruta29_1",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_01",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_02",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_03",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_04",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_05",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_06",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_07",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_08",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_09",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_10",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_11",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_12",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_13",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_14",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
+    },
+    {
+      "from": "TRANSPORTE",
+      "to": "PALET_15",
+      "length": 7.9282,
+      "max_speed": 1.5,
+      "direction": "bi",
+      "blocked": false,
+      "allowed_types": [
+        "delivery"
+      ]
     }
   ],
   "zones": [

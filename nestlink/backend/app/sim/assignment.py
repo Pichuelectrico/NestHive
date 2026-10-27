@@ -2,10 +2,14 @@
 # Cola de misiones priorizada y asignador global óptimo (Método Húngaro con afinidad)
 
 import math
+import json
+from pathlib import Path
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 from typing import List, Tuple, Dict, Optional, Any
 from app.models import Tarea
+
+POLICY = json.loads((Path(__file__).resolve().parents[1] / "data_maps" / "fleet_policy.json").read_text())
 
 class MissionQueue:
     def __init__(self):
@@ -82,7 +86,12 @@ def compute_hungarian_assignment(
                 # Comodín (Nestlé Runner): neutral, pero muy veloz para emergencias
                 affinity_factor = 0.65 if task.prioridad >= 8 else 0.85
 
-            cost_matrix[i, j] = dist * prio_factor * affinity_factor
+            # AMRs are reserved for transport and cannot take pallet-recovery
+            # routes unless the mission is explicitly marked emergency.
+            if getattr(amr, "tipo", "").lower() in ("unit_load", "pallet_lifter") and task.tipo.startswith("RECO_") and not task.emergency:
+                cost_matrix[i, j] = np.inf
+            else:
+                cost_matrix[i, j] = dist * prio_factor * affinity_factor
 
     row_ind, col_ind = linear_sum_assignment(cost_matrix)
 

@@ -12,9 +12,22 @@ def main():
  nodes=[]
  for n in raw['nodos']:
   nid=renamed.get(n['id'],n['id']); typ='linea' if nid.startswith('L') else 'empacadora' if nid.startswith('E') else 'almacen' if nid.startswith('WH_') else 'carga' if nid.startswith('CHARGER') else 'buffer' if nid.startswith('BUFFER') else 'cruce'; p=pos(n); assert 40<=p[0]<=960 and 40<=p[1]<=560; nodes.append({'id':nid,'x':p[0],'y':p[1],'type':typ,'label':FRIENDLY.get(nid,nid)})
+ markers=json.loads((ROOT/'nestlink/backend/app/data_maps/new_map_markers.json').read_text())
+ def marker(nid,p,typ,label): nodes.append({'id':nid,'x':round(p['x_px']/1452*1000,2),'y':round(p['y_px']/1100*600,2),'type':typ,'label':label})
+ for i,p in enumerate(markers['morado']['puntos'],1): marker(f'PALET_{i:02d}',p,'buffer','Paletizaje')
+ for k in ('P1','P2','P3'): marker(f'INSUMO_{k}',next(p for p in markers['amarillo']['puntos'] if p.get('etiqueta')==k),'almacen',f'Insumo {k}')
+ marker('FUENTE_INSUMOS',markers['cafe']['puntos'][0],'almacen','Fuente de insumos')
+ for k in ('R1','R2','R3'): marker(f'RECO_{k}',next(p for p in markers['naranja']['puntos'] if p.get('etiqueta')==k),'almacen',f'Recolección {k}')
+ nodes.append({'id':'TRANSPORTE','x':80,'y':330,'type':'buffer','label':'Transporte externo'})
  edges=[]
  for e in raw['aristas']:
   u,v=renamed.get(e['origen'],e['origen']),renamed.get(e['destino'],e['destino']); z={'from':u,'to':v,'length':float(e['distancia_m']),'max_speed':1.5,'direction':'bi' if e.get('bidireccional',True) else 'one-way','blocked':False}; edges.append(z); edges.append({**z,'from':v,'to':u}) if e.get('bidireccional',True) else None
+ base=[n for n in nodes if n['id'] in src]
+ for n in nodes:
+  if n['id'] in src or n['id']=='TRANSPORTE': continue
+  q=min(base,key=lambda b:(b['x']-n['x'])**2+(b['y']-n['y'])**2); edges.append({'from':n['id'],'to':q['id'],'length':1.0,'max_speed':1.5,'direction':'bi','blocked':False})
+ for n in nodes:
+  if n['id'].startswith('PALET_'): edges.append({'from':'TRANSPORTE','to':n['id'],'length':1.0,'max_speed':1.5,'direction':'bi','blocked':False,'allowed_types':['delivery']})
  G=nx.Graph(); G.add_nodes_from(n['id'] for n in nodes); G.add_edges_from((e['from'],e['to'],{'length':e['length']}) for e in edges); assert nx.is_connected(G)
  realistic=json.loads((MAPS/'realistic.json').read_text()); UG=nx.Graph(); UG.add_edges_from((e['from'],e['to'],{'length':e['length']}) for e in realistic['edges']); RG=nx.DiGraph(UG); DG=nx.DiGraph(); DG.add_edges_from((e['from'],e['to'],{'length':e['length']}) for e in edges); pairs=[(f'WH_MP_{i}',x) for i in range(1,6) for x in ('L1_OUT','L2_OUT','L1_OUT','L2_OUT')]; assert len(pairs)==20; old=[nx.shortest_path_length(DG,a,b,weight='length') for a,b in pairs]; ref=[nx.shortest_path_length(RG,a,b,weight='length') for a,b in pairs]; factor=sum(ref)/max(sum(old),1e-9)
  for e in edges:e['length']=round(e['length']*factor,4)
@@ -26,5 +39,5 @@ def main():
  for i,a in enumerate(seed['amrs']):a.update(home_zone=cruces[i%len(cruces)],posicion_nodo='CHARGER_1' if i%2==0 else 'CHARGER_2')
  (SEEDS/'seed_espol.json').write_text(json.dumps(seed,ensure_ascii=False,indent=2)+'\n'); public=ROOT/'nestlink/frontend/public/maps'; public.mkdir(parents=True,exist_ok=True); shutil.copy2(MAPS/'espol_fusion.json',public/'espol_fusion.json')
  sys.path.insert(0,str(APP.parent)); from app.data_maps import build_plant_graph,load_layout_raw
- loaded=load_layout_raw('espol_fusion'); gg,_=build_plant_graph(loaded); assert len(loaded['nodes'])==96 and len(loaded['edges'])>=110 and nx.is_connected(nx.Graph(gg)); assert all(nx.shortest_path(gg,f'WH_MP_{i}','L1_OUT') for i in range(1,4)); mean_new=sum(old)*factor/20; mean_ref=sum(ref)/20; assert abs(mean_new-mean_ref)<=.2*mean_ref; print(json.dumps({'nodes':96,'edges':len(edges),'factor':round(factor,4),'mean_espol':round(mean_new,3),'mean_realistic':round(mean_ref,3),'asserts':'PASS'}))
+ loaded=load_layout_raw('espol_fusion'); gg,_=build_plant_graph(loaded); assert len(loaded['nodes'])>=96 and len(loaded['edges'])>=110 and nx.is_connected(nx.Graph(gg)); assert all(nx.shortest_path(gg,f'WH_MP_{i}','L1_OUT') for i in range(1,4)); mean_new=sum(old)*factor/20; mean_ref=sum(ref)/20; assert abs(mean_new-mean_ref)<=.2*mean_ref; print(json.dumps({'nodes':len(nodes),'edges':len(edges),'factor':round(factor,4),'mean_espol':round(mean_new,3),'mean_realistic':round(mean_ref,3),'asserts':'PASS'}))
 if __name__=='__main__':main()

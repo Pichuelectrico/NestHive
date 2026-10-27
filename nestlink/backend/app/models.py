@@ -137,6 +137,7 @@ class Tarea(BaseModel):
     estado: EstadoTarea = "pendiente"
     amr_asignado: Optional[str] = None
     created_at_sim: float = 0.0
+    emergency: bool = False
 
 class BlockRequest(BaseModel):
     from_node: str = Field(..., alias="from")
