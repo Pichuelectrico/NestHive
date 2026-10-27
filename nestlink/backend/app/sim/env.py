@@ -707,7 +707,7 @@ class SimulationEnvironment:
     def trigger_emergency_pickup(self, line: str = "R2") -> Dict[str, Any]:
         amr = next((a for a in self.amrs if a.id == "AMR_04" and a.clase == "AMR"), None)
         if not amr: return {"status": "unavailable", "line": line}
-        mission = self.mission_queue.add_mission(f"RECO_{line}", f"RECO_{line}", "PALET_01", prioridad=10, sim_time=self.sim_time)
+        mission = self.mission_queue.add_mission("PICKUP_PT", f"RECO_{line}", "PALET_01", prioridad=10, sim_time=self.sim_time)
         mission.emergency = True
         self.metrics.amr_emergency_assists += 1
         self.add_notice("WARNING", amr.id, f"🚨 Emergencia: AMR 4 apoya {line} → Paletizaje (AGVs ocupados)")
