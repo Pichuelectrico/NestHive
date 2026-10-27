@@ -679,155 +679,155 @@
     },
     {
       "id": "PALET_01",
-      "x": 278.24,
-      "y": 277.09,
+      "x": 78.82,
+      "y": 358.1,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_02",
-      "x": 315.43,
-      "y": 277.09,
+      "x": 106.82,
+      "y": 358.1,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_03",
-      "x": 392.56,
-      "y": 278.73,
+      "x": 166.98,
+      "y": 359.79,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_04",
-      "x": 429.75,
-      "y": 278.73,
+      "x": 196.14,
+      "y": 359.79,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_05",
-      "x": 353.31,
-      "y": 279.27,
+      "x": 136.36,
+      "y": 360.36,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_06",
-      "x": 278.24,
-      "y": 320.73,
+      "x": 78.82,
+      "y": 403.23,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_07",
-      "x": 318.87,
-      "y": 320.73,
+      "x": 109.5,
+      "y": 403.23,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_08",
-      "x": 354.68,
-      "y": 320.73,
+      "x": 137.43,
+      "y": 403.23,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_09",
-      "x": 393.25,
-      "y": 320.73,
+      "x": 167.51,
+      "y": 403.23,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_10",
-      "x": 432.51,
-      "y": 320.73,
+      "x": 198.34,
+      "y": 403.23,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_11",
-      "x": 278.24,
-      "y": 362.73,
+      "x": 78.82,
+      "y": 456.67,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_12",
-      "x": 318.87,
-      "y": 362.73,
+      "x": 109.5,
+      "y": 456.67,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_13",
-      "x": 393.25,
-      "y": 362.73,
+      "x": 167.51,
+      "y": 456.67,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_14",
-      "x": 433.88,
-      "y": 362.73,
+      "x": 199.44,
+      "y": 456.67,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "PALET_15",
-      "x": 355.37,
-      "y": 363.27,
+      "x": 137.97,
+      "y": 457.38,
       "type": "buffer",
       "label": "Paletizaje"
     },
     {
       "id": "INSUMO_P1",
-      "x": 882.92,
-      "y": 57.82,
+      "x": 869.94,
+      "y": 49.3,
       "type": "almacen",
       "label": "Insumo P1"
     },
     {
       "id": "INSUMO_P2",
-      "x": 893.94,
-      "y": 283.64,
+      "x": 877.48,
+      "y": 364.87,
       "type": "almacen",
       "label": "Insumo P2"
     },
     {
       "id": "INSUMO_P3",
-      "x": 920.8,
-      "y": 463.09,
+      "x": 895.84,
+      "y": 558.85,
       "type": "almacen",
       "label": "Insumo P3"
     },
     {
       "id": "FUENTE_INSUMOS",
-      "x": 522.73,
-      "y": 511.64,
+      "x": 270.34,
+      "y": 573.44,
       "type": "almacen",
       "label": "Fuente de insumos"
     },
     {
       "id": "RECO_R1",
-      "x": 388.43,
-      "y": 136.36,
+      "x": 163.75,
+      "y": 116.28,
       "type": "almacen",
       "label": "Recolección R1"
     },
     {
       "id": "RECO_R2",
-      "x": 795.45,
-      "y": 286.36,
+      "x": 685.67,
+      "y": 367.69,
       "type": "almacen",
       "label": "Recolección R2"
     },
     {
       "id": "RECO_R3",
-      "x": 814.05,
-      "y": 475.64,
+      "x": 725.27,
+      "y": 562.62,
       "type": "almacen",
       "label": "Recolección R3"
     },
@@ -1971,7 +1971,7 @@
     {
       "from": "PALET_01",
       "to": "X_Ruta42_1",
-      "length": 7.9282,
+      "length": 255.4152,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1979,7 +1979,7 @@
     {
       "from": "PALET_02",
       "to": "X_Ruta42_1",
-      "length": 7.9282,
+      "length": 228.9485,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1987,7 +1987,7 @@
     {
       "from": "PALET_03",
       "to": "X_Ruta49_1",
-      "length": 7.9282,
+      "length": 259.64,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -1995,7 +1995,7 @@
     {
       "from": "PALET_04",
       "to": "X_Ruta49_1",
-      "length": 7.9282,
+      "length": 232.1289,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2003,7 +2003,7 @@
     {
       "from": "PALET_05",
       "to": "X_Ruta42_1",
-      "length": 7.9282,
+      "length": 202.3717,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2011,7 +2011,7 @@
     {
       "from": "PALET_06",
       "to": "X_Ruta15_1",
-      "length": 7.9282,
+      "length": 219.1407,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2019,7 +2019,7 @@
     {
       "from": "PALET_07",
       "to": "X_Ruta1_7",
-      "length": 7.9282,
+      "length": 227.3649,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2027,7 +2027,7 @@
     {
       "from": "PALET_08",
       "to": "ControlPoint13",
-      "length": 7.9282,
+      "length": 217.4482,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2035,7 +2035,7 @@
     {
       "from": "PALET_09",
       "to": "ControlPoint12",
-      "length": 7.9282,
+      "length": 244.3882,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2043,7 +2043,7 @@
     {
       "from": "PALET_10",
       "to": "X_Ruta7_11",
-      "length": 7.9282,
+      "length": 230.0239,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2051,7 +2051,7 @@
     {
       "from": "PALET_11",
       "to": "X_Ruta16_2",
-      "length": 7.9282,
+      "length": 231.7132,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2059,7 +2059,7 @@
     {
       "from": "PALET_12",
       "to": "X_Ruta1_1",
-      "length": 7.9282,
+      "length": 232.9744,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2067,7 +2067,7 @@
     {
       "from": "PALET_13",
       "to": "X_Ruta7_1",
-      "length": 7.9282,
+      "length": 263.9761,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2075,7 +2075,7 @@
     {
       "from": "PALET_14",
       "to": "X_Ruta7_1",
-      "length": 7.9282,
+      "length": 234.5515,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2083,7 +2083,7 @@
     {
       "from": "PALET_15",
       "to": "ControlPoint11",
-      "length": 7.9282,
+      "length": 210.494,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2091,7 +2091,7 @@
     {
       "from": "INSUMO_P1",
       "to": "X_Ruta38_1",
-      "length": 7.9282,
+      "length": 275.5379,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2099,7 +2099,7 @@
     {
       "from": "INSUMO_P2",
       "to": "X_Ruta38_1",
-      "length": 7.9282,
+      "length": 88.2411,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2107,7 +2107,7 @@
     {
       "from": "INSUMO_P3",
       "to": "X_Ruta32_1",
-      "length": 7.9282,
+      "length": 121.929,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2115,7 +2115,7 @@
     {
       "from": "FUENTE_INSUMOS",
       "to": "X_Ruta34_1",
-      "length": 7.9282,
+      "length": 275.7415,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2123,7 +2123,7 @@
     {
       "from": "RECO_R1",
       "to": "X_Ruta49_1",
-      "length": 7.9282,
+      "length": 297.7993,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2131,7 +2131,7 @@
     {
       "from": "RECO_R2",
       "to": "X_Ruta35_1",
-      "length": 7.9282,
+      "length": 182.9983,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
@@ -2139,7 +2139,7 @@
     {
       "from": "RECO_R3",
       "to": "X_Ruta29_1",
-      "length": 7.9282,
+      "length": 180.3268,
       "max_speed": 1.5,
       "direction": "bi",
       "blocked": false
