@@ -5,6 +5,8 @@ import { AMR_STATE_COLORS } from "@/lib/amrColors";
 import { getBatteryEmoji, resolveAmrCargoVisual } from "@/lib/amrCargo";
 import { FLEET_PRESENTATION, tipoDeAmr } from "@/lib/config";
 import { WIFI_APS_BY_PLANT } from "@/lib/config";
+import { VISUAL_V2_DEFAULT, VISUAL_V2_PLANTS, isVisualV2Enabled } from "@/lib/config";
+import { drawVisualV2Nodes, drawVisualV2Underlay, drawVisualV2ZoneTitles } from "@/lib/mapVisualV2";
 import { edgeKey, findEdgeAtScreenPoint } from "@/lib/edgeHit";
 import { getAmrAnchor } from "@/lib/mapGeometry";
 import { getLayoutBounds, type LayoutBounds } from "@/lib/layoutBounds";
@@ -147,6 +149,10 @@ export function PlantMap({
   const hoveredRef = useRef<SelectedEdge | null>(null);
   const [mapOpacity, setMapOpacity] = useState(1);
   const [panning, setPanning] = useState(false);
+  // Mapa visual v2 (New_map.png) — `?visual=v1` vuelve al renderer clásico sin rebuild
+  const [visualV2On, setVisualV2On] = useState(VISUAL_V2_DEFAULT);
+  useEffect(() => setVisualV2On(isVisualV2Enabled()), []);
+  const v2 = visualV2On && VISUAL_V2_PLANTS.includes(plantId ?? "");
 
   const resize = useCallback(() => {
     const canvas = canvasRef.current;
@@ -236,6 +242,7 @@ export function PlantMap({
     const bgW = bounds.width * scale;
     const bgH = bounds.height * scale;
 
+    if (!v2) {
     ctx.fillStyle = "#e8f4fc";
     ctx.fillRect(bgX, bgY, bgW, bgH);
 
@@ -264,6 +271,7 @@ export function PlantMap({
       ctx.lineTo(bgX + bgW, s.y);
       ctx.stroke();
     }
+    }
 
     // Lookup O(1) para mapas grandes (~500 nodos/aristas)
     const nodeById = new Map(layout.nodes.map((n) => [n.id, n]));
@@ -276,7 +284,7 @@ export function PlantMap({
 
     // Capas de fondo (zonas) — impermeable si ausente/vacío
     const zones = layout.zones;
-    if (zones && zones.length > 0) {
+    if (!v2 && zones && zones.length > 0) {
       for (const zone of zones) {
         try {
           const tl = toScreen(zone.x, zone.y);
@@ -332,7 +340,7 @@ export function PlantMap({
     // Muros/paredes físicas (no transpirables) — dibujados como barras sólidas oscuras
     // justo debajo de aristas/nodos para que se vean como obstáculos reales del piso.
     const walls = layout.walls;
-    if (walls && walls.length > 0) {
+    if (!v2 && walls && walls.length > 0) {
       for (const wl of walls) {
         try {
           const tl = toScreen(wl.x, wl.y);
@@ -363,6 +371,10 @@ export function PlantMap({
       }
     }
 
+    // v2: corredores, muros y zonas salen del grafo real; el bucle de aristas solo
+    // superpone bloqueos / hover / selección (interacción de derrame intacta).
+    if (v2) drawVisualV2Underlay(ctx, layout, toScreen, scale);
+
     layout.edges.forEach((e: LayoutEdge) => {
       const na = nodeById.get(e.from);
       const nb = nodeById.get(e.to);
@@ -373,6 +385,7 @@ export function PlantMap({
       const blocked = blockedEdges.has(key);
       const isHover = hover && edgeKey(hover.from, hover.to) === key;
       const isSel = sel && edgeKey(sel.from, sel.to) === key;
+      if (v2 && !blocked && !isHover && !isSel) return;
 
       ctx.beginPath();
       ctx.moveTo(sa.x, sa.y);
@@ -410,7 +423,7 @@ export function PlantMap({
 
       // Flecha de sentido en aristas unidireccionales (entre zonas y nodos)
       const dir = (e.direction || "bi").toLowerCase();
-      if (dir !== "bi") {
+      if (dir !== "bi" && !v2) {
         drawDirectionArrow(ctx, sa, sb, scale);
       }
 
@@ -432,7 +445,11 @@ export function PlantMap({
       }
     });
 
-    layout.nodes.forEach((n) => {
+    if (v2) {
+      drawVisualV2Nodes(ctx, layout, toScreen, scale);
+      drawVisualV2ZoneTitles(ctx, layout, toScreen, scale);
+    }
+    else layout.nodes.forEach((n) => {
       try {
         const s = toScreen(n.x, n.y);
         const landmark = !dense || isDenseLandmark(n);
@@ -824,7 +841,7 @@ export function PlantMap({
         // Saltar AMR problemático; el resto sigue visible
       }
     });
-  }, [layout, amrs, missions, obstacles, spillMode, selectedEdge, getBlockedEdges, plantId, lidarMode, simTime, outStock, showWifiNetwork]);
+  }, [layout, amrs, missions, obstacles, spillMode, selectedEdge, getBlockedEdges, plantId, lidarMode, simTime, outStock, showWifiNetwork, v2]);
 
   useEffect(() => {
     resize();

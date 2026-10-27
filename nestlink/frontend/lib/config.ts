@@ -82,3 +82,19 @@ export const WIFI_APS_BY_PLANT: Record<string, WifiAp[]> = {
   ],
   // Canvas 800×500 — cobertura tipo sobre el mapa clásico
 };
+
+/** Mapa visual v2 (estilo New_map.png) para espol_fusion. Default ON; rollback en caliente
+ *  con `?visual=v1` en la URL (sin rebuild) o en build con NEXT_PUBLIC_VISUAL_V2=0. */
+export const VISUAL_V2 = (process.env.NEXT_PUBLIC_VISUAL_V2 ?? "1").trim() !== "0";
+export const VISUAL_V2_DEFAULT = VISUAL_V2;
+export const VISUAL_V2_PLANTS = ["espol_fusion"];
+
+export function isVisualV2Enabled(plantId?: string): boolean {
+  if (plantId && !VISUAL_V2_PLANTS.includes(plantId)) return false;
+  if (typeof window !== "undefined") {
+    const q = new URLSearchParams(window.location.search).get("visual");
+    if (q === "v1") return false;
+    if (q === "v2") return true;
+  }
+  return VISUAL_V2_DEFAULT;
+}
