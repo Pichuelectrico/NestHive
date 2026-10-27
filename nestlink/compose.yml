@@ -1,5 +1,8 @@
+name: nesthive
+
 services:
   api:
+    image: nesthive-api:latest
     build:
       context: ./backend
       dockerfile: Dockerfile
@@ -17,6 +20,7 @@ services:
     restart: unless-stopped
 
   web:
+    image: nesthive-web:latest
     build:
       context: ./frontend
       dockerfile: Dockerfile
