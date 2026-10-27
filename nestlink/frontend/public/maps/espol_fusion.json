@@ -1684,37 +1684,37 @@
     {
       "id": "ZONE_MP",
       "label": "MP · Almacén",
-      "x": 60,
-      "y": 60,
-      "w": 320,
-      "h": 220,
+      "x": 264,
+      "y": 499,
+      "w": 98,
+      "h": 76,
       "color": "#EAD3A9"
     },
     {
       "id": "ZONE_LINES",
       "label": "Líneas",
-      "x": 360,
-      "y": 60,
-      "w": 300,
-      "h": 220,
+      "x": 902,
+      "y": 57,
+      "w": 72,
+      "h": 323,
       "color": "#FBC866"
     },
     {
       "id": "ZONE_PT",
       "label": "Producto terminado",
-      "x": 660,
-      "y": 60,
-      "w": 280,
-      "h": 220,
+      "x": 297,
+      "y": 469,
+      "w": 142,
+      "h": 85,
       "color": "#FBFBF8"
     },
     {
       "id": "ZONE_CHARGE",
       "label": "Carga",
-      "x": 660,
-      "y": 340,
-      "w": 280,
-      "h": 180,
+      "x": 70,
+      "y": 277,
+      "w": 145,
+      "h": 50,
       "color": "#EAD3A9"
     }
   ],
