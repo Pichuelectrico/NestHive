@@ -15,7 +15,7 @@ def default_eligible(amr: Any, task: Tarea) -> bool:
     """Fleet-domain gate; conservative defaults preserve legacy callers."""
     clase = getattr(amr, "clase", None)
     if clase not in ("AGV", "AMR"):
-        clase = "AMR" if getattr(amr, "id", "") in {"AMR_04", "AMR_05"} else "AGV"
+        return True  # seeds legacy sin clase explícita conservan su comportamiento
     tipo = task.tipo
     emergency = bool(getattr(task, "emergency", False))
     is_reco = tipo.startswith("RECO_") or getattr(task, "origen", "").startswith("RECO_")
@@ -90,10 +90,6 @@ def compute_hungarian_assignment(
         for j, task in enumerate(pending_missions):
             gate = eligible or default_eligible
             if not gate(amr, task):
-                cost_matrix[i, j] = np.inf
-                continue
-            clase = getattr(amr, "clase", None) or ("AMR" if getattr(amr, "id", "") in {"AMR_04", "AMR_05"} else "AGV")
-            if (task.tipo.startswith("RECO_") or task.origen.startswith("RECO_")) and clase == "AMR" and not getattr(task, "emergency", False):
                 cost_matrix[i, j] = np.inf
                 continue
             target_pos = node_positions.get(task.origen, (amr.x, amr.y))
