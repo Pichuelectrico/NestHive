@@ -38,9 +38,9 @@ export function Header({
     <header className="relative z-20 shrink-0 border-b border-black/[0.08] bg-white/90 backdrop-blur-xl">
       <div className="flex items-center justify-between gap-4 px-5 py-3 flex-wrap">
         <div className="flex items-center gap-3 min-w-0">
-          {/* Logo 3:2 (1536×1024): caja proporcional, sin barras ni recorte */}
+          {/* Logo banner (1159×405, ratio 2.86): caja proporcional, sin barras ni recorte */}
           <div
-            className="flex h-10 w-[60px] shrink-0 items-center justify-center overflow-hidden rounded-lg border border-nest-accent/40 bg-[#FBFBF8] shadow-nest-glow"
+            className="flex h-8 w-[92px] shrink-0 items-center justify-center overflow-hidden rounded-md border border-nest-accent/40 bg-[#FBFBF8] shadow-nest-glow"
             aria-hidden
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
