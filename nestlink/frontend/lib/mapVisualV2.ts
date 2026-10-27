@@ -64,6 +64,12 @@ function arrowHead(
   ctx.restore();
 }
 
+/** roundRect con respaldo a rect: Safari<16 / Chrome<99 no lo implementan y lanzarían. */
+function roundedRect(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
+  if (typeof ctx.roundRect === "function") ctx.roundRect(x, y, w, h, r);
+  else ctx.rect(x, y, w, h);
+}
+
 function label(
   ctx: CanvasRenderingContext2D,
   text: string,
@@ -105,7 +111,7 @@ function zoneAround(
   ctx.lineWidth = 1.2;
   ctx.setLineDash([5 * scale, 3 * scale]);
   ctx.beginPath();
-  ctx.roundRect(tl.x, tl.y, w, h, 6 * scale);
+  roundedRect(ctx, tl.x, tl.y, w, h, 6 * scale);
   ctx.fill();
   ctx.stroke();
   ctx.restore();
@@ -137,6 +143,31 @@ export function drawVisualV2ZoneTitles(
     const tl = toScreen(b.minX - z.pad, b.minY - z.pad);
     const br = toScreen(b.maxX + z.pad, b.maxY + z.pad);
     label(ctx, z.title, (tl.x + br.x) / 2, tl.y - 6 * scale, 7 * scale, z.color);
+  }
+
+  // "Punto de Entrega": como en el PNG, a la derecha de la 2.ª fila de puntos morados
+  const palet = layout.nodes.filter((n) => n.id.startsWith("PALET_"));
+  const rows: LayoutNode[][] = [];
+  for (const n of [...palet].sort((a, b) => a.y - b.y)) {
+    const row = rows.find((r) => Math.abs(r[0].y - n.y) < 8);
+    if (row) row.push(n);
+    else rows.push([n]);
+  }
+  const target = rows[1] ?? rows[0];
+  if (target) {
+    const right = target.reduce((a, b) => (b.x > a.x ? b : a));
+    const s = toScreen(right.x, right.y);
+    ctx.save();
+    ctx.textAlign = "left";
+    ctx.font = `600 ${6.5 * scale}px sans-serif`;
+    const text = "Punto de Entrega";
+    ctx.strokeStyle = "rgba(251,248,241,0.92)";
+    ctx.lineWidth = Math.max(2, (6.5 * scale) / 3.5);
+    ctx.textBaseline = "middle";
+    ctx.strokeText(text, s.x + 10 * scale, s.y);
+    ctx.fillStyle = V2_COLORS.texto;
+    ctx.fillText(text, s.x + 10 * scale, s.y);
+    ctx.restore();
   }
 }
 
@@ -312,7 +343,7 @@ export function drawVisualV2Nodes(
       ctx.strokeStyle = n.type === "almacen" ? V2_COLORS.cafe : V2_COLORS.texto;
       ctx.lineWidth = 1;
       ctx.beginPath();
-      ctx.roundRect(s.x - w / 2, s.y - h / 2, w, h, 3 * scale);
+      roundedRect(ctx, s.x - w / 2, s.y - h / 2, w, h, 3 * scale);
       ctx.fill();
       ctx.stroke();
       ctx.restore();
