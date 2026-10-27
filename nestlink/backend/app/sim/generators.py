@@ -231,7 +231,7 @@ class PlantDemandGenerator:
             if not any(m.origen == origin and m.estado in ("pendiente", "asignada", "en_curso")
                        for m in mission_queue.get_all_missions()):
                 destination = f"PALET_{(self._reco_index % 15) + 1:02d}"
-                mission_queue.add_mission("PICKUP_PT", origin, destination, prioridad=6,
+                mission_queue.add_mission("PICKUP_PT", origin, destination, prioridad=8,
                                           peso_kg=480.0, sim_time=sim_time)
                 self._reco_index += 1
             self._next_reco_sim += 110.0
