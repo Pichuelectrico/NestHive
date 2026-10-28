@@ -130,7 +130,7 @@ export function ControlPanel({
           </button>
         )}
 
-        <span className="hidden sm:inline h-5 w-px bg-black/[0.1] mx-0.5" aria-hidden />
+        <span className="hidden sm:inline h-5 w-px bg-nest-border mx-0.5" aria-hidden />
 
         {packingLines.length > 0 && (
           <>
@@ -141,7 +141,7 @@ export function ControlPanel({
               aria-label="Línea de producción"
             >
               {packingLines.map((l) => (
-                <option key={l.id} value={l.id} className="bg-white text-nest-text">
+                <option key={l.id} value={l.id} className="bg-nest-panel text-nest-text">
                   {l.nombre}
                 </option>
               ))}
@@ -178,7 +178,7 @@ export function ControlPanel({
           </>
         )}
 
-        <span className="hidden md:inline h-5 w-px bg-black/[0.1] mx-0.5" aria-hidden />
+        <span className="hidden md:inline h-5 w-px bg-nest-border mx-0.5" aria-hidden />
 
         <button
           type="button"
@@ -214,14 +214,14 @@ export function ControlPanel({
           </span>
         )}
       </div>
-      {onEmergencyPickup && <div className="flex items-center gap-1 border border-red-500/30 rounded px-1.5 py-1">
-        <span className="text-[0.65rem] text-red-700">🚨 Emergencia</span>
-        {(["R1", "R2", "R3"] as const).map((line) => <button key={line} type="button" disabled={loading || offline} onClick={() => void onEmergencyPickup(line)} aria-label={`Disparar emergencia de recolección ${line}`} className="nest-btn nest-btn-ghost border-red-500/40 text-red-700 px-2 py-0.5">{line}</button>)}
+      {onEmergencyPickup && <div className="flex items-center gap-1 rounded border border-nest-red/30 bg-[#fff5f5] px-1.5 py-1">
+        <span className="text-[0.65rem] font-semibold text-nest-red">🚨 Emergencia</span>
+        {(["R1", "R2", "R3"] as const).map((line) => <button key={line} type="button" disabled={loading || offline} onClick={() => void onEmergencyPickup(line)} aria-label={`Disparar emergencia de recolección ${line}`} className="nest-btn nest-btn-danger px-2 py-0.5">{line}</button>)}
       </div>}
 
       {onBreakdown && (
-        <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-red-600/25 bg-red-50/70 px-2 py-1.5">
-          <span className="text-[0.65rem] font-bold uppercase tracking-wide text-red-800">Avería AMR</span>
+        <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-nest-red/30 bg-[#fff5f5] px-2 py-1.5">
+          <span className="text-[0.65rem] font-bold uppercase tracking-wide text-nest-red">Avería AMR</span>
           <select
             value={activeAgv?.id ?? ""}
             onChange={(e) => setSelectedAgvId(e.target.value)}

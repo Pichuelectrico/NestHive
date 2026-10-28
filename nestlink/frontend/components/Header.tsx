@@ -35,21 +35,22 @@ export function Header({
     plants.find((p) => p.id === selectedPlantId)?.nombre ?? selectedPlantId;
 
   return (
-    <header className="relative z-20 shrink-0 border-b border-black/[0.08] bg-white/90 backdrop-blur-xl">
-      <div className="flex items-center justify-between gap-4 px-5 py-3 flex-wrap">
+    <header className="relative z-20 shrink-0 border-b border-nest-border bg-nest-panel">
+      <div className="h-0.5 bg-nest-accent" aria-hidden />
+      <div className="flex items-center justify-between gap-4 px-5 py-2.5 flex-wrap">
         <div className="flex items-center gap-3 min-w-0">
           {/* Logo banner (1159×405, ratio 2.86): caja proporcional, sin barras ni recorte */}
           <div
-            className="flex h-8 w-[92px] shrink-0 items-center justify-center overflow-hidden rounded-md border border-nest-accent/40 bg-[#FBFBF8] shadow-nest-glow"
+            className="flex h-8 w-[92px] shrink-0 items-center justify-center overflow-hidden rounded-md border border-nest-border bg-nest-bg"
             aria-hidden
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src="/logo-nesthive.png" alt="" className="h-full w-full object-contain p-0.5" />
           </div>
           <div className="min-w-0">
-            <div className="text-lg font-semibold tracking-tight leading-none">
+            <div className="nest-wordmark">
               <span className="text-nest-text">Nest</span>
-              <span className="text-nest-accent">Hive</span>
+              <span className="text-nest-ink">Hive</span>
             </div>
             <div className="nest-label mt-0.5 normal-case tracking-wide text-[0.6rem]">
               Centro de operaciones intralogísticas
@@ -70,7 +71,7 @@ export function Header({
               className="nest-select min-w-[140px]"
             >
               {plants.map((p) => (
-                <option key={p.id} value={p.id} className="bg-white text-nest-text">
+                <option key={p.id} value={p.id} className="bg-nest-panel text-nest-text">
                   {p.nombre}
                 </option>
               ))}
@@ -83,7 +84,7 @@ export function Header({
             )}
           </div>
 
-          <div className="hidden sm:block h-6 w-px bg-black/[0.1]" aria-hidden />
+          <div className="hidden sm:block h-6 w-px bg-nest-border" aria-hidden />
 
           {mode === "live" ? (
             <span className="nest-status-live">
@@ -108,7 +109,7 @@ export function Header({
                 {formatSimTime(simTime)}
               </div>
             </div>
-            <div className="h-8 w-px bg-black/[0.1]" aria-hidden />
+            <div className="h-8 w-px bg-nest-border" aria-hidden />
             <div className="text-right">
               <div className="nest-label leading-none">Flota activa</div>
               <div className="nest-kpi-value text-lg text-nest-text">{amrCount}</div>

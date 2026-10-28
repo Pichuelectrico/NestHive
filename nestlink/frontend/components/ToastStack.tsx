@@ -13,12 +13,12 @@ export function ToastStack() {
         <div
           key={t.id}
           role="status"
-          className={`pointer-events-auto rounded-xl border px-4 py-3 text-sm shadow-nest-panel backdrop-blur-xl animate-in slide-in-from-right ${
+          className={`nest-toast ${
             t.type === "error"
-              ? "border-nest-red/40 bg-red-50 text-[#8b001c]"
+              ? "nest-toast-error"
               : t.type === "success"
-                ? "border-emerald-600/35 bg-emerald-50 text-emerald-900"
-                : "border-black/[0.1] bg-white/95 text-nest-text"
+                ? "nest-toast-success"
+                : ""
           }`}
         >
           <div className="flex items-start justify-between gap-3">
@@ -26,7 +26,7 @@ export function ToastStack() {
             <button
               type="button"
               onClick={() => removeToast(t.id)}
-              className="shrink-0 rounded-md p-0.5 text-nest-muted hover:bg-black/[0.05] hover:text-nest-text text-xs"
+              className="shrink-0 rounded-md p-0.5 text-nest-muted hover:bg-nest-bg hover:text-nest-text text-xs"
               aria-label="Cerrar"
             >
               ✕

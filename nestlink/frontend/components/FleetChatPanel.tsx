@@ -160,7 +160,7 @@ export function FleetChatPanel() {
         <div className="nest-label">💬 Asistente de flota</div>
         <span
           className={`text-[0.6rem] font-medium ${
-            motorOk ? "text-emerald-700" : "text-amber-700"
+            motorOk ? "text-nest-green" : "text-[#92400e]"
           }`}
         >
           {loadingAsks
@@ -172,7 +172,7 @@ export function FleetChatPanel() {
       </div>
 
       {!motorOk && !loadingAsks && (
-        <p className="px-1 text-[0.65rem] text-amber-800/90 leading-snug">
+        <p className="px-1 text-[0.65rem] leading-snug text-[#92400e]">
           Motor no disponible — las preguntas se muestran, pero el gemelo aún no
           responde. El resto del dashboard sigue operativo.
         </p>
@@ -215,7 +215,7 @@ export function FleetChatPanel() {
       {(reply || error) && (
         <div className="nest-card px-2 py-1.5 space-y-1">
           {error && (
-            <p className="text-[0.7rem] text-amber-800 leading-snug">{error}</p>
+            <p className="text-[0.7rem] leading-snug text-[#92400e]">{error}</p>
           )}
           {reply && (
             <>
@@ -242,7 +242,7 @@ export function FleetChatPanel() {
         </div>
       )}
 
-      <div className="border-t border-black/[0.06] pt-1 px-1">
+      <div className="border-t border-nest-border px-1 pt-1">
         <p className="text-[0.65rem] text-nest-muted leading-snug">
           <span className="font-medium text-nest-text">Reporte horario · </span>
           {formatReportLine(report)}

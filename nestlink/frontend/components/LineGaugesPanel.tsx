@@ -78,7 +78,7 @@ export function LineGaugesPanel({
                   {line.nivel_pct.toFixed(0)}%
                 </span>
               </div>
-              <div className="h-1.5 rounded-full bg-black/10 overflow-hidden">
+              <div className="h-1.5 overflow-hidden rounded-full bg-nest-text/10">
                 <div
                   className="h-full rounded-full transition-all duration-500"
                   style={{

@@ -113,7 +113,7 @@ export function FleetDetailView({
                 <span>Batería</span>
                 <span>{amr.bateria}%</span>
               </div>
-              <div className="h-3 rounded-full border border-nest-border bg-black/[0.06] overflow-hidden">
+              <div className="h-3 overflow-hidden rounded-full border border-nest-border bg-nest-text/10">
                 <div
                   className="h-full rounded-full transition-all duration-300"
                   style={{

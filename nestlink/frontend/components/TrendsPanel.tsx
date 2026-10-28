@@ -29,27 +29,27 @@ export function TrendsPanel() {
         <LineChart data={DEMO_TREND}>
           <XAxis
             dataKey="t"
-            tick={{ fontSize: 10, fill: "#6b7280" }}
-            axisLine={{ stroke: "rgba(15,23,42,0.08)" }}
+            tick={{ fontSize: 10, fill: "#674627" }}
+            axisLine={{ stroke: "rgba(91,57,24,0.14)" }}
             tickLine={false}
           />
           <YAxis hide />
           <Tooltip
             contentStyle={{
-              background: "#ffffff",
-              border: "1px solid rgba(15,23,42,0.1)",
+              background: "#fffcf7",
+              border: "1px solid rgba(91,57,24,0.14)",
               borderRadius: 8,
               fontSize: 11,
             }}
-            labelStyle={{ color: "#6b7280" }}
+            labelStyle={{ color: "#674627" }}
           />
           <Line
             type="monotone"
             dataKey="viajes"
-            stroke="#e4032e"
+            stroke="#8a5a00"
             strokeWidth={2}
             dot={false}
-            activeDot={{ r: 3, fill: "#e4032e" }}
+            activeDot={{ r: 3, fill: "#f9ae08" }}
           />
         </LineChart>
       </ResponsiveContainer>

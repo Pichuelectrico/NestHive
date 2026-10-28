@@ -27,7 +27,7 @@ export function KanbanDetailView({ missions, plantId }: KanbanDetailViewProps) {
             key={col.key}
             className="nest-panel p-2 min-h-[120px]"
           >
-            <h4 className="nest-label mb-2 pb-2 border-b border-black/[0.06]">
+            <h4 className="nest-label mb-2 border-b border-nest-border pb-2">
               {col.label}
               <span className="ml-1 text-nest-ink">({items.length})</span>
             </h4>

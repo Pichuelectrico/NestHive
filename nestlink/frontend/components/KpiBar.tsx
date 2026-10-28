@@ -16,12 +16,12 @@ export function KpiBar({ kpis }: KpiBarProps) {
     {
       label: "Vacíos evitados",
       value: kpis.viajes_vacios_evitados,
-      accent: "text-[#9f1239]",
+      accent: "text-nest-text",
     },
     {
       label: "Paradas evitadas",
       value: kpis.paradas_evitadas,
-      accent: "text-amber-700",
+      accent: "text-nest-text",
     },
     {
       label: "Tiempo medio",
@@ -31,12 +31,12 @@ export function KpiBar({ kpis }: KpiBarProps) {
     {
       label: "En OUT (prom.)",
       value: `${kpis.tiempo_medio_en_out_min.toFixed(1)} min`,
-      accent: "text-violet-700",
+      accent: "text-nest-text",
     },
     {
       label: "ROI distancia",
       value: `−${kpis.roi_km_pct}% km`,
-      accent: "text-emerald-700",
+      accent: "text-nest-ink",
       highlight: true,
     },
   ];
@@ -47,7 +47,7 @@ export function KpiBar({ kpis }: KpiBarProps) {
         <div
           key={item.label}
           className={`nest-card flex-1 min-w-[100px] px-4 py-2.5 text-center ${
-            item.highlight ? "border-emerald-600/25 bg-emerald-50" : ""
+            item.highlight ? "border-nest-accent/50 bg-nest-accent/15" : ""
           }`}
         >
           <div className={`nest-kpi-value ${item.accent}`}>{item.value}</div>

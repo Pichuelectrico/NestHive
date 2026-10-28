@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
-import { JetBrains_Mono, Outfit } from "next/font/google";
+import { Fira_Code, Fira_Sans } from "next/font/google";
 import { ToastProvider } from "@/hooks/useToast";
 import { ToastStack } from "@/components/ToastStack";
 import "./globals.css";
 
-const outfit = Outfit({
+const firaSans = Fira_Sans({
   subsets: ["latin"],
-  variable: "--font-outfit",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-fira-sans",
   display: "swap",
 });
 
-const jetbrains = JetBrains_Mono({
+const firaCode = Fira_Code({
   subsets: ["latin"],
-  variable: "--font-jetbrains",
+  weight: ["400", "500", "600"],
+  variable: "--font-fira-code",
   display: "swap",
 });
 
@@ -27,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="es" className={`${outfit.variable} ${jetbrains.variable}`}>
+    <html lang="es" className={`${firaSans.variable} ${firaCode.variable}`}>
       <body className="font-sans antialiased">
         <ToastProvider>
           {children}

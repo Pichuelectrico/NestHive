@@ -34,7 +34,7 @@ export function CollapsibleSidePanel({
           className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.1em] text-nest-muted hover:text-nest-text flex-1 min-w-0 transition-colors"
         >
           <span
-            className="flex h-5 w-5 items-center justify-center rounded-md border border-black/[0.1] bg-black/[0.02] text-[0.55rem] transition-transform duration-200"
+            className="flex h-5 w-5 items-center justify-center rounded-md border border-nest-border bg-nest-bg text-[0.55rem] text-nest-muted transition-transform duration-200"
             style={{ transform: collapsed ? "rotate(-90deg)" : "rotate(0deg)" }}
           >
             ▾

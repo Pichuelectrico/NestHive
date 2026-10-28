@@ -33,7 +33,7 @@ export function FloatingLinesBar({
         <button
           type="button"
           onClick={() => setExpanded(true)}
-          className="pointer-events-auto nest-panel flex items-center gap-2 border-black/[0.1] bg-white/95 px-4 py-2 shadow-nest-panel backdrop-blur-xl hover:border-black/[0.16] transition-colors"
+          className="pointer-events-auto nest-panel flex items-center gap-2 px-4 py-2 shadow-nest-glow transition-colors hover:border-nest-border"
           title="Abrir operaciones de línea"
         >
           <span className="flex items-center gap-1" aria-hidden>
@@ -53,8 +53,8 @@ export function FloatingLinesBar({
           </span>
         </button>
       ) : (
-        <div className="pointer-events-auto nest-panel w-full max-w-4xl border-black/[0.1] bg-white/95 shadow-nest-panel backdrop-blur-xl">
-          <div className="flex items-center justify-between gap-2 border-b border-black/[0.06] px-3 py-2">
+        <div className="pointer-events-auto nest-panel w-full max-w-4xl shadow-nest-glow">
+          <div className="flex items-center justify-between gap-2 border-b border-nest-border px-3 py-2">
             <button
               type="button"
               onClick={() => setExpanded(false)}
@@ -95,7 +95,7 @@ export function FloatingLinesBar({
                 return (
                   <li
                     key={line.id}
-                    className="flex flex-wrap items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-black/[0.03]"
+                    className="flex flex-wrap items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-nest-bg"
                   >
                     <span
                       className="h-2.5 w-2.5 shrink-0 rounded-full"

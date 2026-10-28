@@ -45,7 +45,7 @@ export function FleetChatWidget({ breakdownAlert }: { breakdownAlert?: { key: st
         role="dialog"
         aria-label="Néstor · Asistente de flota"
         hidden={!open}
-        className="nest-panel fixed bottom-20 right-4 z-40 w-[22rem] max-w-[calc(100vw-2rem)] max-h-[60vh] overflow-y-auto border-nest-accent/40 p-1.5 shadow-nest-glow"
+        className="nest-panel fixed bottom-20 right-4 z-40 w-[22rem] max-w-[calc(100vw-2rem)] max-h-[60vh] overflow-y-auto border-t-2 border-t-nest-accent p-1.5 shadow-nest-glow"
       >
         <div className="flex items-center gap-2 px-1 pb-1.5">
           <img
@@ -53,7 +53,7 @@ export function FleetChatWidget({ breakdownAlert }: { breakdownAlert?: { key: st
             alt=""
             className="h-6 w-[42px] rounded-md object-cover object-center"
           />
-          <span className="flex-1 text-xs font-semibold text-[#5b3918]">
+          <span className="flex-1 text-xs font-semibold text-nest-text">
             Néstor · Asistente de flota
           </span>
           <button
@@ -66,9 +66,9 @@ export function FleetChatWidget({ breakdownAlert }: { breakdownAlert?: { key: st
           </button>
         </div>
         {activeAlert && (
-          <div className="mx-1 mb-2 rounded-lg border border-red-600/35 bg-red-50 px-3 py-2" role="alert">
-            <p className="text-[0.65rem] font-bold uppercase tracking-wide text-red-800">🚨 Aviso de mantenimiento</p>
-            <p className="mt-0.5 text-xs leading-snug text-red-950">{activeAlert}</p>
+          <div className="mx-1 mb-2 rounded-lg border border-nest-red/35 bg-[#fff5f5] px-3 py-2" role="alert">
+            <p className="text-[0.65rem] font-bold uppercase tracking-wide text-nest-red">🚨 Aviso de mantenimiento</p>
+            <p className="mt-0.5 text-xs leading-snug text-nest-text">{activeAlert}</p>
           </div>
         )}
         <FleetChatPanel />
@@ -83,14 +83,14 @@ export function FleetChatWidget({ breakdownAlert }: { breakdownAlert?: { key: st
         title="Néstor · Asistente de flota"
         className="group fixed bottom-4 right-4 z-40 flex items-center gap-2"
       >
-        <span className="block h-12 w-[84px] overflow-hidden rounded-2xl bg-white ring-2 ring-nest-accent/60 shadow-nest-glow transition-transform group-hover:scale-105 group-hover:ring-nest-accent">
+        <span className="block h-12 w-[84px] overflow-hidden rounded-2xl bg-nest-panel ring-2 ring-nest-accent/70 shadow-nest-panel transition-shadow group-hover:ring-nest-accent">
           <img
             src={AVATAR_SRC}
             alt=""
             className="h-full w-full object-cover object-center"
           />
         </span>
-        <span className="hidden md:inline rounded-full bg-white/95 px-2 py-0.5 text-xs font-semibold text-[#5b3918] shadow-nest-panel">
+        <span className="hidden rounded-full border border-nest-border bg-nest-panel px-2 py-0.5 text-xs font-semibold text-nest-text shadow-nest-panel md:inline">
           {open ? "Cerrar" : "Néstor"}
         </span>
       </button>

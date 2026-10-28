@@ -37,14 +37,14 @@ export function FleetMaintenancePanel({
       onToggle={onToggle}
       onExpand={onToggle}
       hideExpand
-      headerExtra={paused ? <span className="rounded bg-red-100 px-1.5 py-0.5 text-[0.6rem] font-bold text-red-800">PAUSA</span> : undefined}
+      headerExtra={paused ? <span className="rounded bg-[#ffe4e6] px-1.5 py-0.5 text-[0.6rem] font-bold text-nest-red">PAUSA</span> : undefined}
     >
       <div className="space-y-2">
         <p className="text-[0.7rem] leading-snug text-nest-muted">
           Desgaste recibido del simulador · {paused ? "flota detenida por mantenimiento" : "flota en operación"}
         </p>
         {maintenance.length === 0 && (
-          <p className="rounded-lg border border-dashed border-[#5B3918]/25 px-3 py-2 text-xs text-nest-muted">
+          <p className="rounded-lg border border-dashed border-nest-border px-3 py-2 text-xs text-nest-muted">
             {offline ? "Conecta el backend para ver el mantenimiento de la flota." : "Esperando datos de mantenimiento…"}
           </p>
         )}
@@ -56,19 +56,19 @@ export function FleetMaintenancePanel({
           const broken = item.status === "broken";
           const wear = Math.max(0, Math.min(100, Number.isFinite(item.wear_pct) ? item.wear_pct : 0));
           return (
-            <div key={item.agv_id} className={`rounded-lg border p-2.5 text-xs ${broken ? "border-red-500/45 bg-red-50" : critical ? "border-amber-600/45 bg-amber-50" : "border-[#5B3918]/15 bg-white/75"}`}>
+            <div key={item.agv_id} className={`rounded-lg border p-2.5 text-xs ${broken ? "border-nest-red/40 bg-[#fff5f5]" : critical ? "border-amber-700/40 bg-[#fffbeb]" : "nest-card"}`}>
               <div className="flex items-center justify-between gap-2">
                 <span className="min-w-0 truncate font-semibold text-nest-text" title={item.agv_id}>{name}</span>
-                <span className={`shrink-0 rounded-full px-2 py-0.5 text-[0.65rem] font-bold ${broken ? "bg-red-100 text-red-800" : critical ? "bg-amber-200 text-amber-950" : "bg-emerald-100 text-emerald-800"}`}>{status}</span>
+                <span className={`shrink-0 rounded-full px-2 py-0.5 text-[0.65rem] font-bold ${broken ? "bg-[#ffe4e6] text-nest-red" : critical ? "bg-[#fef3c7] text-[#92400e]" : "bg-[#ecfdf5] text-nest-green"}`}>{status}</span>
               </div>
               <div className="mt-2 flex items-baseline justify-between text-nest-muted">
                 <span>Desgaste</span>
                 <span className="font-mono font-bold tabular-nums text-nest-text">{wear.toFixed(0)}%</span>
               </div>
-              <div className="mt-1 h-2 overflow-hidden rounded-full bg-[#5B3918]/10" role="progressbar" aria-label={`Desgaste de ${name}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={wear}>
+              <div className="mt-1 h-2 overflow-hidden rounded-full bg-nest-text/10" role="progressbar" aria-label={`Desgaste de ${name}`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={wear}>
                 <div className={`h-full rounded-full transition-[width] duration-300 ${broken ? "bg-red-600" : critical ? "bg-amber-600" : "bg-emerald-600"}`} style={{ width: `${wear}%` }} />
               </div>
-              {item.remaining_seconds > 0 && <p className="mt-1.5 font-mono text-[0.65rem] text-red-800">Restan {item.remaining_seconds.toFixed(0)} s simulados</p>}
+              {item.remaining_seconds > 0 && <p className="mt-1.5 font-mono text-[0.65rem] text-nest-red">Restan {item.remaining_seconds.toFixed(0)} s simulados</p>}
               <button
                 type="button"
                 disabled={offline || loadingId === item.agv_id || broken}

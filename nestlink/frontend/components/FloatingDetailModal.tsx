@@ -55,7 +55,7 @@ export function FloatingDetailModal({
   return (
     <div className="fixed inset-0 z-[100] flex items-start justify-center p-4 pointer-events-none">
       <div
-        className="absolute inset-0 bg-slate-900/30 backdrop-blur-sm pointer-events-auto"
+        className="nest-scrim absolute inset-0 pointer-events-auto"
         onClick={onClose}
         aria-hidden
       />

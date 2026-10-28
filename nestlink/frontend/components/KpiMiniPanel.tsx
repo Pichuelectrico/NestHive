@@ -17,12 +17,12 @@ export function KpiMiniPanel({ kpis, plantId }: KpiMiniPanelProps) {
     {
       label: "Vacíos evit.",
       value: String(kpis.viajes_vacios_evitados),
-      accent: "text-[#9f1239]",
+      accent: "text-nest-text",
     },
     {
       label: "Paradas",
       value: String(kpis.paradas_evitadas),
-      accent: "text-amber-700",
+      accent: "text-nest-text",
     },
     {
       label: "T. medio",
@@ -32,20 +32,20 @@ export function KpiMiniPanel({ kpis, plantId }: KpiMiniPanelProps) {
     {
       label: "OUT (prom.)",
       value: `${kpis.tiempo_medio_en_out_min.toFixed(1)}m`,
-      accent: "text-violet-700",
+      accent: "text-nest-text",
     },
     {
       label: "km evit.",
       value: kpis.km_evitados.toFixed(1),
-      accent: "text-[#c40026]",
+      accent: "text-nest-text",
     },
     {
       label: "ROI km",
       value: `−${kpis.roi_km_pct}%`,
-      accent: "text-emerald-700",
+      accent: "text-nest-ink",
       highlight: true,
     },
-    { label: "Asistencias AMR", value: String(kpis.amr_emergency_assists ?? 0), accent: "text-red-700" },
+    { label: "Asistencias AMR", value: String(kpis.amr_emergency_assists ?? 0), accent: "text-nest-red" },
   ];
 
   return (
@@ -56,7 +56,7 @@ export function KpiMiniPanel({ kpis, plantId }: KpiMiniPanelProps) {
           <div
             key={item.label}
             className={`nest-card px-1.5 py-1.5 text-center ${
-              item.highlight ? "border-emerald-600/25 bg-emerald-50" : ""
+              item.highlight ? "border-nest-accent/50 bg-nest-accent/15" : ""
             }`}
           >
             <div
