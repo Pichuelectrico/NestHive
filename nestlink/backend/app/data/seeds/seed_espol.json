@@ -6,7 +6,7 @@
       "material": "Insumos para cookies",
       "tasa_consumo_kg_min": 4.2,
       "umbral_critico_pct": 25,
-      "nivel_inicial_pct": 80.0,
+      "nivel_inicial_pct": 50.0,
       "capacidad_pallet_unidades": 480
     },
     {
@@ -15,7 +15,7 @@
       "material": "Insumos para chocolates",
       "tasa_consumo_kg_min": 3.5,
       "umbral_critico_pct": 20,
-      "nivel_inicial_pct": 80.0,
+      "nivel_inicial_pct": 50.0,
       "capacidad_pallet_unidades": 960
     },
     {
@@ -24,7 +24,7 @@
       "material": "Insumos para wafer",
       "tasa_consumo_kg_min": 2.8,
       "umbral_critico_pct": 30,
-      "nivel_inicial_pct": 80.0,
+      "nivel_inicial_pct": 50.0,
       "capacidad_pallet_unidades": 12
     }
   ],

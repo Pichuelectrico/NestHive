@@ -6,7 +6,7 @@
       "material": "Frasco Vidrio 200g",
       "tasa_consumo_kg_min": 4.5,
       "umbral_critico_pct": 25.0,
-      "nivel_inicial_pct": 80.0
+      "nivel_inicial_pct": 50.0
     },
     {
       "id": "L2_OUT",
@@ -14,7 +14,7 @@
       "material": "Sobre Sopas 50g",
       "tasa_consumo_kg_min": 3.8,
       "umbral_critico_pct": 20.0,
-      "nivel_inicial_pct": 80.0
+      "nivel_inicial_pct": 50.0
     },
     {
       "id": "L3_OUT",
@@ -22,7 +22,7 @@
       "material": "Cereal Pouch 350g",
       "tasa_consumo_kg_min": 3.2,
       "umbral_critico_pct": 20.0,
-      "nivel_inicial_pct": 80.0
+      "nivel_inicial_pct": 50.0
     },
     {
       "id": "E1_IN",
@@ -30,7 +30,7 @@
       "material": "Film Laminado 120mm",
       "tasa_consumo_kg_min": 3.0,
       "umbral_critico_pct": 30.0,
-      "nivel_inicial_pct": 80.0
+      "nivel_inicial_pct": 50.0
     },
     {
       "id": "E2_IN",
@@ -38,7 +38,7 @@
       "material": "Lata Hojalata 395g",
       "tasa_consumo_kg_min": 5.5,
       "umbral_critico_pct": 25.0,
-      "nivel_inicial_pct": 80.0
+      "nivel_inicial_pct": 50.0
     }
   ],
   "amrs": [

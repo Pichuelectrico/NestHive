@@ -6,7 +6,7 @@
       "material": "Frasco Vidrio 200g",
       "tasa_consumo_kg_min": 4.2,
       "umbral_critico_pct": 25.0,
-      "nivel_inicial_pct": 80.0,
+      "nivel_inicial_pct": 50.0,
       "capacidad_pallet_unidades": 480
     },
     {
@@ -15,7 +15,7 @@
       "material": "Sobre Sopas 50g",
       "tasa_consumo_kg_min": 3.5,
       "umbral_critico_pct": 20.0,
-      "nivel_inicial_pct": 80.0,
+      "nivel_inicial_pct": 50.0,
       "capacidad_pallet_unidades": 960
     },
     {
@@ -24,7 +24,7 @@
       "material": "Film Laminado 120mm",
       "tasa_consumo_kg_min": 2.8,
       "umbral_critico_pct": 30.0,
-      "nivel_inicial_pct": 80.0,
+      "nivel_inicial_pct": 50.0,
       "capacidad_pallet_unidades": 12
     },
     {
@@ -33,7 +33,7 @@
       "material": "Lata Hojalata 395g",
       "tasa_consumo_kg_min": 5.1,
       "umbral_critico_pct": 25.0,
-      "nivel_inicial_pct": 80.0,
+      "nivel_inicial_pct": 50.0,
       "capacidad_pallet_unidades": 600
     }
   ],
