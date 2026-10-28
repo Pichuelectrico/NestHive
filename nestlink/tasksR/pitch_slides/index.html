@@ -6,15 +6,18 @@
 <title>NestHive — Pitch 5 min · Hackathon InnoLabs Nestlé</title>
 <style>
   :root {
-    --red: #e3262d;
-    --red-soft: #fdecec;
-    --red-border: #f3c1c3;
-    --brown: #63513d;
-    --ink: #1f1f1f;
-    --muted: #555;
-    --line: #e0e0e0;
-    --bg: #fff;
-    --panel: #f6f8fa;
+    --gold: #e0a800;
+    --gold-deep: #d4a017;
+    --gold-soft: #fff6d6;
+    --gold-border: #e8c96a;
+    --cafe: #6f4e37;
+    --cafe-mid: #8b5e34;
+    --cream: #faf6ef;
+    --cacao: #f3ebe0;
+    --ink: #2a2118;
+    --muted: #6a5a4a;
+    --line: #e2d5c4;
+    --panel: #fffaf3;
     --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --mono: Menlo, Consolas, monospace;
   }
@@ -23,27 +26,26 @@
   body {
     font-family: var(--font);
     color: var(--ink);
-    background: #111;
+    background: #1a1410;
     overflow: hidden;
   }
 
-  /* subtle hive motif */
   .deck {
     position: relative;
     width: 100vw;
     height: 100vh;
     background:
-      radial-gradient(circle at 12% 18%, rgba(227,38,45,0.06), transparent 40%),
-      radial-gradient(circle at 88% 78%, rgba(99,81,61,0.07), transparent 42%),
-      linear-gradient(180deg, #fff 0%, #fafafa 100%);
+      radial-gradient(circle at 14% 16%, rgba(224,168,0,0.12), transparent 42%),
+      radial-gradient(circle at 86% 80%, rgba(111,78,55,0.10), transparent 44%),
+      linear-gradient(165deg, var(--cream) 0%, #fff 48%, var(--cacao) 100%);
   }
   .deck::before {
     content: "";
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.045;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='98' viewBox='0 0 56 98'%3E%3Cpath fill='none' stroke='%23e3262d' stroke-width='1' d='M28 2 L54 17 V47 L28 62 L2 47 V17 Z'/%3E%3C/svg%3E");
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='98' viewBox='0 0 56 98'%3E%3Cpath fill='none' stroke='%236f4e37' stroke-width='1' d='M28 2 L54 17 V47 L28 62 L2 47 V17 Z'/%3E%3C/svg%3E");
     background-size: 56px 98px;
   }
 
@@ -51,65 +53,70 @@
     display: none;
     position: absolute;
     inset: 0;
-    padding: 4.5vh 5.5vw 14vh;
+    padding: 4.2vh 5.2vw 13.5vh;
     flex-direction: column;
     justify-content: flex-start;
+    opacity: 0;
   }
-  .slide.active { display: flex; animation: in 280ms ease; }
-  @keyframes in {
-    from { opacity: 0; transform: translateY(8px); }
+  .slide.active {
+    display: flex;
+    animation: slideIn 420ms cubic-bezier(.22,.9,.3,1) forwards;
+  }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  .slide.active .stagger {
+    opacity: 0;
+    animation: fadeUp 480ms cubic-bezier(.22,.9,.3,1) forwards;
+  }
+  .slide.active .stagger:nth-child(1) { animation-delay: 60ms; }
+  .slide.active .stagger:nth-child(2) { animation-delay: 130ms; }
+  .slide.active .stagger:nth-child(3) { animation-delay: 200ms; }
+  .slide.active .stagger:nth-child(4) { animation-delay: 270ms; }
+  .slide.active .stagger:nth-child(5) { animation-delay: 340ms; }
+  .slide.active .stagger:nth-child(6) { animation-delay: 410ms; }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
     to { opacity: 1; transform: none; }
   }
 
   .eyebrow {
-    font-size: clamp(11px, 1.2vw, 14px);
-    letter-spacing: 0.14em;
+    font-size: clamp(11px, 1.15vw, 13px);
+    letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--brown);
-    font-weight: 600;
-    margin: 0 0 0.6em;
-  }
-  h1 {
-    font-size: clamp(28px, 4.2vw, 52px);
-    color: var(--red);
-    margin: 0 0 0.35em;
-    line-height: 1.12;
+    color: var(--cafe-mid);
     font-weight: 700;
+    margin: 0 0 0.55em;
   }
   h2 {
-    font-size: clamp(24px, 3.2vw, 40px);
-    color: var(--red);
-    margin: 0 0 0.55em;
-    line-height: 1.15;
+    font-size: clamp(24px, 3.1vw, 40px);
+    color: var(--cafe);
+    margin: 0 0 0.45em;
+    line-height: 1.12;
   }
   .lead {
-    font-size: clamp(16px, 1.7vw, 22px);
-    color: var(--brown);
-    margin: 0 0 1.1em;
+    font-size: clamp(15px, 1.6vw, 21px);
+    color: var(--cafe-mid);
+    margin: 0 0 1em;
     max-width: 52rem;
     line-height: 1.4;
   }
   .body {
-    font-size: clamp(15px, 1.45vw, 19px);
+    font-size: clamp(14px, 1.35vw, 18px);
     line-height: 1.45;
     max-width: 56rem;
   }
+
   .grid-2 {
     display: grid;
     grid-template-columns: 1.1fr 0.9fr;
-    gap: 1.4rem;
+    gap: 1.2rem;
     align-items: start;
   }
-  .grid-3 {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-  }
-  .grid-4 {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0.85rem;
-  }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.95rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; }
   @media (max-width: 900px) {
     .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
     .slide { padding-bottom: 18vh; }
@@ -117,28 +124,74 @@
 
   .card {
     background: var(--panel);
-    border-left: 4px solid var(--red);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--gold);
     padding: 0.95em 1.05em;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 12px 12px 0;
+    box-shadow: 0 6px 18px rgba(111,78,55,0.05);
+    transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(111,78,55,0.10);
+    border-color: var(--gold-border);
+  }
+  .card .ico {
+    font-size: 1.45rem;
+    line-height: 1;
+    margin-bottom: 0.35em;
   }
   .card h3 {
     margin: 0 0 0.35em;
-    color: var(--brown);
+    color: var(--cafe);
     font-size: 1.02em;
   }
   .card p, .card li { margin: 0.25em 0; color: var(--ink); }
-  .card ul { margin: 0.3em 0 0; padding-left: 1.15em; }
+  .card ul { margin: 0.3em 0 0; padding-left: 1.1em; }
+
+  .stat {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 7.2rem;
+    background: var(--gold-soft);
+    border: 1px solid var(--gold-border);
+    border-radius: 12px;
+    padding: 0.55em 0.75em 0.5em;
+    margin: 0.2em 0.45em 0.2em 0;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+  }
+  .stat .n {
+    font-family: var(--mono);
+    font-weight: 800;
+    font-size: clamp(22px, 2.4vw, 32px);
+    color: var(--cafe);
+    line-height: 1;
+  }
+  .stat .l {
+    font-size: clamp(11px, 1.05vw, 13px);
+    color: var(--muted);
+    margin-top: 0.28em;
+    font-weight: 600;
+  }
+  .stat.hot {
+    background: linear-gradient(160deg, var(--gold) 0%, var(--gold-deep) 100%);
+    border-color: var(--gold-deep);
+  }
+  .stat.hot .n, .stat.hot .l { color: #fff; }
 
   .pill {
     display: inline-block;
     font-family: var(--mono);
     font-weight: 700;
-    font-size: clamp(13px, 1.2vw, 16px);
-    background: var(--red-soft);
-    border: 1px solid var(--red-border);
-    border-radius: 4px;
-    padding: 0.2em 0.55em;
-    margin: 0.15em 0.35em 0.15em 0;
+    font-size: clamp(12px, 1.1vw, 15px);
+    background: var(--gold-soft);
+    border: 1px solid var(--gold-border);
+    border-radius: 6px;
+    padding: 0.22em 0.55em;
+    margin: 0.12em 0.3em 0.12em 0;
+    color: var(--cafe);
   }
   .pill small {
     font-family: var(--font);
@@ -146,23 +199,23 @@
     color: var(--muted);
   }
   .pill.hot {
-    background: var(--red);
+    background: var(--cafe);
     color: #fff;
-    border-color: var(--red);
+    border-color: var(--cafe);
   }
-  .pill.hot small { color: #ffe8e8; }
+  .pill.hot small { color: #f0e2d2; }
 
   .list-clean { list-style: none; margin: 0; padding: 0; }
   .list-clean li {
     position: relative;
     padding-left: 1.15em;
-    margin: 0.55em 0;
+    margin: 0.5em 0;
   }
   .list-clean li::before {
     content: "•";
     position: absolute;
     left: 0;
-    color: var(--red);
+    color: var(--gold-deep);
     font-weight: 700;
   }
 
@@ -174,143 +227,241 @@
     padding-bottom: 12vh;
   }
   .cover .logo {
-    width: clamp(96px, 14vw, 148px);
+    width: clamp(280px, 42vw, 460px);
     height: auto;
-    margin-bottom: 1.1rem;
-    filter: drop-shadow(0 8px 24px rgba(227,38,45,0.18));
+    margin: 0 auto 1.15rem;
+    display: block;
+    filter: drop-shadow(0 14px 32px rgba(111,78,55,0.18));
   }
-  .cover h1 { font-size: clamp(42px, 7vw, 78px); margin-bottom: 0.2em; }
   .cover .tagline {
     font-size: clamp(18px, 2.2vw, 26px);
-    color: var(--brown);
-    max-width: 36rem;
-    margin: 0 auto 1.4rem;
+    color: var(--cafe);
+    max-width: 38rem;
+    margin: 0 auto 1.15rem;
+    font-weight: 600;
   }
   .cover .team {
-    font-size: clamp(14px, 1.3vw, 17px);
+    font-size: clamp(14px, 1.35vw, 17px);
     color: var(--muted);
   }
   .hex-mark {
-    display: inline-flex;
-    width: 72px; height: 72px;
+    display: none;
+    width: 88px; height: 88px;
     align-items: center; justify-content: center;
-    background: var(--red);
-    color: #fff;
+    background: var(--gold);
+    color: var(--cafe);
     font-weight: 800;
-    font-size: 1.25rem;
+    font-size: 1.35rem;
     clip-path: polygon(25% 6%, 75% 6%, 100% 50%, 75% 94%, 25% 94%, 0 50%);
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem;
   }
 
-  /* architecture diagram */
   .arch {
     display: grid;
     grid-template-columns: 1fr auto 1fr auto 1fr;
-    gap: 0.55rem;
+    gap: 0.5rem;
     align-items: stretch;
-    margin: 0.6rem 0 1rem;
+    margin: 0.5rem 0 0.85rem;
   }
   .arch-box {
     background: #fff;
-    border: 2px solid var(--red-border);
-    border-radius: 10px;
+    border: 2px solid var(--gold-border);
+    border-radius: 12px;
     padding: 0.85rem 0.9rem;
-    min-height: 150px;
+    min-height: 148px;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+  }
+  .arch-box:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 22px rgba(111,78,55,0.08);
   }
   .arch-box.center {
-    border-color: var(--red);
-    background: var(--red-soft);
-    box-shadow: 0 0 0 3px rgba(227,38,45,0.08);
+    border-color: var(--gold-deep);
+    background: var(--gold-soft);
+    box-shadow: 0 0 0 3px rgba(224,168,0,0.12);
   }
   .arch-box h3 {
-    margin: 0 0 0.4em;
-    color: var(--red);
-    font-size: clamp(15px, 1.4vw, 18px);
+    margin: 0 0 0.35em;
+    color: var(--cafe);
+    font-size: clamp(15px, 1.35vw, 18px);
   }
   .arch-box .role {
-    font-size: 0.82em;
-    color: var(--brown);
-    font-weight: 600;
-    margin-bottom: 0.45em;
+    font-size: 0.8em;
+    color: var(--cafe-mid);
+    font-weight: 700;
+    margin-bottom: 0.4em;
   }
   .arch-box ul {
     margin: 0;
     padding-left: 1.05em;
-    font-size: clamp(12px, 1.15vw, 14.5px);
+    font-size: clamp(12px, 1.1vw, 14px);
   }
   .arch-arrow {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: var(--red);
+    color: var(--gold-deep);
     font-family: var(--mono);
-    font-size: clamp(11px, 1.1vw, 13px);
+    font-size: clamp(11px, 1.05vw, 13px);
     font-weight: 700;
-    min-width: 4.5rem;
+    min-width: 4.4rem;
     text-align: center;
-    gap: 0.25rem;
+    gap: 0.2rem;
   }
-  .arch-arrow .flow { color: var(--muted); font-family: var(--font); font-weight: 500; font-size: 0.85em; line-height: 1.25; }
+  .arch-arrow .flow {
+    color: var(--muted);
+    font-family: var(--font);
+    font-weight: 500;
+    font-size: 0.82em;
+    line-height: 1.25;
+  }
   .rfid {
-    margin-top: 0.2rem;
-    border: 1px dashed var(--brown);
-    border-radius: 8px;
-    padding: 0.7rem 0.95rem;
-    color: var(--brown);
-    font-size: clamp(13px, 1.25vw, 16px);
-    background: rgba(99,81,61,0.04);
+    margin-top: 0.15rem;
+    border: 1px dashed var(--cafe-mid);
+    border-radius: 10px;
+    padding: 0.65rem 0.9rem;
+    color: var(--cafe);
+    font-size: clamp(13px, 1.2vw, 15.5px);
+    background: rgba(111,78,55,0.04);
   }
-  .rfid b { color: var(--ink); }
 
-  table.crit {
+  table.crit, table.cost {
     width: 100%;
     border-collapse: collapse;
-    font-size: clamp(13px, 1.25vw, 16px);
-    margin-top: 0.3rem;
+    font-size: clamp(12px, 1.15vw, 15px);
+    margin-top: 0.25rem;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(111,78,55,0.05);
   }
-  table.crit th, table.crit td {
+  table.crit th, table.crit td,
+  table.cost th, table.cost td {
     text-align: left;
-    padding: 0.55em 0.65em;
+    padding: 0.48em 0.6em;
     border-bottom: 1px solid var(--line);
     vertical-align: top;
   }
-  table.crit th {
-    color: var(--brown);
-    font-size: 0.85em;
+  table.crit th, table.cost th {
+    color: var(--cafe);
+    font-size: 0.82em;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.05em;
+    background: var(--cacao);
   }
-  table.crit td:first-child { font-weight: 700; color: var(--red); width: 28%; }
-  table.crit td:last-child { font-family: var(--mono); font-size: 0.95em; }
+  table.crit td:first-child { font-weight: 700; color: var(--cafe); width: 26%; }
+  table.crit td:last-child, table.cost td.num {
+    font-family: var(--mono);
+    font-size: 0.95em;
+    white-space: nowrap;
+  }
+  table.cost td.tag {
+    font-size: 0.78em;
+    color: var(--cafe-mid);
+    font-weight: 700;
+  }
+  table.cost tfoot td {
+    font-weight: 800;
+    background: var(--gold-soft);
+    border-bottom: none;
+  }
+  .fine {
+    font-size: clamp(11px, 1.05vw, 13px);
+    color: var(--muted);
+    margin-top: 0.45rem;
+  }
 
   .note-honest {
-    margin-top: 0.9rem;
-    padding: 0.7rem 0.9rem;
-    background: #fff8e8;
-    border-left: 4px solid #c9892d;
-    border-radius: 0 8px 8px 0;
-    font-size: clamp(13px, 1.25vw, 16px);
+    margin-top: 0.7rem;
+    padding: 0.65rem 0.85rem;
+    background: #fff8e6;
+    border-left: 4px solid var(--gold);
+    border-radius: 0 10px 10px 0;
+    font-size: clamp(13px, 1.2vw, 15.5px);
     color: #5a4518;
   }
+
+  /* payback chart */
+  .payback {
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 1rem;
+    margin-top: 0.55rem;
+  }
+  .chart {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 0.75rem 0.85rem 0.55rem;
+  }
+  .chart h3 {
+    margin: 0 0 0.55em;
+    color: var(--cafe);
+    font-size: 0.95em;
+  }
+  .bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.45rem;
+    height: 140px;
+    padding-top: 0.4rem;
+  }
+  .bar-col {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    justify-content: flex-end;
+    gap: 0.3rem;
+  }
+  .bar {
+    width: 100%;
+    max-width: 42px;
+    border-radius: 8px 8px 3px 3px;
+    background: linear-gradient(180deg, var(--gold) 0%, var(--gold-deep) 100%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.35);
+    position: relative;
+    transition: height 500ms ease;
+  }
+  .bar.capex {
+    background: linear-gradient(180deg, var(--cafe-mid) 0%, var(--cafe) 100%);
+  }
+  .bar.eq {
+    outline: 2px dashed var(--cafe);
+    outline-offset: 2px;
+  }
+  .bar-val {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--cafe);
+    font-weight: 700;
+  }
+  .bar-lab {
+    font-size: 10px;
+    color: var(--muted);
+    text-align: center;
+    line-height: 1.15;
+  }
+  .origins li { margin: 0.28em 0; }
 
   .footer-bar {
     position: absolute;
     left: 0; right: 0; bottom: 0;
-    height: 52px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1.4rem;
-    background: rgba(255,255,255,0.92);
+    padding: 0 1.3rem;
+    background: rgba(250,246,239,0.94);
     border-top: 1px solid var(--line);
     z-index: 5;
-    font-size: 13px;
+    font-size: 12.5px;
     color: var(--muted);
   }
-  .footer-bar .brand { color: var(--red); font-weight: 700; }
+  .footer-bar .brand { color: var(--cafe); font-weight: 800; }
   .counter { font-family: var(--mono); color: var(--ink); }
-  .keys { opacity: 0.85; }
   .keys kbd {
     font-family: var(--mono);
     background: var(--panel);
@@ -320,33 +471,32 @@
     margin: 0 1px;
   }
 
-  /* speaker notes */
   .notes {
     position: absolute;
-    left: 1.2rem;
-    right: 1.2rem;
-    bottom: 60px;
-    max-height: 28vh;
+    left: 1.15rem;
+    right: 1.15rem;
+    bottom: 58px;
+    max-height: 27vh;
     overflow: auto;
-    background: rgba(31,31,31,0.94);
-    color: #f5f5f5;
-    border-radius: 10px;
-    padding: 0.85rem 1rem 0.95rem;
+    background: rgba(42,33,24,0.95);
+    color: #f7f1e8;
+    border-radius: 12px;
+    padding: 0.85rem 1rem;
     z-index: 6;
     display: none;
-    box-shadow: 0 12px 40px rgba(0,0,0,0.28);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.28);
   }
   .notes.show { display: block; }
   .notes .meta {
     font-size: 11px;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #f3a0a3;
+    color: var(--gold);
     margin-bottom: 0.4rem;
     font-weight: 700;
   }
   .notes .script {
-    font-size: clamp(13px, 1.2vw, 15.5px);
+    font-size: clamp(13px, 1.15vw, 15px);
     line-height: 1.45;
     white-space: pre-wrap;
   }
@@ -354,52 +504,55 @@
   .progress {
     position: absolute;
     top: 0; left: 0; height: 3px;
-    background: var(--red);
+    background: linear-gradient(90deg, var(--gold), var(--cafe-mid));
     z-index: 7;
-    transition: width 200ms ease;
-  }
-
-  .stat-row { margin: 0.5rem 0 0.9rem; }
-
-  .big-num {
-    font-family: var(--mono);
-    font-size: clamp(28px, 3.5vw, 42px);
-    color: var(--red);
-    font-weight: 800;
-    line-height: 1;
-  }
-  .big-num span {
-    display: block;
-    font-family: var(--font);
-    font-size: 0.38em;
-    color: var(--brown);
-    font-weight: 600;
-    margin-top: 0.35em;
+    transition: width 220ms ease;
   }
 
   .flow-chain {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.4rem;
+    gap: 0.35rem;
     align-items: center;
-    margin: 0.7rem 0 1rem;
-    font-size: clamp(13px, 1.3vw, 16px);
+    margin: 0.55rem 0 0.9rem;
+    font-size: clamp(13px, 1.25vw, 15.5px);
   }
   .flow-chain .step {
     background: #fff;
-    border: 1px solid var(--red-border);
+    border: 1px solid var(--gold-border);
     border-radius: 999px;
-    padding: 0.35em 0.75em;
-    font-weight: 600;
+    padding: 0.32em 0.7em;
+    font-weight: 650;
   }
-  .flow-chain .arrow { color: var(--red); font-weight: 800; }
+  .flow-chain .arrow { color: var(--gold-deep); font-weight: 800; }
 
   .two-col-tight {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1rem;
+    gap: 0.9rem;
   }
-  @media (max-width: 800px) { .two-col-tight { grid-template-columns: 1fr; } .arch { grid-template-columns: 1fr; } .arch-arrow { flex-direction: row; min-width: 0; padding: 0.3rem 0; } }
+  .big-num {
+    font-family: var(--mono);
+    font-size: clamp(30px, 3.6vw, 44px);
+    color: var(--cafe);
+    font-weight: 800;
+    line-height: 1;
+    text-align: center;
+  }
+  .big-num span {
+    display: block;
+    font-family: var(--font);
+    font-size: 0.34em;
+    color: var(--cafe-mid);
+    font-weight: 650;
+    margin-top: 0.35em;
+  }
+
+  @media (max-width: 800px) {
+    .two-col-tight, .payback { grid-template-columns: 1fr; }
+    .arch { grid-template-columns: 1fr; }
+    .arch-arrow { flex-direction: row; min-width: 0; padding: 0.25rem 0; }
+  }
 </style>
 </head>
 <body>
@@ -407,25 +560,25 @@
   <div class="progress" id="progress"></div>
 
   <!-- 1 PORTADA -->
-  <section class="slide cover active" data-t="0:00–0:15 · 15s" data-notes="Buenas tardes. Somos NestHive. Una sola flota, un solo cerebro, cero desperdicio: convertimos la logística interna de Nestlé en una colmena que se percibe, decide y se coordina sola. En cinco minutos les mostramos el problema, el cerebro —Néstor—, la flota de cuatro AGVs, la demo y los números.">
-    <img class="logo" src="logo-nesthive.png" alt="NestHive" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" />
-    <div class="hex-mark" style="display:none" aria-hidden="true">NH</div>
-    <h1>NestHive</h1>
-    <p class="tagline">Una sola flota · un solo cerebro · cero desperdicio</p>
-    <p class="team">Hackathon InnoLabs Nestlé · Equipo: Joshua (USFQ) · ESPOL · UTPL</p>
+  <section class="slide cover active" data-t="0:00–0:12 · 12s" data-notes="Buenas tardes. Somos NestHive. Una sola flota, un solo cerebro, cero desperdicio: convertimos la logística interna de Nestlé en una colmena que se percibe, decide y se coordina sola. En cinco minutos les mostramos el problema, el cerebro —Néstor—, la flota de cuatro AGVs, la economía y los números.">
+    <img class="logo stagger" src="logo-nesthive.png" alt="NestHive" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" />
+    <div class="hex-mark" aria-hidden="true">NH</div>
+    <p class="tagline stagger">Una sola flota · un solo cerebro · cero desperdicio</p>
+    <p class="team stagger">Joshua Reinoso (USFQ) · Andrea Verdezoto (ESPOL) · Andrés Fernandez (UTPL)</p>
   </section>
 
   <!-- 2 PROBLEMÁTICA -->
-  <section class="slide" data-t="0:15–0:50 · 35s" data-notes="El reto de Nestlé es textual: automatizar y optimizar el flujo de materiales y productos entre producción y almacenamiento con tecnologías autónomas que mejoren productividad, eficiencia y seguridad. Ese flujo va en dos sentidos: producto terminado hacia el almacén, e insumos desde el almacén hacia las empaquetadoras. Hoy hay intervenciones manuales, riesgos en pasillos compartidos y costos ocultos: cerca del cuarenta y cinco por ciento de los kilómetros son pata vacía, paquetes olvidados bloquean el punto de entrega, y hay gente dedicada a desbloquear, no a crear valor.">
-    <p class="eyebrow">Criterio · Problemática · 20%</p>
-    <h2>El reto Nestlé, sin maquillaje</h2>
-    <p class="lead">Automatizar el flujo de materiales y productos entre producción y almacenamiento — con más productividad, eficiencia y seguridad.</p>
+  <section class="slide" data-t="0:12–0:44 · 32s" data-notes="El reto de Nestlé es textual: automatizar y optimizar el flujo de materiales y productos entre producción y almacenamiento con tecnologías autónomas que mejoren productividad, eficiencia y seguridad. Ese flujo va en dos sentidos: producto terminado hacia el almacén, e insumos desde el almacén hacia las empaquetadoras. Hoy hay intervenciones manuales, riesgos en pasillos compartidos y costos ocultos: cerca del cuarenta y cinco por ciento de los kilómetros son pata vacía, paquetes olvidados bloquean el punto de entrega, y hay gente dedicada a desbloquear, no a crear valor.">
+    <p class="eyebrow stagger">Criterio · Problemática · 20%</p>
+    <h2 class="stagger">El reto Nestlé, sin maquillaje</h2>
+    <p class="lead stagger">Automatizar el flujo de materiales y productos entre producción y almacenamiento — con más productividad, eficiencia y seguridad.</p>
     <div class="grid-2">
-      <div>
-        <div class="card" style="margin-bottom:0.85rem">
+      <div class="stagger">
+        <div class="card" style="margin-bottom:0.8rem">
+          <div class="ico">↔️</div>
           <h3>Doble flujo que no puede fallar</h3>
           <ul>
-            <li><b>Producto terminado</b> → líneas semiautomáticas → almacenamiento</li>
+            <li><b>Producto terminado</b> → líneas → almacenamiento</li>
             <li><b>Materiales</b> → almacén → empaquetadoras, a tiempo</li>
           </ul>
         </div>
@@ -435,9 +588,12 @@
           <li>Abastecimiento reactivo → líneas que esperan</li>
         </ul>
       </div>
-      <div class="card">
+      <div class="card stagger">
+        <div class="ico">💸</div>
         <h3>Costos ocultos</h3>
-        <p><span class="pill">~45% <small>pata vacía</small></span></p>
+        <div style="margin:0.45em 0 0.65em">
+          <div class="stat hot"><span class="n">~45%</span><span class="l">pata vacía</span></div>
+        </div>
         <ul>
           <li>Paquetes olvidados en el punto de entrega</li>
           <li>Personas desbloqueando en vez de crear valor</li>
@@ -447,39 +603,30 @@
     </div>
   </section>
 
-  <!-- 3 NESTHIVE + NÉSTOR -->
-  <section class="slide" data-t="0:50–1:15 · 25s" data-notes="NestHive es la colmena. Néstor es la reina abeja: la IA orquestadora que gestiona los hilos —qué ruta usa cada vehículo, qué AGV atiende qué demanda—. Informa datos en vivo con KPIs y permite preguntar rápido en lenguaje operacional. Las obreras son los AGVs; la reina es Néstor. Un solo cerebro para toda la flota.">
-    <p class="eyebrow">El cerebro de la colmena</p>
-    <h2>NestHive + Néstor, la reina abeja</h2>
-    <p class="lead">Una IA orquestadora: decide rutas y vehículos, prioriza demandas, informa en vivo y responde preguntas operacionales.</p>
+  <!-- 3 NÉSTOR -->
+  <section class="slide" data-t="0:44–1:06 · 22s" data-notes="NestHive es la colmena. Néstor es la reina abeja: la IA orquestadora que gestiona los hilos —qué ruta usa cada vehículo, qué AGV atiende qué demanda—. Informa datos en vivo con KPIs y permite preguntar rápido en lenguaje operacional. Las obreras son los AGVs; la reina es Néstor.">
+    <p class="eyebrow stagger">El cerebro de la colmena</p>
+    <h2 class="stagger">NestHive + Néstor, la reina abeja</h2>
+    <p class="lead stagger">Una IA orquestadora: decide rutas y vehículos, prioriza demandas, informa en vivo y responde preguntas operacionales.</p>
     <div class="grid-3">
-      <div class="card">
-        <h3>Decide</h3>
-        <p>Qué ruta usa cada AGV y qué demanda atiende — asignación y re-ruteo en el mismo cerebro.</p>
-      </div>
-      <div class="card">
-        <h3>Informa</h3>
-        <p>KPIs en vivo: movimientos, paradas evitadas, estado de flota y averías.</p>
-      </div>
-      <div class="card">
-        <h3>Conversacional</h3>
-        <p>Néstor responde intents operativos: flota, baterías, misiones, cuellos de botella, riesgo del turno.</p>
-      </div>
+      <div class="card stagger"><div class="ico">🧭</div><h3>Decide</h3><p>Qué ruta usa cada AGV y qué demanda atiende — asignación y re-ruteo en el mismo cerebro.</p></div>
+      <div class="card stagger"><div class="ico">📊</div><h3>Informa</h3><p>KPIs en vivo: movimientos, paradas evitadas, estado de flota y averías.</p></div>
+      <div class="card stagger"><div class="ico">💬</div><h3>Conversacional</h3><p>Néstor responde intents operativos: flota, baterías, misiones, cuellos de botella, riesgo del turno.</p></div>
     </div>
-    <div class="stat-row" style="margin-top:1.1rem">
+    <div class="stagger" style="margin-top:1rem">
       <span class="pill">Obreras = AGVs</span>
       <span class="pill hot">Reina = Néstor</span>
       <span class="pill">Un mapa · un cerebro</span>
     </div>
   </section>
 
-  <!-- 4 WCS ↔ NÉSTOR ↔ WMS -->
-  <section class="slide" data-t="1:15–1:45 · 30s" data-notes="Arquitectura en tres capas. A la izquierda, el WCS: el piso — PLCs, cinta, AGVs, la misión ya ejecutada. En el centro, Néstor: decide rutas, vehículos, prioridades y averías. A la derecha, WMS y SAP: el inventario empresarial. Y el anillo RFID: al recoger cada palet, el lector del AGV escanea el tag y actualiza SAP/WMS en tiempo real, con exactitud mayor o igual a noventa y nueve coma nueve por ciento. Hoy validamos la decisión en gemelo digital; la integración de piso es el siguiente paso.">
-    <p class="eyebrow">Viabilidad técnica · Integración</p>
-    <h2>WCS ↔ Néstor ↔ WMS / SAP</h2>
-    <div class="arch" aria-label="Diagrama de arquitectura">
+  <!-- 4 WCS -->
+  <section class="slide" data-t="1:06–1:31 · 25s" data-notes="Arquitectura en tres capas. A la izquierda, el WCS: el piso — PLCs, cinta, AGVs, la misión ya ejecutada. En el centro, Néstor: decide rutas, vehículos, prioridades y averías. A la derecha, WMS y SAP: el inventario empresarial. Y el anillo RFID: al recoger cada palet, el lector del AGV escanea el tag y actualiza SAP/WMS en tiempo real, con exactitud mayor o igual a noventa y nueve coma nueve por ciento. Hoy validamos la decisión en gemelo digital; la integración de piso es el siguiente paso.">
+    <p class="eyebrow stagger">Viabilidad técnica · Integración</p>
+    <h2 class="stagger">WCS ↔ Néstor ↔ WMS / SAP</h2>
+    <div class="arch stagger" aria-label="Diagrama de arquitectura">
       <div class="arch-box">
-        <h3>WCS</h3>
+        <h3>🏭 WCS</h3>
         <div class="role">Piso industrial</div>
         <ul>
           <li>PLCs y cinta</li>
@@ -488,12 +635,9 @@
           <li>Telemetría de posición</li>
         </ul>
       </div>
-      <div class="arch-arrow">
-        <div>⇄</div>
-        <div class="flow">misión<br/>estado<br/>bloqueos</div>
-      </div>
+      <div class="arch-arrow"><div>⇄</div><div class="flow">misión<br/>estado<br/>bloqueos</div></div>
       <div class="arch-box center">
-        <h3>NÉSTOR</h3>
+        <h3>👑 NÉSTOR</h3>
         <div class="role">Cerebro NestHive</div>
         <ul>
           <li>Rutas y vehículos</li>
@@ -502,12 +646,9 @@
           <li>KPIs + chat operativo</li>
         </ul>
       </div>
-      <div class="arch-arrow">
-        <div>⇄</div>
-        <div class="flow">órdenes<br/>stock<br/>evento palet</div>
-      </div>
+      <div class="arch-arrow"><div>⇄</div><div class="flow">órdenes<br/>stock<br/>evento palet</div></div>
       <div class="arch-box">
-        <h3>WMS / SAP</h3>
+        <h3>📦 WMS / SAP</h3>
         <div class="role">Inventario empresarial</div>
         <ul>
           <li>Órdenes EWM</li>
@@ -517,56 +658,44 @@
         </ul>
       </div>
     </div>
-    <div class="rfid">
-      <b>Anillo RFID → SAP/WMS:</b> al recoger cada palet, el lector RFID del AGV escanea el tag y actualiza inventario en tiempo real —
-      <span class="pill" style="margin-left:0.35em">≥99,9% <small>exactitud</small></span>
+    <div class="rfid stagger">
+      <b>📡 Anillo RFID → SAP/WMS:</b> al recoger cada palet, el lector RFID del AGV escanea el tag y actualiza inventario en tiempo real —
+      <span class="stat" style="margin-left:0.4em;vertical-align:middle"><span class="n" style="font-size:1.15rem">≥99,9%</span><span class="l">exactitud</span></span>
     </div>
   </section>
 
   <!-- 5 DEMANDA -->
-  <section class="slide" data-t="1:45–2:10 · 25s" data-notes="No esperamos a que la línea se detenga. Movemos la demanda antes de que materialice: takt de ciento treinta y dos segundos, umbrales críticos y abastecimiento preventivo. Con eso el techo sube a cuatrocientos once pallets por turno — un noventa y uno por ciento más. De reactivo a preventivo: esa es la frase que nos diferencia.">
-    <p class="eyebrow">Estrategia de movimiento</p>
-    <h2>Mover antes de que la demanda llegue</h2>
-    <p class="lead">Predictivo y preventivo: la flota se adelanta al stock-out, no reacciona cuando la línea ya paró.</p>
-    <div class="stat-row">
-      <span class="pill">takt 132 s</span>
-      <span class="pill">1.035 <small>mov/día</small></span>
-      <span class="pill">215 / 131 <small>salida / entrada por turno</small></span>
-      <span class="pill hot">techo 411 <small>pallets/turno (+91%)</small></span>
+  <section class="slide" data-t="1:31–1:53 · 22s" data-notes="No esperamos a que la línea se detenga. Movemos la demanda antes de que materialice: takt de ciento treinta y dos segundos, umbrales críticos y abastecimiento preventivo. Con eso el techo sube a cuatrocientos once pallets por turno — un noventa y uno por ciento más. De reactivo a preventivo: esa es la frase que nos diferencia.">
+    <p class="eyebrow stagger">Estrategia de movimiento</p>
+    <h2 class="stagger">Mover antes de que la demanda llegue</h2>
+    <p class="lead stagger">Predictivo y preventivo: la flota se adelanta al stock-out, no reacciona cuando la línea ya paró.</p>
+    <div class="stagger" style="margin-bottom:0.85rem">
+      <div class="stat"><span class="n">132 s</span><span class="l">takt</span></div>
+      <div class="stat"><span class="n">1.035</span><span class="l">mov/día</span></div>
+      <div class="stat"><span class="n">215/131</span><span class="l">salida / entrada · turno</span></div>
+      <div class="stat hot"><span class="n">411</span><span class="l">techo pallets/turno (+91%)</span></div>
     </div>
-    <div class="grid-3" style="margin-top:0.6rem">
-      <div class="card">
-        <h3>Umbral crítico</h3>
-        <p>Disparo de abastecimiento antes de que el gauge cruce el mínimo operativo.</p>
-      </div>
-      <div class="card">
-        <h3>Preventivo</h3>
-        <p>Misiones anticipadas en cola — holgura para el matching, menos picos de flota.</p>
-      </div>
-      <div class="card">
-        <h3>Degradación segura</h3>
-        <p>Si el forecast se desvía, vuelve a modo reactivo. La predicción nunca arriesga la planta.</p>
-      </div>
+    <div class="grid-3">
+      <div class="card stagger"><div class="ico">⚠️</div><h3>Umbral crítico</h3><p>Disparo de abastecimiento antes de que el gauge cruce el mínimo operativo.</p></div>
+      <div class="card stagger"><div class="ico">⏩</div><h3>Preventivo</h3><p>Misiones anticipadas en cola — holgura para el matching, menos picos de flota.</p></div>
+      <div class="card stagger"><div class="ico">🛡️</div><h3>Degradación segura</h3><p>Si el forecast se desvía, vuelve a modo reactivo. La predicción nunca arriesga la planta.</p></div>
     </div>
   </section>
 
-  <!-- 6 FLOTA 4 AGVs -->
-  <section class="slide" data-t="2:10–2:35 · 25s" data-notes="Flota objetivo: cuatro AGVs — tres operativos y uno de backup. Menos CAPEX y menos mantenimiento que sobredimensionar. Si hay avería: el AGV se detiene, bloquea su tramo, los demás re-rutean; si no hay paso, se pausa la operación. La reparación tarda diez segundos de simulación. El backup asume sin perder misiones. El AGV de exportación lleva la cadena al Transporte.">
-    <p class="eyebrow">Flota unificada</p>
-    <h2>4 AGVs · 3 operativos + 1 backup</h2>
+  <!-- 6 FLOTA -->
+  <section class="slide" data-t="1:53–2:15 · 22s" data-notes="Flota objetivo: cuatro AGVs — tres operativos y uno de backup. Menos CAPEX y menos mantenimiento que sobredimensionar. Si hay avería: el AGV se detiene, bloquea su tramo, los demás re-rutean; si no hay paso, se pausa la operación. La reparación tarda diez segundos de simulación. El backup asume sin perder misiones.">
+    <p class="eyebrow stagger">Flota unificada</p>
+    <h2 class="stagger">4 AGVs · 3 operativos + 1 backup</h2>
     <div class="grid-2">
-      <div>
-        <div class="two-col-tight" style="margin-bottom:0.9rem">
-          <div class="card" style="text-align:center">
-            <div class="big-num">3<span>operativos</span></div>
-          </div>
-          <div class="card" style="text-align:center;border-left-color:var(--brown)">
-            <div class="big-num" style="color:var(--brown)">1<span>backup N+1</span></div>
-          </div>
+      <div class="stagger">
+        <div class="two-col-tight" style="margin-bottom:0.85rem">
+          <div class="card" style="text-align:center"><div class="big-num">3<span>operativos</span></div></div>
+          <div class="card" style="text-align:center;border-left-color:var(--cafe)"><div class="big-num">1<span>backup N+1</span></div></div>
         </div>
         <p class="body">Menos CAPEX y menos mantenimiento. El AGV de exportación cubre paletizaje → Transporte; el backup asume sin perder misiones.</p>
       </div>
-      <div class="card">
+      <div class="card stagger">
+        <div class="ico">🛠️</div>
         <h3>Robustez ante avería (OPS)</h3>
         <ul>
           <li>El AGV se <b>detiene</b></li>
@@ -580,10 +709,10 @@
   </section>
 
   <!-- 7 DEMO -->
-  <section class="slide" data-t="2:35–3:05 · 30s" data-notes="Esto es lo que van a ver en el gemelo: mapa canónico real — muros y ciento treinta y nueve nodos —, la cadena roja de paletizaje a Transporte, Néstor informando, señales de puzzle y paquete, y OPS en vivo. Cadena: fuente de insumos, P con puzzle, cinta de veinte segundos, R con paquete, morado, Transporte. Nota honesta: hoy validamos la decisión en simulador; la integración WCS y RFID es el siguiente paso. Presentamos la idea completa sin afirmar que el hardware ya corre.">
-    <p class="eyebrow">Demo en vivo · Gemelo digital</p>
-    <h2>Qué verán en pantalla</h2>
-    <div class="flow-chain" aria-label="Cadena de materiales">
+  <section class="slide" data-t="2:15–2:40 · 25s" data-notes="Esto es lo que van a ver en el gemelo: mapa canónico real — muros y ciento treinta y nueve nodos —, la cadena roja de paletizaje a Transporte, Néstor informando, señales de puzzle y paquete, y OPS en vivo. Nota honesta: hoy validamos la decisión en simulador; la integración WCS y RFID es el siguiente paso.">
+    <p class="eyebrow stagger">Demo en vivo · Gemelo digital</p>
+    <h2 class="stagger">Qué verán en pantalla</h2>
+    <div class="flow-chain stagger">
       <span class="step">FUENTE</span><span class="arrow">→</span>
       <span class="step">P 🧩</span><span class="arrow">→</span>
       <span class="step">cinta 20 s</span><span class="arrow">→</span>
@@ -592,108 +721,72 @@
       <span class="step">Transporte</span>
     </div>
     <div class="grid-2">
-      <ul class="list-clean body">
+      <ul class="list-clean body stagger">
         <li>Mapa canónico ESPOL Fusion: muros + <b>139 nodos / 162 aristas</b></li>
-        <li>Cadena roja paletizaje → Transporte (AGV de exportación)</li>
+        <li>Cadena paletizaje → Transporte (AGV de exportación)</li>
         <li>Néstor informando y respondiendo en vivo</li>
         <li>Señales 🧩 / 📦 + panel OPS de averías</li>
       </ul>
-      <div class="note-honest">
+      <div class="note-honest stagger">
         <b>Nota honesta para el jurado:</b> hoy validamos la decisión en simulador. La integración WCS/RFID es el siguiente paso — presentamos la arquitectura completa sin afirmar que el hardware ya está en planta.
       </div>
     </div>
   </section>
 
   <!-- 8 INNOVACIÓN -->
-  <section class="slide" data-t="3:05–3:25 · 20s" data-notes="¿Qué nos diferencia? Mission control: cero puntos de entrega bloqueados para siempre. Decisión sobre percepción real del layout — muros, pasillos, bloqueos —, no sobre un dibujo decorativo. Néstor conversacional para el operador. Y una flota unificada sobre protocolo abierto: agnóstica de fabricante.">
-    <p class="eyebrow">Criterio · Innovación · 15%</p>
-    <h2>Qué innovamos de verdad</h2>
+  <section class="slide" data-t="2:40–2:58 · 18s" data-notes="¿Qué nos diferencia? Mission control: cero puntos de entrega bloqueados para siempre. Decisión sobre percepción real del layout — muros, pasillos, bloqueos —. Néstor conversacional. Y una flota unificada sobre protocolo abierto: agnóstica de fabricante.">
+    <p class="eyebrow stagger">Criterio · Innovación · 15%</p>
+    <h2 class="stagger">Qué innovamos de verdad</h2>
     <div class="grid-4">
-      <div class="card">
-        <h3>Mission control</h3>
-        <p>Cero puntos bloqueados: cada salida encadena exportación; nada se olvida en el buffer.</p>
-      </div>
-      <div class="card">
-        <h3>Percepción real</h3>
-        <p>Decisión sobre el grafo vivo: muros, aristas y bloqueos — no un mapa decorativo.</p>
-      </div>
-      <div class="card">
-        <h3>Néstor conversacional</h3>
-        <p>Preguntas operativas con respuesta determinista y datos verificables.</p>
-      </div>
-      <div class="card">
-        <h3>Protocolo abierto</h3>
-        <p>Flota unificada vía API/WebSocket — agnóstica de fabricante.</p>
-      </div>
+      <div class="card stagger"><div class="ico">🎯</div><h3>Mission control</h3><p>Cero puntos bloqueados: cada salida encadena exportación.</p></div>
+      <div class="card stagger"><div class="ico">👁️</div><h3>Percepción real</h3><p>Decisión sobre el grafo vivo: muros, aristas y bloqueos.</p></div>
+      <div class="card stagger"><div class="ico">🗣️</div><h3>Néstor conversacional</h3><p>Preguntas operativas con datos verificables.</p></div>
+      <div class="card stagger"><div class="ico">🔌</div><h3>Protocolo abierto</h3><p>API/WebSocket — agnóstica de fabricante.</p></div>
     </div>
   </section>
 
   <!-- 9 CUMPLIMIENTO -->
-  <section class="slide" data-t="3:25–3:50 · 25s" data-notes="Cumplimiento del reto, criterio a criterio, con dato. Productividad: techo cuatrocientos once, más noventa y uno por ciento, takt ciento treinta y dos segundos. Demanda: mil treinta y cinco movimientos al día, doscientos quince de salida y ciento treinta y uno de entrada por turno. Exactitud de inventario mayor o igual a noventa y nueve coma nueve vía RFID. Disponibilidad mayor o igual a noventa y ocho. Espera menor o igual a treinta segundos al percentil noventa y cinco. Seguridad: muros, percepción y peatones.">
-    <p class="eyebrow">Criterio · Valor para Nestlé · 15%</p>
-    <h2>Cumplimiento del reto — con dato</h2>
-    <table class="crit">
+  <section class="slide" data-t="2:58–3:20 · 22s" data-notes="Cumplimiento del reto, criterio a criterio, con dato. Productividad: techo cuatrocientos once, más noventa y uno por ciento, takt ciento treinta y dos segundos. Demanda: mil treinta y cinco movimientos al día. Exactitud de inventario mayor o igual a noventa y nueve coma nueve vía RFID. Disponibilidad mayor o igual a noventa y ocho. Espera menor o igual a treinta segundos al percentil noventa y cinco. Seguridad: muros, percepción y peatones.">
+    <p class="eyebrow stagger">Criterio · Valor para Nestlé · 15%</p>
+    <h2 class="stagger">Cumplimiento del reto — con dato</h2>
+    <table class="crit stagger">
       <thead>
         <tr><th>Criterio</th><th>Cómo lo cumplimos</th><th>Dato canónico</th></tr>
       </thead>
       <tbody>
-        <tr>
-          <td>Productividad</td>
-          <td>Techo de turno y ritmo de línea</td>
-          <td>411 pallets/turno (+91%) · takt 132 s</td>
-        </tr>
-        <tr>
-          <td>Demanda</td>
-          <td>Movimientos diarios dimensionados</td>
-          <td>1.035 mov/día · 215 / 131 por turno</td>
-        </tr>
-        <tr>
-          <td>Exactitud</td>
-          <td>RFID en recogida → SAP/WMS</td>
-          <td>≥99,9%</td>
-        </tr>
-        <tr>
-          <td>Disponibilidad</td>
-          <td>Backup + re-ruteo ante avería</td>
-          <td>≥98%</td>
-        </tr>
-        <tr>
-          <td>Servicio</td>
-          <td>Espera controlada en flujo</td>
-          <td>≤30 s p95</td>
-        </tr>
-        <tr>
-          <td>Seguridad</td>
-          <td>Muros + percepción + peatones</td>
-          <td>ISO 3691-4 (diseño)</td>
-        </tr>
+        <tr><td>Productividad</td><td>Techo de turno y ritmo de línea</td><td>411 pallets/turno (+91%) · takt 132 s</td></tr>
+        <tr><td>Demanda</td><td>Movimientos diarios dimensionados</td><td>1.035 mov/día · 215 / 131 por turno</td></tr>
+        <tr><td>Exactitud</td><td>RFID en recogida → SAP/WMS</td><td>≥99,9%</td></tr>
+        <tr><td>Disponibilidad</td><td>Backup + re-ruteo ante avería</td><td>≥98%</td></tr>
+        <tr><td>Servicio</td><td>Espera controlada en flujo</td><td>≤30 s p95</td></tr>
+        <tr><td>Seguridad</td><td>Muros + percepción + peatones</td><td>ISO 3691-4 (diseño)</td></tr>
       </tbody>
     </table>
   </section>
 
   <!-- 10 ROI -->
-  <section class="slide" data-t="3:50–4:15 · 25s" data-notes="Economía solo con números canónicos. CAPEX alrededor de cero coma noventa y cinco millones en el caso base de seis unidades — con flota de cuatro AGVs el CAPEX baja aún más y mejora el payback. Ahorro alrededor de cero coma veintiún millones al año. Payback cuatro coma cinco años, menor o igual a tres con tres turnos. Piloto de cero coma veintidós millones, reversible en menos de un turno. Suite de cierre verde: ciento dieciocho backend más ciento setenta y uno ESPOL con noventa y tres subtests.">
-    <p class="eyebrow">Costo-beneficio</p>
-    <h2>ROI y economía — números vetados</h2>
-    <div class="stat-row">
-      <span class="pill">CAPEX ≈ $0,95M</span>
-      <span class="pill">ahorro ≈ $0,21M/año</span>
-      <span class="pill">payback 4,5 años</span>
-      <span class="pill">≤3 años <small>con 3 turnos</small></span>
-      <span class="pill hot">piloto $0,22M <small>reversible &lt;1 turno</small></span>
+  <section class="slide" data-t="3:20–3:38 · 18s" data-notes="Economía con números canónicos. CAPEX alrededor de cero coma noventa y cinco millones en el caso base. Ahorro alrededor de cero coma veintiún millones al año. Payback cuatro coma cinco años, menor o igual a tres con tres turnos. Piloto de cero coma veintidós millones, reversible en menos de un turno. Suite de cierre verde: ciento dieciocho backend más ciento setenta y uno ESPOL.">
+    <p class="eyebrow stagger">Costo-beneficio</p>
+    <h2 class="stagger">ROI — números canónicos</h2>
+    <div class="stagger" style="margin-bottom:0.9rem">
+      <div class="stat"><span class="n">$0,95M</span><span class="l">CAPEX caso base</span></div>
+      <div class="stat"><span class="n">$0,21M</span><span class="l">ahorro / año</span></div>
+      <div class="stat"><span class="n">4,5</span><span class="l">años payback</span></div>
+      <div class="stat"><span class="n">≤3</span><span class="l">años · 3 turnos</span></div>
+      <div class="stat hot"><span class="n">$0,22M</span><span class="l">piloto &lt;1 turno</span></div>
     </div>
-    <div class="grid-2" style="margin-top:0.7rem">
-      <div class="card">
-        <h3>Caso base</h3>
-        <p>CAPEX ≈ $0,95M (rango 0,7–1,3) referenciado a dimensionamiento de 6 unidades.</p>
-        <p style="margin-top:0.55em"><b>Flota de 4 AGVs</b> reduce aún más el CAPEX y mejora el payback.
-          <span style="display:block;margin-top:0.35em;font-size:0.92em;color:var(--muted)">[POR CONFIRMAR CON JOSHUA] recálculo exacto a 4 uds.</span>
-        </p>
+    <div class="grid-2">
+      <div class="card stagger">
+        <div class="ico">🧮</div>
+        <h3>Caso base vs flota objetivo</h3>
+        <p>CAPEX ≈ $0,95M (rango 0,7–1,3) referenciado a dimensionamiento de <b>6 unidades</b>.</p>
+        <p style="margin-top:0.5em"><b>Flota de 4 AGVs (3+1)</b> reduce el CAPEX y mejora el payback — detalle en la siguiente slide.</p>
       </div>
-      <div class="card">
+      <div class="card stagger">
+        <div class="ico">✅</div>
         <h3>Validación de software</h3>
         <p>Suite de cierre verde:</p>
-        <p style="margin-top:0.4em">
+        <p style="margin-top:0.45em">
           <span class="pill">118 <small>backend</small></span>
           <span class="pill">171 <small>ESPOL</small></span>
           <span class="pill">+93 <small>subtests</small></span>
@@ -702,49 +795,152 @@
     </div>
   </section>
 
-  <!-- 11 SOSTENIBILIDAD -->
-  <section class="slide" data-t="4:15–4:35 · 20s" data-notes="Menos recorrido improductivo no es solo dinero: es sostenibilidad operativa. Alineados con Net Zero dos mil cincuenta de Nestlé y con el ODS doce. Menos energía por pallet, menos ciclos de batería, cero desperdicio por paquetes olvidados. Hacemos más pallets con menos electricidad, menos horas y menos desperdicio.">
-    <p class="eyebrow">Criterio · Sostenibilidad · 15%</p>
-    <h2>Menos energía · menos desperdicio</h2>
-    <p class="lead">Net Zero 2050 · ODS 12 — eficiencia de recursos con números, no con eslóganes.</p>
-    <div class="grid-3">
-      <div class="card">
-        <h3>Menos energía / pallet</h3>
-        <p>Cada km de pata vacía evitado reduce consumo eléctrico de la flota.</p>
+  <!-- 11 COSTOS + RECUPERACIÓN (NUEVA) -->
+  <section class="slide" data-t="3:38–4:06 · 28s" data-notes="¿De dónde sale el ahorro y cuándo se recupera? El ahorro anual canónico es unos doscientos diez mil dólares: viene de eliminar la pata vacía —cerca del cuarenta y cinco por ciento de los kilómetros—, de liberar horas de gente que hoy desbloquea paquetes, de menos energía por pallet y de menos mermas por olvidos. Con CAPEX de cero coma noventa y cinco millones, el payback es cuatro coma cinco años; con tres turnos baja a tres o menos. Con cuatro AGVs el CAPEX preliminar es menor —alrededor de cero coma setenta y seis millones, por confirmar— y el equilibrio llega antes. El gráfico muestra el ahorro acumulado cruzando la barra de CAPEX entre el año cuatro y el cinco.">
+    <p class="eyebrow stagger">Descomposición · Recuperación</p>
+    <h2 class="stagger">CAPEX detallado y cómo se recupera</h2>
+    <div class="payback">
+      <div class="stagger">
+        <table class="cost">
+          <thead>
+            <tr>
+              <th>Línea CAPEX</th>
+              <th>6 uds (base)</th>
+              <th>4 AGVs (3+1)</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>AGVs (n × $95k unit.)</td>
+              <td class="num">$570k <small>(6)</small></td>
+              <td class="num">$380k <small>(4)</small></td>
+              <td class="tag">[POR CONFIRMAR]</td>
+            </tr>
+            <tr>
+              <td>Integración WCS / comunicaciones</td>
+              <td class="num">$120k</td>
+              <td class="num">$120k</td>
+              <td class="tag">[POR CONFIRMAR]</td>
+            </tr>
+            <tr>
+              <td>Lectores RFID + tags / palet</td>
+              <td class="num">$55k</td>
+              <td class="num">$55k</td>
+              <td class="tag">[POR CONFIRMAR]</td>
+            </tr>
+            <tr>
+              <td>Infraestructura (cintas, sensores, señalización)</td>
+              <td class="num">$90k</td>
+              <td class="num">$90k</td>
+              <td class="tag">[POR CONFIRMAR]</td>
+            </tr>
+            <tr>
+              <td>Puesta en marcha / licencias</td>
+              <td class="num">$70k</td>
+              <td class="num">$70k</td>
+              <td class="tag">[POR CONFIRMAR]</td>
+            </tr>
+            <tr>
+              <td>Contingencia</td>
+              <td class="num">$45k</td>
+              <td class="num">$45k</td>
+              <td class="tag">[POR CONFIRMAR]</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>TOTAL</td>
+              <td class="num">≈ $0,95M</td>
+              <td class="num">≈ $0,76M</td>
+              <td class="tag">[POR CONFIRMAR]</td>
+            </tr>
+          </tfoot>
+        </table>
+        <p class="fine">Estimaciones sobre precios públicos de AGVs industriales; por validar con el equipo. El caso base <b>suma exacto $950k</b> (= canónico $0,95M). Columna 4 AGVs = mismo precio unitario × 4 + mismos ítems de soporte.</p>
       </div>
-      <div class="card">
-        <h3>Menos ciclos de batería</h3>
-        <p>Menos viajes improductivos → más vida útil y menos recargas.</p>
-      </div>
-      <div class="card">
-        <h3>Cero desperdicio operativo</h3>
-        <p>Sin paquetes olvidados ni entregas perdidas por avería o recarga.</p>
+      <div class="stagger">
+        <div class="card" style="margin-bottom:0.65rem">
+          <div class="ico">♻️</div>
+          <h3>Cómo se recupera la inversión</h3>
+          <p style="margin-bottom:0.4em"><b>Ahorro ≈ $0,21M/año</b> proviene de:</p>
+          <ul class="origins">
+            <li>Eliminar km de pata vacía (~45%)</li>
+            <li>Horas de gente desbloqueando paquetes</li>
+            <li>Menos energía por pallet</li>
+            <li>Menos mermas por olvidos</li>
+          </ul>
+          <p style="margin-top:0.55em;font-size:0.95em">
+            Payback = CAPEX / ahorro ≈ <b>4,5 años</b> → <b>≤3</b> con 3 turnos.<br/>
+            Con 4 AGVs (CAPEX menor ≈$0,76M) el equilibrio llega antes
+            <span class="pill" style="margin-left:0.25em">[POR CONFIRMAR]</span>
+          </p>
+        </div>
+        <div class="chart">
+          <h3>Ahorro acumulado vs CAPEX base ($0,95M)</h3>
+          <div class="bars" aria-label="Gráfico de payback">
+            <div class="bar-col">
+              <div class="bar-val">0,95</div>
+              <div class="bar capex" style="height:95%"></div>
+              <div class="bar-lab">CAPEX<br/>base</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-val">0,21</div>
+              <div class="bar" style="height:21%"></div>
+              <div class="bar-lab">Año 1</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-val">0,42</div>
+              <div class="bar" style="height:42%"></div>
+              <div class="bar-lab">Año 2</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-val">0,63</div>
+              <div class="bar" style="height:63%"></div>
+              <div class="bar-lab">Año 3</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-val">0,84</div>
+              <div class="bar" style="height:84%"></div>
+              <div class="bar-lab">Año 4</div>
+            </div>
+            <div class="bar-col">
+              <div class="bar-val">1,05</div>
+              <div class="bar eq" style="height:100%"></div>
+              <div class="bar-lab">Año 5<br/>equilibrio</div>
+            </div>
+          </div>
+          <p class="fine" style="margin-top:0.35rem">Cruce del punto de equilibrio ≈ año 4,5 (canónico). Escala relativa a $1,05M (= 5 × $0,21M).</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- 12 ESCALABILIDAD + CIERRE -->
-  <section class="slide" data-t="4:35–5:00 · 25s" data-notes="Un centro es un mundo configurable: layout, flota y ritmo. Multi-centro desde un tablero. El mismo motor Néstor coordina hoy una planta y mañana un grupo. NestHive convierte la logística interna en una colmena: una flota, un cerebro, cero desperdicio. Gracias — quedamos listos para sus preguntas.">
-    <p class="eyebrow">Criterio · Escalabilidad · 15% · Cierre</p>
-    <h2>De una planta a la colmena Nestlé</h2>
-    <div class="grid-3" style="margin-bottom:1rem">
-      <div class="card">
-        <h3>Un centro = un mundo</h3>
-        <p>Layout + flota + ritmo. Otra planta se configura, no se reescribe.</p>
-      </div>
-      <div class="card">
-        <h3>Multi-centro</h3>
-        <p>Un tablero. Varias simulaciones hoy; varias plantas mañana.</p>
-      </div>
-      <div class="card">
-        <h3>Mismo Néstor</h3>
-        <p>El cerebro no cambia: solo el mapa y la demanda.</p>
-      </div>
+  <!-- 12 SOSTENIBILIDAD -->
+  <section class="slide" data-t="4:06–4:22 · 16s" data-notes="Menos recorrido improductivo no es solo dinero: es sostenibilidad operativa. Alineados con Net Zero dos mil cincuenta de Nestlé y con el ODS doce. Menos energía por pallet, menos ciclos de batería, cero desperdicio por paquetes olvidados.">
+    <p class="eyebrow stagger">Criterio · Sostenibilidad · 15%</p>
+    <h2 class="stagger">Menos energía · menos desperdicio</h2>
+    <p class="lead stagger">Net Zero 2050 · ODS 12 — eficiencia de recursos con números, no con eslóganes.</p>
+    <div class="grid-3">
+      <div class="card stagger"><div class="ico">⚡</div><h3>Menos energía / pallet</h3><p>Cada km de pata vacía evitado reduce consumo eléctrico de la flota.</p></div>
+      <div class="card stagger"><div class="ico">🔋</div><h3>Menos ciclos de batería</h3><p>Menos viajes improductivos → más vida útil y menos recargas.</p></div>
+      <div class="card stagger"><div class="ico">🌱</div><h3>Cero desperdicio operativo</h3><p>Sin paquetes olvidados ni entregas perdidas por avería o recarga.</p></div>
     </div>
-    <div class="card" style="background:var(--red-soft);border-left-width:6px">
-      <h3 style="color:var(--red)">Cierre</h3>
+  </section>
+
+  <!-- 13 CIERRE -->
+  <section class="slide" data-t="4:22–5:00 · 38s" data-notes="Un centro es un mundo configurable: layout, flota y ritmo. Multi-centro desde un tablero. El mismo motor Néstor coordina hoy una planta y mañana un grupo. NestHive convierte la logística interna en una colmena: una flota, un cerebro, cero desperdicio. Gracias — quedamos listos para sus preguntas.">
+    <p class="eyebrow stagger">Criterio · Escalabilidad · 15% · Cierre</p>
+    <h2 class="stagger">De una planta a la colmena Nestlé</h2>
+    <div class="grid-3" style="margin-bottom:0.9rem">
+      <div class="card stagger"><div class="ico">🗺️</div><h3>Un centro = un mundo</h3><p>Layout + flota + ritmo. Otra planta se configura, no se reescribe.</p></div>
+      <div class="card stagger"><div class="ico">🖥️</div><h3>Multi-centro</h3><p>Un tablero. Varias simulaciones hoy; varias plantas mañana.</p></div>
+      <div class="card stagger"><div class="ico">👑</div><h3>Mismo Néstor</h3><p>El cerebro no cambia: solo el mapa y la demanda.</p></div>
+    </div>
+    <div class="card stagger" style="background:var(--gold-soft);border-left-width:6px;border-left-color:var(--gold-deep)">
+      <h3 style="color:var(--cafe)">Cierre</h3>
       <p class="body" style="margin:0">NestHive: <b>una sola flota, un solo cerebro, cero desperdicio</b>. La colmena que se percibe, decide y se coordina sola.</p>
-      <p style="margin:0.7em 0 0;font-weight:700;color:var(--brown)">Gracias — quedamos listos para sus preguntas.</p>
+      <p style="margin:0.65em 0 0;font-weight:700;color:var(--cafe-mid)">Gracias — quedamos listos para sus preguntas.</p>
     </div>
   </section>
 
@@ -755,7 +951,7 @@
 
   <div class="footer-bar">
     <div><span class="brand">NestHive</span> · Pitch 5:00 · ← → navegar · <kbd>N</kbd> notas · <kbd>F</kbd> fullscreen</div>
-    <div class="counter" id="counter">1 / 12</div>
+    <div class="counter" id="counter">1 / 13</div>
   </div>
 </div>
 
