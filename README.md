@@ -1,32 +1,25 @@
 # NestHive
 
-> **Fusión del MVP NestLink** (gemelo digital de intralogística con AMRs — hackathon InnoLabs Nestlé fase 1) **y el proyecto AGV de ESPOL** (FlexSim + Streamlit/Néstor, traído por Andrea). Proyecto final — Fase 2, Loja.
+Webapp de simulación y operación de una flota AGV en la planta **ESPOL Fusion**. Esta es la versión final del escenario: mapa de rutas, órdenes de suministro y recogida, paletizaje, transporte, mantenimiento preventivo, averías y asistente Néstor.
 
-## Estructura (ambos proyectos copiados intactos — la fusión es por adaptación, no reescritura)
+La documentación completa de funcionalidades, archivos modificados, verificaciones y operación está en **[vf.md](vf.md)**.
 
-### `nestlink/` — gemelo digital + flota AMR
-- Backend **FastAPI** (sim a 5 Hz, seed 42, WebSocket, asignación húngara, chatbot de intents prefijados + reporte horario)
-- Frontend **Next.js** (dashboard 2D, chat "💬 Asistente de flota", capa Wi-Fi con toggle)
-- Demo offline + deck/one-pager en `tasksR/`
-- **Arranque:** `cd nestlink && docker compose up -d --build` → web `:3000` · api `:8000`
+## Iniciar la webapp de desarrollo
 
-### `agv-espol/` — lado AGV (ESPOL / Andrea)
-- App **Streamlit** con panel **Néstor** (preguntas prefijadas), conector **WMS mock**
-- Simulación **FlexSim** (`.fsm`) con **puente TCP** — simulación de AGVs
-- **17 suites de tests** + `CALCULO_FLOTA.md` · `RENTABILIDAD_AGV.md` · `RESULTADOS_215_PT.md`
-- **Arranque:** `pip install -r agv-espol/requirements.txt && streamlit run agv-espol/interfaz.py`
+Con Docker Desktop abierto:
 
-## Mapa de fusión (próximos pasos)
+```bash
+cd nestlink
+docker compose -f compose.dev.yml up -d --build
+```
 
-| Pieza ESPOL | Encaje en NestHive | Estado |
-|---|---|---|
-| `flexsim/` + `tcp_bridge` | lado AGV del gemelo (capa WCS, AGVs de cinta) | 🔜 |
-| `app/services` → conector WMS | capa read-only hacia EWM/WMS | 🔜 |
-| Panel **Néstor** (preguntas prefijadas) | fusionar con chatbot de intents de nestlink | 🔜 |
-| `tests/` (17 suites) | correr junto a los 89 tests de nestlink | 🔜 |
-| `RENTABILIDAD_AGV.md` / `CALCULO_FLOTA.md` | insumo del bloque ROI (UTPL) | 🔜 |
+Web: **http://localhost:3001** · API: **http://localhost:8001**.
 
-## Reglas del repo
-- 🔒 El repo original (`mare1225.github.io/NestLink`) **sigue congelado** — este repo (NestHive) es el de desarrollo de la fase 2.
-- Backend SIEMPRE en **Docker Desktop** (no OrbStack).
-- Sin credenciales ni `.env` en el repo.
+## Apagarla
+
+```bash
+cd nestlink
+docker compose -f compose.dev.yml down
+```
+
+`nestlink/` contiene la webapp FastAPI + Next.js y conserva la planta `realistic`. `agv-espol/` contiene la aplicación ESPOL original y sus pruebas. El entorno estándar de `nestlink/compose.yml` usa los puertos 3000 y 8000; su despliegue lo gestiona el responsable del entorno en vivo.

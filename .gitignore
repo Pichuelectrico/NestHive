@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 # Briefing local de Codex (nunca se sube al repo)
 codex.md
+.agents/
