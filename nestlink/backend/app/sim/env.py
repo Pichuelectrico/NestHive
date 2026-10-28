@@ -170,7 +170,7 @@ class SimulationEnvironment:
             self.notices.pop(0)
 
     def _maintenance_edge(self, amr: AMRAgent) -> Optional[tuple[str, str]]:
-        """Tramo físico ocupado; en reposo, el próximo tramo del AGV."""
+        """Tramo físico ocupado; en reposo, el próximo tramo del AMR."""
         if amr.path and 0 < amr.target_node_idx < len(amr.path):
             u, v = amr.path[amr.target_node_idx - 1:amr.target_node_idx + 1]
             if (self.G.has_edge(u, v) and not self.G[u][v].get("blocked", False)
@@ -228,7 +228,7 @@ class SimulationEnvironment:
         if self.maintenance_paused:
             self.add_notice("PAUSE", amr_id,
                             f"Néstor: {amr.nombre} descompuesto. Operación pausada: este tramo es la única ruta para un pedido activo. "
-                            "Se reanudará al reparar el AGV.")
+                            "Se reanudará al reparar el AMR.")
         return {"status": "broken", "agv_id": amr_id, "edge": [u, v],
                 "remaining_seconds": 30.0, "maintenance_paused": self.maintenance_paused}
 
@@ -672,7 +672,7 @@ class SimulationEnvironment:
                     break
         if not self.espol_flow or not exports:
             return
-        # La flota restante apoya solo cuando la cola supera la capacidad del AGV reservado.
+        # La flota restante apoya solo cuando la cola supera la capacidad del AMR reservado.
         exporter_broken = any(aid in self.maintenance_broken for aid in self.delivery_amr_ids)
         overloaded = (len(exports) >= 2 or
                       self.sim_time - min(m.created_at_sim for m in exports) >=
@@ -689,7 +689,7 @@ class SimulationEnvironment:
                         break
 
     def _backup_needed(self) -> bool:
-        """Deploy the reserve AGV only to cover a primary vehicle breakdown."""
+        """Deploy the reserve AMR only to cover a primary vehicle breakdown."""
         return bool(set(self.maintenance_broken) - self.backup_amr_ids)
 
     def pick_best_out(self, from_node: Optional[str] = None) -> str:
@@ -745,8 +745,7 @@ class SimulationEnvironment:
             sim_time=st
         )
         self.out_en_ruta[out_id] += 1
-        fleet_type = "AGV" if self.espol_flow else "AMR"
-        self.add_notice("INFO", None, f"📦 Paquete en {out_id} esperando recolección del {fleet_type} exclusivo (muro externo)")
+        self.add_notice("INFO", None, f"📦 Paquete en {out_id} esperando recolección del AMR exclusivo (muro externo)")
         return True
 
     def abort_export(self, mission) -> None:
@@ -768,8 +767,8 @@ class SimulationEnvironment:
         self._provision_export(out)
         self.add_notice(
             "WARNING", None,
-            (f"EXPORT interrumpida: {'AGV' if self.espol_flow else 'AMR'} exclusivo fue a recargar → paquete de {out} devuelto al buffer"
-             if picked_up else f"EXPORT interrumpida: {'AGV' if self.espol_flow else 'AMR'} exclusivo fue a recargar → {out} reprogramado")
+            (f"EXPORT interrumpida: AMR exclusivo fue a recargar → paquete de {out} devuelto al buffer"
+             if picked_up else f"EXPORT interrumpida: AMR exclusivo fue a recargar → {out} reprogramado")
         )
 
     def out_pickup(self, out_id: str, amr_name: str = "") -> None:
@@ -906,7 +905,7 @@ class SimulationEnvironment:
             mission.emergency = True
             self.metrics.amr_emergency_assists += 1
             self.add_notice("WARNING", None,
-                            f"🚨 Recolección urgente en {line}: AGV disponible irá a paletizaje")
+                            f"🚨 Recolección urgente en {line}: AMR disponible irá a paletizaje")
             return {"status": "emergency_queued", "line": line, "mission_id": mission.id,
                     "emergency": True}
         amr = next((a for a in self.amrs if a.id == "AMR_04" and a.clase == "AMR"), None)
@@ -914,7 +913,7 @@ class SimulationEnvironment:
         mission = self.mission_queue.add_mission("PICKUP_PT", f"RECO_{line}", "PALET_01", prioridad=10, sim_time=self.sim_time)
         mission.emergency = True
         self.metrics.amr_emergency_assists += 1
-        self.add_notice("WARNING", amr.id, f"🚨 Emergencia: AMR 4 apoya {line} → Paletizaje (AGVs ocupados)")
+        self.add_notice("WARNING", amr.id, f"🚨 Emergencia: AMR 4 apoya {line} → Paletizaje (los demás AMRs están ocupados)")
         return {"status": "emergency_queued", "line": line, "amr_id": amr.id, "mission_id": mission.id, "emergency": True}
 
     def get_snapshot(self) -> SimulationSnapshot:

@@ -29,7 +29,7 @@ def answer(q: str, env: Any) -> Dict[str, Any]:
     elif any(x in s for x in ("flota", "amr", "agv")):
         counts = {}
         for a in fleet: counts[a["estado"]] = counts.get(a["estado"], 0) + 1
-        description = (f"Flota de {len(fleet)} AGV; uno reservado para paletizaje → transporte. "
+        description = (f"Flota de {len(fleet)} AMR; uno reservado para paletizaje → transporte. "
                        if env.plant_id == "espol_fusion" else
                        f"Flota de {len(fleet)} vehículos. ")
         data, text = {"counts": counts, "fleet": fleet}, description + ", ".join(f"{n} {v}" for n, v in counts.items())
@@ -43,7 +43,7 @@ def answer(q: str, env: Any) -> Dict[str, Any]:
         data, text = {"kpis": k}, f"Turno: {k['viajes_completados']} viajes, {k['paradas_evitadas']} paradas evitadas y {k['km_evitados']} km evitados."
     elif any(x in s for x in ("estrateg", "asignó", "asigno")):
         data = {"active": active, "rule": "prioridad + distancia + afinidad de zona (asignación húngara)"}
-        text = ("Estrategia activa: AGV reservado para exportación; los demás se desvían ante bloqueos y apoyan si hay sobrecarga."
+        text = ("Estrategia activa: AMR reservado para exportación; los demás se desvían ante bloqueos y apoyan si hay sobrecarga."
                 if env.plant_id == "espol_fusion" else
                 "Estrategia activa: prioriza urgencia, distancia y afinidad de zona.")
     elif any(x in s for x in ("cuello", "parada", "stock")):

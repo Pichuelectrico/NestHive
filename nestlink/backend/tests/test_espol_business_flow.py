@@ -43,7 +43,7 @@ def test_palet_arrival_creates_export_for_dedicated_agv():
     assert sum(v.id not in env.delivery_amr_ids and v.id not in env.backup_amr_ids for v in env.amrs) == 3
     assert env.delivery_amr_ids == {"AMR_03"}
     assert env.backup_amr_ids == {"AMR_04"}
-    assert next(v for v in env.amrs if v.id == "AMR_04").nombre == "AGV Backup"
+    assert next(v for v in env.amrs if v.id == "AMR_04").nombre == "AMR Backup"
     env.out_arrive("PALET_01", 10.0)
     assert env.get_snapshot().out_stock["PALET_01"] == 1
     env._dispatch_exports()

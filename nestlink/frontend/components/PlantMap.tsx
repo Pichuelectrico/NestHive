@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AMR_STATE_COLORS } from "@/lib/amrColors";
 import { getBatteryEmoji, resolveAmrCargoVisual } from "@/lib/amrCargo";
-import { FLEET_PRESENTATION, tipoDeAmr, colorDeFlota } from "@/lib/config";
+import { FLEET_PRESENTATION, colorDeFlota } from "@/lib/config";
 import { WIFI_APS_BY_PLANT } from "@/lib/config";
 import { VISUAL_V2_DEFAULT, VISUAL_V2_PLANTS, isVisualV2Enabled } from "@/lib/config";
 import { drawVisualV2Nodes, drawVisualV2Underlay, drawVisualV2ZoneTitles } from "@/lib/mapVisualV2";
@@ -887,7 +887,7 @@ export function PlantMap({
         ctx.lineWidth = 3 * spriteK * scale;
         ctx.stroke();
 
-        const fleetType = plantId === "espol_fusion" ? "AGV" : tipoDeAmr(amr.id);
+        const fleetType = "AMR";
         const typeColor = colorDeFlota(amr.id, plantId);
         ctx.fillStyle = typeColor;
         const w = 20 * spriteK * scale;
@@ -903,7 +903,7 @@ export function PlantMap({
         const defaultLabel = plantId === "espol_fusion"
           ? amr.nombre
           : (FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre);
-        const amrLabel = plantId === "espol_fusion" ? defaultLabel.replace(/^AMR\b/, "AGV") : defaultLabel;
+        const amrLabel = defaultLabel;
         ctx.fillText(amrLabel, s.x, s.y - 22 * spriteK * scale);
         ctx.font = `${Math.max(8, 9 * spriteK * scale)}px Arial, sans-serif`;
         ctx.fillStyle = typeColor;
@@ -929,7 +929,7 @@ export function PlantMap({
       }
     });
 
-    // Avería activa: señal persistente y visible sobre el AGV detenido.
+    // Avería activa: señal persistente y visible sobre el AMR detenido.
     amrs.forEach((amr) => {
       if (amr.estado !== "ERROR") return;
       try {
@@ -951,7 +951,7 @@ export function PlantMap({
         ctx.fillText("⚠️", s.x, y + 1);
         ctx.restore();
       } catch {
-        // No ocultar la planta si un AGV averiado tiene datos incompletos.
+        // No ocultar la planta si un AMR averiado tiene datos incompletos.
       }
     });
   }, [layout, amrs, missions, obstacles, spillMode, selectedEdge, getBlockedEdges, plantId, lidarMode, simTime, outStock, stationStock, showWifiNetwork, v2]);

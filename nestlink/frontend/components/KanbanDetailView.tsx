@@ -51,7 +51,7 @@ export function KanbanDetailView({ missions, plantId }: KanbanDetailViewProps) {
                   </div>
                   {m.amr_asignado && (
                     <div className="mt-1 text-[0.65rem]">
-                      🤖 {plantId === "espol_fusion" ? m.amr_asignado.replace(/^AMR_/, "AGV_") : m.amr_asignado}
+                      🤖 {m.amr_asignado}
                     </div>
                   )}
                 </div>

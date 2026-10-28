@@ -1,7 +1,7 @@
 "use client";
 
 import { AMR_STATE_COLORS } from "@/lib/amrColors";
-import { FLEET_PRESENTATION, tipoDeAmr, colorDeFlota } from "@/lib/config";
+import { FLEET_PRESENTATION, colorDeFlota } from "@/lib/config";
 import { nearestNodeId } from "@/lib/layoutBounds";
 import type { AMRState, PlantLayout } from "@/lib/types";
 
@@ -33,10 +33,10 @@ export function FleetDetailView({
   return (
     <div className="space-y-3">
       {amrs.length === 0 && (
-        <p className="text-sm text-nest-muted">Sin {plantId === "espol_fusion" ? "AGVs" : "AMRs"} en snapshot</p>
+        <p className="text-sm text-nest-muted">Sin AMRs en snapshot</p>
       )}
       {amrs.map((amr) => {
-        const fleetType = plantId === "espol_fusion" ? "AGV" : tipoDeAmr(amr.id);
+        const fleetType = "AMR";
         const displayName = plantId === "espol_fusion" ? amr.nombre : (FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre);
         const ring = AMR_STATE_COLORS[amr.estado] ?? "#8b949e";
         const fleetColor = colorDeFlota(amr.id, plantId);
@@ -63,7 +63,7 @@ export function FleetDetailView({
                   <span className="font-bold text-base">{displayName}</span>
                   <span className="ml-1 rounded px-1.5 py-0.5 text-[0.6rem] font-bold" style={{ color: fleetColor, backgroundColor: fleetColor === FLEET_PRESENTATION.AGV_COLOR ? "#FEE2E2" : "#DBEAFE" }}>{fleetType}{plantId === "espol_fusion" && (FLEET_PRESENTATION.TRANSPORT_AGV_IDS as readonly string[]).includes(amr.id) ? " · TRANSPORTE" : ""}</span>
                   <span className="font-mono text-xs text-nest-muted">
-                    {plantId === "espol_fusion" ? amr.id.replace(/^AMR_/, "AGV_") : amr.id}
+                    {amr.id}
                   </span>
                 </div>
                 <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-nest-muted">

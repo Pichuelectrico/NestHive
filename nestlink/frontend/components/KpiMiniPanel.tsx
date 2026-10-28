@@ -45,7 +45,7 @@ export function KpiMiniPanel({ kpis, plantId }: KpiMiniPanelProps) {
       accent: "text-emerald-700",
       highlight: true,
     },
-    { label: plantId === "espol_fusion" ? "Asistencias AGV" : "Asistencias AMR", value: String(kpis.amr_emergency_assists ?? 0), accent: "text-red-700" },
+    { label: "Asistencias AMR", value: String(kpis.amr_emergency_assists ?? 0), accent: "text-red-700" },
   ];
 
   return (

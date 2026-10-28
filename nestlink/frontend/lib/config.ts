@@ -46,7 +46,7 @@ export const FLEET_PRESENTATION = {
   AMR_COLOR: "#2563EB",
   TRANSPORT_AGV_IDS: ["AMR_03"],
   TRANSPORT_AGV_COLOR: "#2563EB",
-  NAME_OVERRIDES: { AMR_01: "AGV 1 · Nestlé", AMR_02: "AGV 2 · Maggi", AMR_03: "AGV 3 · Savoy", AMR_06: "AGV 6 · Expedición", AMR_04: "AMR 4 · Apoyo", AMR_05: "AMR 5 · Apoyo" } as Record<string, string>,
+  NAME_OVERRIDES: { AMR_01: "AMR 1 · Nestlé", AMR_02: "AMR 2 · Maggi", AMR_03: "AMR 3 · Savoy", AMR_06: "AMR 6 · Expedición", AMR_04: "AMR 4 · Apoyo", AMR_05: "AMR 5 · Apoyo" } as Record<string, string>,
 } as const;
 export function tipoDeAmr(id: string): "AGV" | "AMR" { return (FLEET_PRESENTATION.AMR_IDS as readonly string[]).includes(id) ? "AMR" : "AGV"; }
 export function colorDeFlota(id: string, plantId?: string): string {

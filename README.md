@@ -1,6 +1,6 @@
 # NestHive
 
-Webapp de simulación y operación de una flota AGV en la planta **ESPOL Fusion**. Esta es la versión final del escenario: mapa de rutas, órdenes de suministro y recogida, paletizaje, transporte, mantenimiento preventivo, averías y asistente Néstor.
+Webapp de simulación y operación de una flota AMR en la planta **ESPOL Fusion**. Esta es la versión final del escenario: mapa de rutas, órdenes de suministro y recogida, paletizaje, transporte, mantenimiento preventivo, averías y asistente Néstor.
 
 La documentación completa de funcionalidades, archivos modificados, verificaciones y operación está en **[vf.md](vf.md)**.
 

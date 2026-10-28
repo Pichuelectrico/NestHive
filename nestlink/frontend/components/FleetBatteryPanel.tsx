@@ -48,7 +48,7 @@ export function FleetBatteryPanel({
       onExpand={onExpand}
     >
       {amrs.length === 0 && (
-        <p className="text-xs text-nest-muted">Sin {plantId === "espol_fusion" ? "AGVs" : "AMRs"} en snapshot</p>
+        <p className="text-xs text-nest-muted">Sin AMRs en snapshot</p>
       )}
       <div className="space-y-2">
         {amrs.map((amr) => {

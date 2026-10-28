@@ -170,8 +170,8 @@ def build():
     BACKEND.write_text(encoded)
     FRONTEND.write_text(encoded)
     visual = json.loads(VISUAL_BACKEND.read_text())
-    visual["legend"]["rojo"] = "Ruta AGV entre paletizaje y transporte"
-    visual["layout_spec"]["transport"]["edge_domain"] = "AGV"
+    visual["legend"]["rojo"] = "Ruta AMR entre paletizaje y transporte"
+    visual["layout_spec"]["transport"]["edge_domain"] = "AMR"
     visual["corridors"] = [{"points": [list(a), list(b)], "width": 9, "oneway": False}
                            for a, b in lanes]
     visual["zones"] = [

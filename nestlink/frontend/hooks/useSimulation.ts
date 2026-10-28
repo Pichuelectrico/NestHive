@@ -264,7 +264,7 @@ export function useLerpAmrs(
         const next: AMRRenderState[] = target.amrs.map((a) => {
           const cur = displayRef.current.get(a.id) ?? { x: a.x, y: a.y };
           // ESPOL must display the simulator's exact graph position. LERP across
-          // a turn cuts the corner and makes an AGV appear to cross a wall.
+          // a turn cuts the corner and makes an AMR appear to cross a wall.
           const nx = plantId === "espol_fusion" ? a.x : cur.x + (a.x - cur.x) * LERP_FACTOR;
           const ny = plantId === "espol_fusion" ? a.y : cur.y + (a.y - cur.y) * LERP_FACTOR;
           displayRef.current.set(a.id, { x: nx, y: ny });

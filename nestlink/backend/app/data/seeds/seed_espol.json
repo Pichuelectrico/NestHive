@@ -65,7 +65,7 @@
   "amrs": [
     {
       "id": "AMR_01",
-      "nombre": "AGV 1",
+      "nombre": "AMR 1",
       "tipo": "pallet_lifter",
       "velocidad_ms": 1.5,
       "carga_kg": 500,
@@ -76,7 +76,7 @@
     },
     {
       "id": "AMR_02",
-      "nombre": "AGV 2",
+      "nombre": "AMR 2",
       "tipo": "towing_tug",
       "velocidad_ms": 0.9,
       "carga_kg": 350,
@@ -87,7 +87,7 @@
     },
     {
       "id": "AMR_05",
-      "nombre": "AGV 3",
+      "nombre": "AMR 3",
       "tipo": "unit_load",
       "velocidad_ms": 1.5,
       "carga_kg": 400,
@@ -98,7 +98,7 @@
     },
     {
       "id": "AMR_03",
-      "nombre": "AGV Transporte · Exclusivo",
+      "nombre": "AMR Transporte · Exclusivo",
       "tipo": "unit_load",
       "velocidad_ms": 1.5,
       "carga_kg": 400,
@@ -110,7 +110,7 @@
     },
     {
       "id": "AMR_04",
-      "nombre": "AGV Backup",
+      "nombre": "AMR Backup",
       "tipo": "pallet_lifter",
       "velocidad_ms": 1.5,
       "carga_kg": 500,

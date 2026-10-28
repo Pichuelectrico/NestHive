@@ -71,7 +71,7 @@ export function KanbanPanel({
             </div>
             {m.amr_asignado && (
               <span className="mt-1.5 inline-block rounded-md border border-black/[0.08] bg-black/[0.03] px-1.5 py-0.5 font-mono text-[0.6rem] text-nest-ink">
-                {plantId === "espol_fusion" ? m.amr_asignado.replace(/^AMR_/, "AGV_") : m.amr_asignado}
+                {m.amr_asignado}
               </span>
             )}
           </div>

@@ -12,7 +12,7 @@
     "amarillo": "Punto de insumos P1-P3",
     "cafe": "Fuente de insumos",
     "naranja": "Punto de recoleccion R1-R3",
-    "rojo": "Ruta AGV entre paletizaje y transporte"
+    "rojo": "Ruta AMR entre paletizaje y transporte"
   },
   "layout_spec": {
     "paletizaje": {
@@ -75,7 +75,7 @@
       "label": "Transporte afuera",
       "shape": "circle",
       "arrow_color": "#ff302c",
-      "edge_domain": "AGV"
+      "edge_domain": "AMR"
     },
     "rendering": {
       "mode": "simplified",

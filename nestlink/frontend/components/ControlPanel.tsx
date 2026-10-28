@@ -221,15 +221,15 @@ export function ControlPanel({
 
       {onBreakdown && (
         <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-red-600/25 bg-red-50/70 px-2 py-1.5">
-          <span className="text-[0.65rem] font-bold uppercase tracking-wide text-red-800">Avería AGV</span>
+          <span className="text-[0.65rem] font-bold uppercase tracking-wide text-red-800">Avería AMR</span>
           <select
             value={activeAgv?.id ?? ""}
             onChange={(e) => setSelectedAgvId(e.target.value)}
             disabled={!fleetAgvs.length || offline}
-            aria-label="AGV para simular avería"
+            aria-label="AMR para simular avería"
             className="nest-select min-w-0 flex-1 py-1 text-xs"
           >
-            {fleetAgvs.length === 0 && <option value="">Sin AGV</option>}
+            {fleetAgvs.length === 0 && <option value="">Sin AMR</option>}
             {fleetAgvs.map((agv) => <option key={agv.id} value={agv.id}>{agv.nombre}</option>)}
           </select>
           <button
