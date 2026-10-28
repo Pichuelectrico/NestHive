@@ -25,6 +25,7 @@ export function useSimulation(layout: PlantLayout | null) {
   const demoRef = useRef<DemoEngine | null>(null);
   const wsRef = useRef<WebSocket | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const lastMissionsRefreshRef = useRef(0);
 
   const refreshMissions = useCallback(async () => {
     if (mode === "offline" && demoRef.current) {
@@ -107,9 +108,12 @@ export function useSimulation(layout: PlantLayout | null) {
     };
   }, [layout]);
 
-  // Refrescar misiones REST en modo live al cambiar tick
+  // Los snapshots llegan a 5 Hz; la cola cambia más lento y se actualiza a 1 Hz.
   useEffect(() => {
     if (mode !== "live" || !snapshot) return;
+    const now = Date.now();
+    if (now - lastMissionsRefreshRef.current < 1000) return;
+    lastMissionsRefreshRef.current = now;
     refreshMissions();
   }, [mode, snapshot?.tick_id, refreshMissions]);
 

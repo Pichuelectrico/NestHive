@@ -150,7 +150,9 @@ class TestFleetClassEligibility(unittest.TestCase):
     def test_08c_espol_export_vehicle_is_an_agv(self):
         env = SimulationEnvironment("espol_fusion")
         self.assertEqual({v.clase for v in env.amrs}, {"AGV"})
-        self.assertEqual(env.delivery_amr_ids, {"AMR_04"})
+        self.assertEqual(len(env.amrs), 4)
+        self.assertEqual(env.delivery_amr_ids, {"AMR_03"})
+        self.assertEqual(env.backup_amr_ids, {"AMR_04"})
 
     def test_08d_espol_amr01_not_eligible_expedition(self):
         v = self._vehicles("espol_fusion")
@@ -227,7 +229,7 @@ class TestRedChainBehaviour(unittest.TestCase):
 
     def test_09b_only_export_agvs_reach_transport(self):
         exporters = {m.amr_asignado for m in self.missions if m.tipo == "EXPORT"}
-        self.assertIn("AMR_04", self.agv_on_transport)
+        self.assertIn("AMR_03", self.agv_on_transport)
         self.assertTrue(self.agv_on_transport <= exporters)
 
     def test_09c_chain_is_fed_and_drains(self):

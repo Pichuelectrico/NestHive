@@ -32,6 +32,8 @@ def default_eligible(amr: Any, task: Tarea) -> bool:
     return True
 
 class MissionQueue:
+    COMPLETED_HISTORY_LIMIT = 400
+
     def __init__(self):
         self.missions: List[Tarea] = []
         self._counter: int = 1
@@ -61,13 +63,34 @@ class MissionQueue:
         )
         self.missions.append(mission)
         self.missions.sort(key=lambda m: (-m.prioridad, m.created_at_sim))
+        self._trim_completed_history()
         return mission
+
+    def _trim_completed_history(self) -> None:
+        completed = [m for m in self.missions if m.estado == "completada"]
+        if len(completed) <= self.COMPLETED_HISTORY_LIMIT:
+            return
+        completed.sort(
+            key=lambda m: (m.created_at_sim, m.id),
+        )
+        expired = {m.id for m in completed[:-self.COMPLETED_HISTORY_LIMIT]}
+        self.missions = [m for m in self.missions if m.id not in expired]
 
     def get_pending_missions(self) -> List[Tarea]:
         return [m for m in self.missions if m.estado == "pendiente"]
 
     def get_all_missions(self) -> List[Tarea]:
+        self._trim_completed_history()
         return self.missions
+
+    def get_recent_missions(self, completed_limit: int = 100) -> List[Tarea]:
+        """Keep every live mission while bounding the completed history sent to clients."""
+        active = [m for m in self.missions if m.estado != "completada"]
+        completed = sorted(
+            (m for m in self.missions if m.estado == "completada"),
+            key=lambda m: (m.created_at_sim, m.id),
+        )
+        return active + completed[-max(0, completed_limit):] if completed_limit else active
 
 def compute_hungarian_assignment(
     idle_amrs: List[Any],

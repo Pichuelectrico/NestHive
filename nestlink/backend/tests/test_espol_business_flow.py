@@ -39,14 +39,17 @@ def test_supply_delivery_starts_delayed_recovery_request():
 def test_palet_arrival_creates_export_for_dedicated_agv():
     env = SimulationEnvironment("espol_fusion")
     assert {v.clase for v in env.amrs} == {"AGV"}
-    assert env.delivery_amr_ids == {"AMR_04"}
+    assert len(env.amrs) == 4
+    assert env.delivery_amr_ids == {"AMR_03"}
+    assert env.backup_amr_ids == {"AMR_04"}
+    assert next(v for v in env.amrs if v.id == "AMR_04").nombre == "AGV Backup"
     env.out_arrive("PALET_01", 10.0)
     assert env.get_snapshot().out_stock["PALET_01"] == 1
     env._dispatch_exports()
     exports = [m for m in env.mission_queue.get_all_missions() if m.tipo == "EXPORT"]
     assert len(exports) == 1
     assert (exports[0].origen, exports[0].destino) == ("PALET_01", "TRANSPORTE")
-    assert exports[0].amr_asignado == "AMR_04"
+    assert exports[0].amr_asignado == "AMR_03"
     env.out_pickup("PALET_01")
     assert env.get_snapshot().out_stock["PALET_01"] == 0
 
@@ -58,12 +61,27 @@ def test_other_agv_assists_only_on_export_overload():
     env._dispatch_exports()
     exports = [m for m in env.mission_queue.get_all_missions() if m.tipo == "EXPORT"]
     assert sum(m.estado == "asignada" for m in exports) == 1
-    assert next(m for m in exports if m.estado == "asignada").amr_asignado == "AMR_04"
+    assert next(m for m in exports if m.estado == "asignada").amr_asignado == "AMR_03"
     env.out_arrive("PALET_03", 0.0)
     env._dispatch_exports()
     assigned = [m for m in env.mission_queue.get_all_missions() if m.tipo == "EXPORT" and m.estado == "asignada"]
     assert len(assigned) >= 2
-    assert any(m.amr_asignado != "AMR_04" for m in assigned)
+    assert any(m.amr_asignado != "AMR_03" for m in assigned)
+
+
+def test_backup_stays_idle_until_primary_breakdown():
+    env = SimulationEnvironment("espol_fusion")
+    backup = next(v for v in env.amrs if v.id == "AMR_04")
+    for _ in range(20):
+        env.step_tick()
+    assert backup.estado == "IDLE"
+    assert not env._backup_needed()
+    env.maintenance_broken["AMR_01"] = {"repair_at": env.sim_time + 30, "edge": []}
+    assert env._backup_needed()
+    assert backup.id in env.backup_amr_ids
+    env.step_tick()
+    assert backup.tarea_actual is not None
+    assert backup.estado == "MOVING_TO_PICKUP"
 
 
 def test_full_chain_and_realistic_remains_active():

@@ -29,3 +29,13 @@ ENV PORT=3000
 ENV HOSTNAME=0.0.0.0
 
 CMD ["node", "server.js"]
+
+# Development target keeps the full dependency tree in the image so compose.dev
+# can mount source files without deleting dependencies or reinstalling on startup.
+FROM deps AS dev
+WORKDIR /app
+COPY . .
+EXPOSE 3000
+ENV PORT=3000
+ENV HOSTNAME=0.0.0.0
+CMD ["npm", "run", "dev"]

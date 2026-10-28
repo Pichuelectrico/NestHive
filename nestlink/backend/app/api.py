@@ -93,7 +93,7 @@ def post_maintenance_signal(amr_id: str, payload: MaintenanceSignal) -> Dict[str
 
 @router.get("/api/v1/missions")
 def get_missions() -> List[Dict[str, Any]]:
-    return [m.model_dump() for m in sim_env.mission_queue.get_all_missions()]
+    return [m.model_dump() for m in sim_env.mission_queue.get_recent_missions()]
 
 @router.get("/api/v1/metrics")
 def get_metrics() -> KPIsState:

@@ -25,7 +25,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    command: sh -c "find /app/.next /app/node_modules -mindepth 1 -delete 2>/dev/null; npm install --no-audit --no-fund --include=dev && npm run dev"
+      target: dev
+    command: npm run dev
     ports:
       - "3001:3000"
     environment:

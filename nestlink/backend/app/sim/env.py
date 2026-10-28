@@ -83,6 +83,9 @@ class SimulationEnvironment:
         self._out_pkg_arrivals: Dict[str, List[float]] = {out: [] for out in self.out_nodes}
         self.delivery_amr_id: Optional[str] = None
         self.delivery_amr_ids: set[str] = set()
+        self.backup_amr_ids: set[str] = {
+            data["id"] for data in self.seeds_raw.get("amrs", []) if data.get("backup")
+        }
 
         self.metrics = KPIManager()
         self.hourly_reports = []
@@ -313,6 +316,8 @@ class SimulationEnvironment:
 
             # 2. Reubicación preventiva para AMRs ociosos (umbral reducido a 2.0s para flujo continuo)
             for amr in self.amrs:
+                if self.espol_flow and amr.id in self.backup_amr_ids and not self._backup_needed():
+                    continue
                 if amr.estado == "IDLE" and amr.idle_timer > 2.0 and not (self.espol_flow and amr.id in self.delivery_amr_ids):
                     is_on_operational_node = self.node_types.get(amr.posicion_nodo) in ["linea", "empacadora", "almacen"]
                     target_hub = amr.home_zone if (amr.home_zone and self.node_types.get(amr.home_zone) not in ["linea", "empacadora", "almacen"]) else ("X_02" if "X_02" in self.node_positions else list(self.node_positions.keys())[0])
@@ -326,7 +331,8 @@ class SimulationEnvironment:
 
             # 3b. Asignación Húngara con validación de ruta (EXPORT fuera del pool; AMR exclusivo reservado)
             idle_amrs = [a for a in self.amrs if a.estado == "IDLE" and
-                         (not self.espol_flow or a.id not in self.delivery_amr_ids)]
+                         (not self.espol_flow or a.id not in self.delivery_amr_ids) and
+                         (a.id not in self.backup_amr_ids or self._backup_needed())]
             pending_missions = [m for m in self.mission_queue.get_pending_missions() if m.tipo != "EXPORT"]
             if idle_amrs and pending_missions:
                 assignments = compute_hungarian_assignment(idle_amrs, pending_missions, self.node_positions)
@@ -469,6 +475,8 @@ class SimulationEnvironment:
         self._mark_emergencies()
 
         for amr in self.amrs:
+            if self.espol_flow and amr.id in self.backup_amr_ids and not self._backup_needed():
+                continue
             if amr.estado == "IDLE" and amr.idle_timer > 2.0 and not (self.espol_flow and amr.id in self.delivery_amr_ids):
                 is_on_operational_node = self.node_types.get(amr.posicion_nodo) in ["linea", "empacadora", "almacen"]
                 target_hub = amr.home_zone if (amr.home_zone and self.node_types.get(amr.home_zone) not in ["linea", "empacadora", "almacen"]) else ("X_02" if "X_02" in self.node_positions else list(self.node_positions.keys())[0])
@@ -480,7 +488,8 @@ class SimulationEnvironment:
         self._dispatch_exports()
 
         idle_amrs = [a for a in self.amrs if a.estado == "IDLE" and
-                     (not self.espol_flow or a.id not in self.delivery_amr_ids)]
+                     (not self.espol_flow or a.id not in self.delivery_amr_ids) and
+                     (a.id not in self.backup_amr_ids or self._backup_needed())]
         pending_missions = [m for m in self.mission_queue.get_pending_missions() if m.tipo != "EXPORT"]
         if idle_amrs and pending_missions:
             assignments = compute_hungarian_assignment(idle_amrs, pending_missions, self.node_positions)
@@ -664,17 +673,24 @@ class SimulationEnvironment:
         if not self.espol_flow or not exports:
             return
         # La flota restante apoya solo cuando la cola supera la capacidad del AGV reservado.
+        exporter_broken = any(aid in self.maintenance_broken for aid in self.delivery_amr_ids)
         overloaded = (len(exports) >= 2 or
                       self.sim_time - min(m.created_at_sim for m in exports) >=
                       float(self.seeds_raw["fleet_rules"].get("export_overload_seconds", 120.0)))
-        if overloaded:
+        if overloaded or exporter_broken:
             for amr in self.amrs:
                 if amr.id in self.delivery_amr_ids or amr.estado != "IDLE":
+                    continue
+                if amr.id in self.backup_amr_ids and not (overloaded or exporter_broken):
                     continue
                 for mission in list(exports):
                     if amr.assign_mission(mission, self.G, env=self):
                         exports.remove(mission)
                         break
+
+    def _backup_needed(self) -> bool:
+        """Deploy the reserve AGV only to cover a primary vehicle breakdown."""
+        return bool(set(self.maintenance_broken) - self.backup_amr_ids)
 
     def pick_best_out(self, from_node: Optional[str] = None) -> str:
         """Elige el OUT con MENOR carga: primero menos paquetes esperando (stock), luego menos
