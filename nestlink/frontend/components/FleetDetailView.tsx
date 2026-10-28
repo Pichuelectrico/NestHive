@@ -1,7 +1,7 @@
 "use client";
 
 import { AMR_STATE_COLORS } from "@/lib/amrColors";
-import { FLEET_PRESENTATION, tipoDeAmr } from "@/lib/config";
+import { FLEET_PRESENTATION, tipoDeAmr, colorDeFlota } from "@/lib/config";
 import { nearestNodeId } from "@/lib/layoutBounds";
 import type { AMRState, PlantLayout } from "@/lib/types";
 
@@ -39,6 +39,7 @@ export function FleetDetailView({
         const fleetType = plantId === "espol_fusion" ? "AGV" : tipoDeAmr(amr.id);
         const displayName = plantId === "espol_fusion" ? amr.nombre : (FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre);
         const ring = AMR_STATE_COLORS[amr.estado] ?? "#8b949e";
+        const fleetColor = colorDeFlota(amr.id, plantId);
         const barColor = batteryBarColor(amr.bateria);
         const nodeId = nearestNodeId(layout, amr.x, amr.y);
         const nextNode = amr.path[0] ?? "—";
@@ -58,9 +59,9 @@ export function FleetDetailView({
                       boxShadow: `0 0 8px ${ring}`,
                     }}
                   />
-                  <span className="mr-1 inline-block h-2 w-2 rounded-full" style={{ backgroundColor: fleetType === "AMR" ? FLEET_PRESENTATION.AMR_COLOR : FLEET_PRESENTATION.AGV_COLOR }} />
+                  <span className="mr-1 inline-block h-2 w-2 rounded-full" style={{ backgroundColor: fleetColor }} />
                   <span className="font-bold text-base">{displayName}</span>
-                  <span className="ml-1 rounded px-1.5 py-0.5 text-[0.6rem] font-bold" style={{ color: fleetType === "AMR" ? FLEET_PRESENTATION.AMR_COLOR : FLEET_PRESENTATION.AGV_COLOR, backgroundColor: fleetType === "AMR" ? "#DBEAFE" : "#FEE2E2" }}>{fleetType}</span>
+                  <span className="ml-1 rounded px-1.5 py-0.5 text-[0.6rem] font-bold" style={{ color: fleetColor, backgroundColor: fleetColor === FLEET_PRESENTATION.AGV_COLOR ? "#FEE2E2" : "#DBEAFE" }}>{fleetType}{plantId === "espol_fusion" && (FLEET_PRESENTATION.TRANSPORT_AGV_IDS as readonly string[]).includes(amr.id) ? " · TRANSPORTE" : ""}</span>
                   <span className="font-mono text-xs text-nest-muted">
                     {plantId === "espol_fusion" ? amr.id.replace(/^AMR_/, "AGV_") : amr.id}
                   </span>

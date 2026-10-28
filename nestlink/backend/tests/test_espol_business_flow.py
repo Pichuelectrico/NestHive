@@ -39,7 +39,8 @@ def test_supply_delivery_starts_delayed_recovery_request():
 def test_palet_arrival_creates_export_for_dedicated_agv():
     env = SimulationEnvironment("espol_fusion")
     assert {v.clase for v in env.amrs} == {"AGV"}
-    assert len(env.amrs) == 4
+    assert len(env.amrs) == 5
+    assert sum(v.id not in env.delivery_amr_ids and v.id not in env.backup_amr_ids for v in env.amrs) == 3
     assert env.delivery_amr_ids == {"AMR_03"}
     assert env.backup_amr_ids == {"AMR_04"}
     assert next(v for v in env.amrs if v.id == "AMR_04").nombre == "AGV Backup"

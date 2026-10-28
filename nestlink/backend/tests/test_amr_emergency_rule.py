@@ -150,9 +150,10 @@ class TestFleetClassEligibility(unittest.TestCase):
     def test_08c_espol_export_vehicle_is_an_agv(self):
         env = SimulationEnvironment("espol_fusion")
         self.assertEqual({v.clase for v in env.amrs}, {"AGV"})
-        self.assertEqual(len(env.amrs), 4)
+        self.assertEqual(len(env.amrs), 5)
         self.assertEqual(env.delivery_amr_ids, {"AMR_03"})
         self.assertEqual(env.backup_amr_ids, {"AMR_04"})
+        self.assertEqual(sum(v.id not in env.delivery_amr_ids and v.id not in env.backup_amr_ids for v in env.amrs), 3)
 
     def test_08d_espol_amr01_not_eligible_expedition(self):
         v = self._vehicles("espol_fusion")

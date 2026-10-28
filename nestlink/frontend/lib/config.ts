@@ -40,13 +40,23 @@ export const DEFAULT_PLANT_ID = "espol_fusion";
 export const DEFAULT_PLANT_NAME = "Planta ESPOL Fusion";
 
 export const FLEET_PRESENTATION = {
-  AGV_IDS: ["AMR_01", "AMR_02", "AMR_03", "AMR_06"],
+  AGV_IDS: ["AMR_01", "AMR_02", "AMR_03", "AMR_05", "AMR_06"],
   AMR_IDS: ["AMR_04", "AMR_05"],
   AGV_COLOR: "#E4032E",
   AMR_COLOR: "#2563EB",
+  TRANSPORT_AGV_IDS: ["AMR_03"],
+  TRANSPORT_AGV_COLOR: "#2563EB",
   NAME_OVERRIDES: { AMR_01: "AGV 1 · Nestlé", AMR_02: "AGV 2 · Maggi", AMR_03: "AGV 3 · Savoy", AMR_06: "AGV 6 · Expedición", AMR_04: "AMR 4 · Apoyo", AMR_05: "AMR 5 · Apoyo" } as Record<string, string>,
 } as const;
 export function tipoDeAmr(id: string): "AGV" | "AMR" { return (FLEET_PRESENTATION.AMR_IDS as readonly string[]).includes(id) ? "AMR" : "AGV"; }
+export function colorDeFlota(id: string, plantId?: string): string {
+  if (plantId === "espol_fusion") {
+    return (FLEET_PRESENTATION.TRANSPORT_AGV_IDS as readonly string[]).includes(id)
+      ? FLEET_PRESENTATION.TRANSPORT_AGV_COLOR
+      : FLEET_PRESENTATION.AGV_COLOR;
+  }
+  return tipoDeAmr(id) === "AMR" ? FLEET_PRESENTATION.AMR_COLOR : FLEET_PRESENTATION.AGV_COLOR;
+}
 
 export const CANVAS_W = 800;
 export const CANVAS_H = 500;

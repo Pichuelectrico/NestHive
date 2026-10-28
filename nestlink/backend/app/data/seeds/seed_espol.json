@@ -86,8 +86,19 @@
       "clase": "AGV"
     },
     {
+      "id": "AMR_05",
+      "nombre": "AGV 3",
+      "tipo": "unit_load",
+      "velocidad_ms": 1.5,
+      "carga_kg": 400,
+      "bateria_inicial": 82,
+      "posicion_nodo": "CHARGER_1",
+      "home_zone": "ControlPoint5",
+      "clase": "AGV"
+    },
+    {
       "id": "AMR_03",
-      "nombre": "AGV 3 · Transporte",
+      "nombre": "AGV Transporte · Exclusivo",
       "tipo": "unit_load",
       "velocidad_ms": 1.5,
       "carga_kg": 400,

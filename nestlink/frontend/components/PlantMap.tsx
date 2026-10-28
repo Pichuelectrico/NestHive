@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AMR_STATE_COLORS } from "@/lib/amrColors";
 import { getBatteryEmoji, resolveAmrCargoVisual } from "@/lib/amrCargo";
-import { FLEET_PRESENTATION, tipoDeAmr } from "@/lib/config";
+import { FLEET_PRESENTATION, tipoDeAmr, colorDeFlota } from "@/lib/config";
 import { WIFI_APS_BY_PLANT } from "@/lib/config";
 import { VISUAL_V2_DEFAULT, VISUAL_V2_PLANTS, isVisualV2Enabled } from "@/lib/config";
 import { drawVisualV2Nodes, drawVisualV2Underlay, drawVisualV2ZoneTitles } from "@/lib/mapVisualV2";
@@ -888,7 +888,7 @@ export function PlantMap({
         ctx.stroke();
 
         const fleetType = plantId === "espol_fusion" ? "AGV" : tipoDeAmr(amr.id);
-        const typeColor = fleetType === "AMR" ? FLEET_PRESENTATION.AMR_COLOR : FLEET_PRESENTATION.AGV_COLOR;
+        const typeColor = colorDeFlota(amr.id, plantId);
         ctx.fillStyle = typeColor;
         const w = 20 * spriteK * scale;
         const h = 16 * spriteK * scale;
@@ -900,7 +900,9 @@ export function PlantMap({
         ctx.font = `bold ${8 * spriteK * scale}px sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "alphabetic";
-        const defaultLabel = FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre;
+        const defaultLabel = plantId === "espol_fusion"
+          ? amr.nombre
+          : (FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre);
         const amrLabel = plantId === "espol_fusion" ? defaultLabel.replace(/^AMR\b/, "AGV") : defaultLabel;
         ctx.fillText(amrLabel, s.x, s.y - 22 * spriteK * scale);
         ctx.font = `${Math.max(8, 9 * spriteK * scale)}px Arial, sans-serif`;
