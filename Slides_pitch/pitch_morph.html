@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NestHive — Pitch morph · KUKA KMP 600P</title>
+<style>
+  :root {
+    --gold: #e0a800;
+    --gold-deep: #d4a017;
+    --gold-soft: #fff6d6;
+    --gold-border: #e8c96a;
+    --amber: #f28907;
+    --cafe: #6f4e37;
+    --cafe-mid: #8b5e34;
+    --cafe-dark: #59391d;
+    --cream: #faf6ef;
+    --cacao: #f3ebe0;
+    --ink: #2a2118;
+    --muted: #6a5a4a;
+    --line: #e2d5c4;
+    --panel: #fffaf3;
+    --font: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --mono: Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body { font-family: var(--font); color: var(--ink); background: #1a1410; overflow: hidden; }
+
+  .deck {
+    position: relative; width: 100vw; height: 100vh;
+    background:
+      radial-gradient(circle at 12% 18%, rgba(224,168,0,0.14), transparent 42%),
+      radial-gradient(circle at 88% 78%, rgba(111,78,55,0.10), transparent 44%),
+      linear-gradient(165deg, var(--cream) 0%, #fff 50%, var(--cacao) 100%);
+  }
+  .deck::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.045;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='98' viewBox='0 0 56 98'%3E%3Cpath fill='none' stroke='%236f4e37' stroke-width='1' d='M28 2 L54 17 V47 L28 62 L2 47 V17 Z'/%3E%3C/svg%3E");
+    background-size: 56px 98px;
+  }
+
+  .slide {
+    display: none; position: absolute; inset: 0;
+    padding: 3.6vh 4.8vw 11.5vh; flex-direction: column; justify-content: flex-start;
+  }
+  .slide.active { display: flex; }
+
+  .corner-logo {
+    position: absolute; top: 1.1rem; right: 1.3rem; width: 72px; height: auto;
+    z-index: 4; opacity: 0; pointer-events: none;
+    filter: drop-shadow(0 4px 10px rgba(111,78,55,0.15));
+  }
+  .corner-logo.show { opacity: 1; }
+
+  .eyebrow { font-size: clamp(10px, 1.05vw, 12px); letter-spacing: 0.14em; text-transform: uppercase; color: var(--cafe-mid); font-weight: 700; margin: 0 0 0.4em; }
+  h2 { font-size: clamp(22px, 2.8vw, 34px); color: var(--cafe); margin: 0 0 0.35em; line-height: 1.12; }
+  .lead { font-size: clamp(14px, 1.4vw, 18px); color: var(--cafe-mid); margin: 0 0 0.75em; max-width: 48rem; line-height: 1.35; }
+
+  .grid-2 { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 0.95rem; align-items: stretch; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.7rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.6rem; }
+  .grid-6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; }
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-4, .grid-6 { grid-template-columns: 1fr; }
+    .slide { padding-bottom: 16vh; }
+  }
+
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-left: 4px solid var(--gold);
+    padding: 0.7em 0.85em; border-radius: 0 10px 10px 0;
+    box-shadow: 0 5px 14px rgba(111,78,55,0.05);
+  }
+  .card.compact { padding: 0.55em 0.7em; }
+  .card .ico { font-size: 1.2rem; margin-bottom: 0.2em; }
+  .card h3 { margin: 0 0 0.22em; color: var(--cafe); font-size: 0.95em; }
+  .card p, .card li { margin: 0.15em 0; font-size: 0.92em; }
+  .card ul { margin: 0.15em 0 0; padding-left: 1em; }
+  .dato { font-family: var(--mono); font-weight: 700; color: var(--cafe); font-size: 0.88em; margin-top: 0.25em; }
+
+  .stat {
+    display: inline-flex; flex-direction: column; min-width: 6.2rem;
+    background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: 10px;
+    padding: 0.4em 0.6em; margin: 0.12em 0.3em 0.12em 0;
+  }
+  .stat .n { font-family: var(--mono); font-weight: 800; font-size: clamp(18px, 2vw, 26px); color: var(--cafe); line-height: 1; }
+  .stat .l { font-size: 11px; color: var(--muted); margin-top: 0.2em; font-weight: 600; }
+  .stat.hot { background: linear-gradient(160deg, var(--gold), var(--gold-deep)); border-color: var(--gold-deep); }
+  .stat.hot .n, .stat.hot .l { color: #fff; }
+  .stat.xl .n { font-size: clamp(28px, 3.4vw, 42px); }
+
+  .pill {
+    display: inline-block; font-family: var(--mono); font-weight: 700; font-size: 12px;
+    background: var(--gold-soft); border: 1px solid var(--gold-border); border-radius: 6px;
+    padding: 0.15em 0.45em; margin: 0.08em 0.2em 0.08em 0; color: var(--cafe);
+  }
+  .pill.hot { background: var(--cafe); color: #fff; border-color: var(--cafe); }
+
+  .quote-big {
+    font-size: clamp(20px, 2.6vw, 32px); font-weight: 800; color: var(--cafe-dark);
+    line-height: 1.25; margin: 0;
+  }
+  .quote-big em { color: var(--amber); font-style: normal; }
+  .quote-attr { margin-top: 0.7rem; color: var(--cafe-mid); font-size: 0.95em; }
+
+  .mantra {
+    margin: 0.5rem 0 0.8rem; padding: 0.85rem 1.1rem;
+    background: linear-gradient(100deg, var(--gold-soft), #fff);
+    border: 2px solid var(--gold); border-radius: 14px;
+    font-size: clamp(18px, 2.2vw, 26px); font-weight: 800; color: var(--cafe-dark);
+    text-align: center; letter-spacing: 0.01em;
+    box-shadow: 0 8px 24px rgba(212,160,23,0.18);
+  }
+
+  .cover { align-items: center; justify-content: center; text-align: center; }
+  .cover-logo {
+    width: clamp(240px, 36vw, 400px); height: auto; margin: 0 auto 1rem;
+    filter: drop-shadow(0 14px 30px rgba(111,78,55,0.2));
+  }
+  .cover .tagline { font-size: clamp(16px, 1.9vw, 22px); color: var(--cafe); font-weight: 650; margin: 0 auto 0.9rem; max-width: 34rem; }
+  .cover .team { color: var(--muted); font-size: clamp(13px, 1.2vw, 15px); }
+
+  .thanks { align-items: center; justify-content: center; text-align: center; }
+  .thanks .cover-logo { width: clamp(110px, 16vw, 160px); }
+  .thanks h2 { font-size: clamp(40px, 6.5vw, 68px); }
+
+  .photo, .media {
+    position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--line);
+    box-shadow: 0 8px 22px rgba(111,78,55,0.1); background: #111; min-height: 160px;
+  }
+  .photo img, .media video, .media img {
+    display: block; width: 100%; height: 100%; object-fit: cover; min-height: 160px; max-height: 280px;
+  }
+  .media.tall video, .photo.tall img { max-height: 320px; min-height: 220px; }
+  .cap {
+    position: absolute; left: 0; right: 0; bottom: 0; padding: 0.4rem 0.65rem;
+    background: linear-gradient(transparent, rgba(42,33,24,0.85)); color: #fff;
+    font-size: 11.5px; font-weight: 600;
+  }
+  .play-overlay {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    background: rgba(42,33,24,0.35); cursor: pointer; border: 0; width: 100%;
+  }
+  .play-overlay span {
+    width: 64px; height: 64px; border-radius: 50%; background: var(--gold);
+    color: var(--cafe-dark); display: flex; align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800; box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  }
+  .play-overlay.hidden { display: none; }
+
+  .arch { display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 0.35rem; align-items: stretch; margin: 0.4rem 0 0.65rem; }
+  .arch-box { background: #fff; border: 2px solid var(--gold-border); border-radius: 10px; padding: 0.65rem 0.7rem; min-height: 120px; }
+  .arch-box.center { border-color: var(--gold-deep); background: var(--gold-soft); }
+  .arch-box h3 { margin: 0 0 0.2em; color: var(--cafe); font-size: 15px; }
+  .arch-box .role { font-size: 0.72em; color: var(--cafe-mid); font-weight: 700; margin-bottom: 0.25em; }
+  .arch-box ul { margin: 0; padding-left: 1em; font-size: 12.5px; }
+  .arch-arrow { display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--gold-deep); font-family: var(--mono); font-size: 12px; font-weight: 700; min-width: 3.4rem; text-align: center; }
+  .arch-arrow .flow { color: var(--muted); font-family: var(--font); font-weight: 500; font-size: 0.75em; }
+
+  /* Hungarian matrix */
+  .hung {
+    display: grid; grid-template-columns: 70px repeat(4, 1fr); gap: 0.35rem; margin-top: 0.5rem;
+    align-items: stretch;
+  }
+  .hung .lab {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700; color: var(--cafe); text-align: center;
+  }
+  .hung .cell {
+    background: #fff; border: 1.5px solid var(--gold-border); border-radius: 8px;
+    min-height: 52px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 12px; color: var(--cafe);
+    opacity: 0; transform: scale(0.85);
+    transition: opacity 280ms ease, transform 280ms ease, background 280ms ease, border-color 280ms ease;
+  }
+  .slide.active .hung .cell { opacity: 1; transform: scale(1); }
+  .slide.active .hung .cell:nth-child(6) { transition-delay: 40ms; }
+  .slide.active .hung .cell:nth-child(7) { transition-delay: 80ms; }
+  .slide.active .hung .cell:nth-child(8) { transition-delay: 120ms; }
+  .slide.active .hung .cell:nth-child(9) { transition-delay: 160ms; }
+  .slide.active .hung .cell:nth-child(11) { transition-delay: 200ms; }
+  .slide.active .hung .cell:nth-child(12) { transition-delay: 240ms; }
+  .slide.active .hung .cell:nth-child(13) { transition-delay: 280ms; }
+  .slide.active .hung .cell:nth-child(14) { transition-delay: 320ms; }
+  .slide.active .hung .cell:nth-child(16) { transition-delay: 360ms; }
+  .slide.active .hung .cell:nth-child(17) { transition-delay: 400ms; }
+  .slide.active .hung .cell:nth-child(18) { transition-delay: 440ms; }
+  .slide.active .hung .cell:nth-child(19) { transition-delay: 480ms; }
+  .slide.active .hung .cell:nth-child(21) { transition-delay: 520ms; }
+  .slide.active .hung .cell:nth-child(22) { transition-delay: 560ms; }
+  .slide.active .hung .cell:nth-child(23) { transition-delay: 600ms; }
+  .slide.active .hung .cell:nth-child(24) { transition-delay: 640ms; }
+  .hung .cell.pick {
+    background: var(--gold); border-color: var(--cafe); color: var(--cafe-dark); font-weight: 800;
+    box-shadow: 0 0 0 2px rgba(111,78,55,0.2);
+  }
+  .hung .cell small { font-family: var(--font); font-size: 9.5px; color: var(--muted); font-weight: 600; }
+  .hung .cell.pick small { color: var(--cafe); }
+  .hung-tag {
+    margin-top: 0.75rem; text-align: center; font-size: clamp(15px, 1.6vw, 19px);
+    font-weight: 800; color: var(--cafe-dark);
+  }
+  .hung-tag span { color: var(--amber); }
+
+  .cost-bits { display: flex; flex-wrap: wrap; gap: 0.35rem; margin: 0.4rem 0 0.6rem; }
+  .cost-bits .pill { font-size: 11px; }
+
+  .banner {
+    margin: 0.35rem 0 0.65rem; padding: 0.55rem 0.85rem; border-radius: 10px;
+    background: linear-gradient(90deg, var(--gold-soft), #fff); border: 1px solid var(--gold-border);
+    font-weight: 800; color: var(--cafe); font-size: clamp(13px, 1.25vw, 16px);
+  }
+
+  table.cost, table.crit {
+    width: 100%; border-collapse: collapse; font-size: 13px; background: #fff;
+    border-radius: 8px; overflow: hidden; box-shadow: 0 3px 12px rgba(111,78,55,0.05);
+  }
+  table.cost th, table.cost td, table.crit th, table.crit td {
+    text-align: left; padding: 0.38em 0.5em; border-bottom: 1px solid var(--line);
+  }
+  table.cost th, table.crit th { background: var(--cacao); color: var(--cafe); font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.04em; }
+  table.cost td.num { font-family: var(--mono); white-space: nowrap; }
+  table.cost tfoot td { font-weight: 800; background: var(--gold-soft); border-bottom: none; }
+  table.crit td:first-child { font-weight: 700; color: var(--cafe); width: 22%; }
+  .fine { font-size: 11.5px; color: var(--muted); margin-top: 0.3rem; }
+
+  .payback { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+  .chart { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 0.6rem 0.7rem; }
+  .chart h3 { margin: 0 0 0.35em; color: var(--cafe); font-size: 0.88em; }
+  .bars { display: flex; align-items: flex-end; gap: 0.35rem; height: 110px; }
+  .bar-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; gap: 0.2rem; }
+  .bar { width: 100%; max-width: 36px; border-radius: 6px 6px 2px 2px; background: linear-gradient(180deg, var(--gold), var(--gold-deep)); }
+  .bar.capex { background: linear-gradient(180deg, var(--cafe-mid), var(--cafe)); }
+  .bar.eq { outline: 2px dashed var(--cafe); outline-offset: 2px; }
+  .bar-val { font-family: var(--mono); font-size: 9px; color: var(--cafe); font-weight: 700; }
+  .bar-lab { font-size: 9px; color: var(--muted); text-align: center; line-height: 1.1; }
+
+  .impact-row { display: flex; flex-wrap: wrap; gap: 0.55rem; margin-top: 0.4rem; }
+  .impact {
+    flex: 1; min-width: 140px; background: var(--gold-soft); border: 1px solid var(--gold-border);
+    border-radius: 12px; padding: 0.7rem 0.8rem; text-align: center;
+  }
+  .impact .n { font-family: var(--mono); font-size: clamp(26px, 3vw, 36px); font-weight: 800; color: var(--cafe); }
+  .impact .l { font-size: 12px; color: var(--muted); font-weight: 600; margin-top: 0.2em; }
+  .impact .src { font-size: 10.5px; color: var(--cafe-mid); margin-top: 0.35em; }
+
+  .two-tight { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; }
+  .big-num { font-family: var(--mono); font-size: clamp(26px, 3vw, 38px); color: var(--cafe); font-weight: 800; text-align: center; line-height: 1; }
+  .big-num span { display: block; font-family: var(--font); font-size: 0.32em; color: var(--cafe-mid); font-weight: 650; margin-top: 0.28em; }
+
+  .footer-bar {
+    position: absolute; left: 0; right: 0; bottom: 0; height: 44px;
+    display: flex; align-items: center; justify-content: space-between; padding: 0 1.1rem;
+    background: rgba(250,246,239,0.95); border-top: 1px solid var(--line); z-index: 5;
+    font-size: 11.5px; color: var(--muted);
+  }
+  .footer-bar .brand { color: var(--cafe); font-weight: 800; }
+  .counter { font-family: var(--mono); color: var(--ink); }
+  kbd { font-family: var(--mono); background: var(--panel); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; }
+
+  .notes {
+    position: absolute; left: 1rem; right: 1rem; bottom: 52px; max-height: 26vh; overflow: auto;
+    background: rgba(42,33,24,0.95); color: #f7f1e8; border-radius: 10px; padding: 0.7rem 0.85rem;
+    z-index: 6; display: none; box-shadow: 0 12px 36px rgba(0,0,0,0.28);
+  }
+  .notes.show { display: block; }
+  .notes .meta { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.3rem; font-weight: 700; }
+  .notes .script { font-size: clamp(12px, 1.05vw, 14px); line-height: 1.4; white-space: pre-wrap; }
+
+  .progress { position: absolute; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--cafe-mid)); z-index: 7; transition: width 200ms ease; }
+
+  /* FLIP ghost layer */
+  .morph-ghost {
+    position: fixed; z-index: 50; pointer-events: none; margin: 0; will-change: transform, opacity;
+    transition: transform 520ms cubic-bezier(.22,.9,.3,1), opacity 520ms ease;
+  }
+
+  @media (max-width: 800px) {
+    .payback, .two-tight, .arch { grid-template-columns: 1fr; }
+    .arch-arrow { flex-direction: row; min-width: 0; padding: 0.2rem 0; }
+  }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+  <div class="progress" id="progress"></div>
+  <img class="corner-logo" id="cornerLogo" src="logo.png" alt="NestHive" data-morph="logo" />
+
+  <!-- 1 PORTADA -->
+  <section class="slide cover active" data-t="0:00–0:12 · Joshua" data-notes="Buenos días. Somos NestHive — y venimos a convertir el manejo de materiales de Nestlé Ecuador en su ventaja competitiva.">
+    <img class="cover-logo" src="logo.png" alt="NestHive" data-morph="logo" />
+    <p class="tagline">Una sola flota · un solo cerebro · cero desperdicio</p>
+    <p class="team">Joshua Reinoso (USFQ) · Andrea Verdezoto (ESPOL) · Andrés Fernandez (UTPL)</p>
+    <p class="team" style="margin-top:0.5em">4× KUKA KMP 600P · Nestlé Warehouse</p>
+  </section>
+
+  <!-- 2 PROBLEMÁTICA -->
+  <section class="slide" data-t="0:12–0:40 · Joshua" data-notes="James Tompkins, la referencia mundial en manejo de materiales, es claro: entre el 20 y el 50% de los gastos operativos de una planta son mover material. Cada pallet que espera ser retirado es capacidad de producción, espacio y tiempo que no se aprovechan. Nestlé Ecuador necesita 215 pallets de salida por turno — 645 al día solo de salida — más todo el flujo de insumos: más de 1.000 movimientos diarios que hoy cargan sobre montacargas, escaneos manuales y suerte.">
+    <p class="eyebrow">Problemática</p>
+    <h2>El costo oculto de mover material</h2>
+    <div class="grid-2">
+      <div>
+        <p class="quote-big">El manejo de materiales puede representar entre el <em>20%</em> y el <em>50%</em> de los gastos operativos de una planta</p>
+        <p class="quote-attr">— James A. Tompkins y colaboradores</p>
+        <div style="margin-top:0.9rem">
+          <div class="stat xl" data-morph="n215"><span class="n">215</span><span class="l">pallets salida / turno</span></div>
+          <div class="stat xl" data-morph="n1035"><span class="n">1.035</span><span class="l">mov / día (ambos flujos)</span></div>
+        </div>
+      </div>
+      <figure class="photo tall">
+        <img src="canva_assets/p03_0.jpeg" alt="Operación de montacargas en almacén" />
+        <figcaption class="cap">Hoy: montacargas, escaneos manuales, puntos ciegos</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 3 NÉSTOR + FRASE -->
+  <section class="slide" data-t="0:40–1:00 · Joshua" data-notes="El corazón de nuestro proyecto es Néstor — la reina abeja que orquesta la colmena. Néstor se comunica con los sistemas que ya existen en la planta y se comunica con el gerente. Nuestra promesa en una frase: la infraestructura habla con Néstor, y Néstor habla contigo — le preguntas qué AMR está en transporte, cuánto demorará la siguiente misión, y te responde con datos en segundos.">
+    <p class="eyebrow">El corazón del proyecto</p>
+    <h2>Néstor · la reina abeja</h2>
+    <div class="mantra" data-morph="mantra">«La infraestructura habla con Néstor y Néstor habla contigo.»</div>
+    <div class="grid-3">
+      <div class="card"><div class="ico">🏭</div><h3>Habla con la planta</h3><p>WCS, PLC de paletizado, AMRs, SAP/WMS.</p></div>
+      <div class="card"><div class="ico">👑</div><h3>Orquesta</h3><p>Rutas, prioridades, baterías, averías — un solo cerebro.</p></div>
+      <div class="card"><div class="ico">💬</div><h3>Habla contigo</h3><p>Preguntas al gerente: flota, demoras, riesgo — respuesta en segundos.</p></div>
+    </div>
+  </section>
+
+  <!-- 4 PLC → MISIÓN -->
+  <section class="slide" data-t="1:00–1:18 · Andrea" data-notes="Todo empieza en el paletizado: el PLC de la línea — la señal puzzle — avisa que el insumo se está consumiendo. Esa solicitud entra a Néstor, se convierte en misión con prioridad, y la asignación sale sola — por prioridad y por disponibilidad. Sin llamadas de radio, sin planillas, sin puntos ciegos.">
+    <p class="eyebrow">Recepción de solicitudes</p>
+    <h2>PLC del paletizado → misión automática</h2>
+    <div class="grid-2">
+      <div>
+        <div class="card" style="margin-bottom:0.6rem">
+          <h3>Flujo</h3>
+          <p>🧩 PLC línea → solicitud → prioridad P1–P10 → asignación por disponibilidad</p>
+        </div>
+        <div class="arch" style="grid-template-columns:1fr auto 1fr auto 1fr">
+          <div class="arch-box"><h3>PLC</h3><div class="role">Paletizado</div><ul><li>Señal 🧩</li><li>Consumo real</li></ul></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-box center"><h3>Néstor</h3><div class="role">Cola</div><ul><li>P1–P10</li><li>Disponibilidad</li></ul></div>
+          <div class="arch-arrow">→</div>
+          <div class="arch-box"><h3>AMR</h3><div class="role">Misión</div><ul><li>Ruta A*</li><li>Ejecuta</li></ul></div>
+        </div>
+      </div>
+      <figure class="photo">
+        <img src="canva_assets/p05_0.jpeg" alt="Cola de solicitudes" />
+        <figcaption class="cap">Sin radio · sin planillas · sin puntos ciegos</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 5 HÚNGARO -->
+  <section class="slide" data-t="1:18–1:44 · Andrea" data-notes="¿Y cómo decide qué AMR atiende qué misión? Con el algoritmo húngaro. Cada misión pendiente y cada AMR libre forman una matriz de costos. Cada celda combina: distancia estimada de ruta con A*, prioridad P1 a P10, nivel de batería, estado idle o cargando, y home-zone. El húngaro resuelve el costo mínimo global para toda la planta en milisegundos. Greedy elige el más cercano; húngaro elige lo mejor para todos.">
+    <p class="eyebrow">Orquestación</p>
+    <h2>Cómo orquesta Néstor: el algoritmo húngaro</h2>
+    <div class="cost-bits">
+      <span class="pill">distancia A*</span>
+      <span class="pill">prioridad P1–P10</span>
+      <span class="pill">batería</span>
+      <span class="pill">estado idle/carga</span>
+      <span class="pill">home-zone</span>
+      <span class="pill hot">Kuhn–Munkres O(n³)</span>
+    </div>
+    <div class="grid-2">
+      <div>
+        <div class="hung" aria-label="Matriz de costos AMR × misión">
+          <div class="lab"></div>
+          <div class="lab">M1</div><div class="lab">M2</div><div class="lab">M3</div><div class="lab">M4</div>
+          <div class="lab">AMR1</div>
+          <div class="cell pick" data-morph="h11">12<small>óptimo</small></div>
+          <div class="cell">41</div><div class="cell">28</div><div class="cell">55</div>
+          <div class="lab">AMR2</div>
+          <div class="cell">33</div>
+          <div class="cell pick" data-morph="h22">9<small>óptimo</small></div>
+          <div class="cell">47</div><div class="cell">22</div>
+          <div class="lab">AMR3</div>
+          <div class="cell">19</div><div class="cell">31</div>
+          <div class="cell pick" data-morph="h33">14<small>óptimo</small></div>
+          <div class="cell">38</div>
+          <div class="lab">AMR4</div>
+          <div class="cell">44</div><div class="cell">17</div><div class="cell">26</div>
+          <div class="cell pick" data-morph="h44">11<small>óptimo</small></div>
+        </div>
+        <p class="hung-tag">Greedy elige el más cercano; <span>húngaro elige lo mejor para todos.</span></p>
+      </div>
+      <div class="card">
+        <h3>Asignación de costo mínimo GLOBAL</h3>
+        <ul>
+          <li>Una celda por fila y por columna</li>
+          <li>Óptimo para <b>toda</b> la planta, no solo el vecino</li>
+          <li>Se recalcula en milisegundos al entrar una misión o cambiar la flota</li>
+        </ul>
+        <p class="dato" style="margin-top:0.7em">Matching húngaro · rutas A* · prioridades vivas</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 MANTENIMIENTO -->
+  <section class="slide" data-t="1:44–2:00 · Andrea" data-notes="Y la colmena se cuida sola. Del software de cada AMR recibimos tiempo de actividad, kilometraje, desgaste de baterías y fallas mecánicas — Néstor avisa cuánto falta para el próximo mantenimiento y detecta la avería antes de que pare la planta. Si un AMR falla: se bloquea su tramo, los demás re-rutean y la producción sigue — el backup asume. Disponibilidad mayor o igual a noventa y ocho por ciento.">
+    <p class="eyebrow">Mantenimiento de flota</p>
+    <h2>La colmena se cuida sola</h2>
+    <div class="grid-4">
+      <div class="card compact"><div class="ico">⏱️</div><h3>Uptime</h3><p>Tiempo de actividad por AMR</p></div>
+      <div class="card compact"><div class="ico">🛣️</div><h3>Km</h3><p>Kilometraje y desgaste</p></div>
+      <div class="card compact"><div class="ico">🔋</div><h3>Baterías</h3><p>Ciclos y próxima carga</p></div>
+      <div class="card compact"><div class="ico">🛠️</div><h3>Próx. servicio</h3><p>Aviso antes de la falla</p></div>
+    </div>
+    <div class="card" style="margin-top:0.75rem">
+      <h3>Avería en misión</h3>
+      <p>Bloquea tramo · re-ruteo dinámico · backup asume · producción sigue —
+        <span class="pill hot">disponibilidad ≥98%</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- 7 WMS / DEMANDA / RFID -->
+  <section class="slide" data-t="2:00–2:18 · Andrea" data-notes="La productividad no se limita a los AMRs. Néstor vigila el warehouse: con el análisis promedio de uso por turno, anticipa cuándo las cintas y empaques se van a acabar y alerta al gerente antes de que la línea espere. Y cada palet que un AMR recoge se escanea con RFID: SAP/WMS se actualiza en tiempo real — exactitud mayor o igual a noventa y nueve coma nueve, sin escaneo manual.">
+    <p class="eyebrow">WMS · insumos · inventario</p>
+    <h2>Demanda anticipada + RFID → SAP</h2>
+    <div class="grid-2">
+      <div class="card">
+        <div class="ico">📦</div>
+        <h3>Insumos antes del stock-out</h3>
+        <p>Análisis de uso por turno (cintas, empaques) → alerta al gerente <b>antes</b> de que la línea espere.</p>
+        <div class="dato">Demanda anticipada · no reactiva</div>
+      </div>
+      <div class="card">
+        <div class="ico">📡</div>
+        <h3>RFID en cada recogida</h3>
+        <p>Tag escaneado → SAP/WMS en vivo. Sin mil escaneos a mano.</p>
+        <div class="stat hot" style="margin-top:0.5em"><span class="n">≥99,9%</span><span class="l">exactitud inventario</span></div>
+      </div>
+    </div>
+    <div class="mantra" style="font-size:clamp(15px,1.6vw,18px);margin-top:0.85rem" data-morph="mantra">«La infraestructura habla con Néstor y Néstor habla contigo.»</div>
+  </section>
+
+  <!-- 8 DEMO -->
+  <section class="slide" data-t="2:18–2:38 · Joshua" data-notes="Esto que ven es NestHive operando el Nestlé Warehouse ahora mismo: el mapa es la planta real, cada AMR sigue la misma lógica que seguirá en piso, y el dashboard muestra la operación en vivo — como la vería el supervisor.">
+    <p class="eyebrow">Demo en vivo</p>
+    <h2>NestHive operando el Nestlé Warehouse</h2>
+    <div class="media tall" id="demoMedia">
+      <video id="demoVideo" src="Recording%20MVP.mov" playsinline preload="metadata" poster="canva_assets/p07_0.jpeg"></video>
+      <button class="play-overlay" id="demoPlay" type="button" aria-label="Reproducir demo"><span>▶</span></button>
+      <div class="cap">Recording MVP · operación en vivo · click para reproducir</div>
+    </div>
+  </section>
+
+  <!-- 9 FLOTA KUKA -->
+  <section class="slide" data-t="2:38–2:58 · Joshua" data-notes="La flota: cuatro AMRs KUKA KMP 600P — tres operando, uno de backup — importados desde Colombia, arancel cero por la Comunidad Andina. KUKA es el gigante alemán de la robótica — el estándar de la industria automotriz. El KMP 600P levanta palets de 600 kilos con su elevador integrado, navega de forma autónoma — sin cintas ni imanes: cero obras civiles — y habla VDA 5050. Y esto no es teoría: un AMR así, en un andén de Ecuador.">
+    <p class="eyebrow">Flota · KUKA Colombia (CAN)</p>
+    <h2>4× KUKA KMP 600P · 3 + 1 backup</h2>
+    <p class="lead">Importados desde Colombia · arancel 0% CAN · elevador de palets integrado · SLAM sin obras civiles</p>
+    <div class="grid-2">
+      <div>
+        <div class="two-tight" style="margin-bottom:0.55rem">
+          <div class="card" style="text-align:center"><div class="big-num">3<span>operativos</span></div></div>
+          <div class="card" style="text-align:center;border-left-color:var(--cafe)"><div class="big-num">1<span>backup N+1</span></div></div>
+        </div>
+        <div class="card compact">
+          <h3>Gigante alemán · estándar automotriz</h3>
+          <p><span class="pill">600 kg</span><span class="pill">elevador palets</span><span class="pill">SLAM</span><span class="pill">LiDAR</span><span class="pill">ISO 3691-4</span><span class="pill">VDA 5050</span></p>
+          <p style="margin-top:0.4em;font-size:0.9em">Sin cintas ni imanes → <b>cero obras civiles</b>. Re-ruteo dinámico natural para Néstor.</p>
+        </div>
+      </div>
+      <div class="media tall">
+        <video src="AMR%20Nestl%C3%A9%20Ecuador%20al%20and%C3%A9n.mp4" autoplay muted loop playsinline></video>
+        <div class="cap">AMR Nestlé Ecuador al andén · 11 s</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 IMPACTO -->
+  <section class="slide" data-t="2:58–3:16 · Andrés" data-notes="No lo decimos nosotros. ABB reporta que sistemas como este reducen hasta 20% los paros de línea, liberan 50% del espacio de staging y aumentan 70% la utilización del espacio disponible. Y Kostić y colaboradores documentaron que la seguridad del personal sube de 40% a 85% al eliminar la convivencia montacargas–peatón.">
+    <p class="eyebrow">Cifras de impacto · fuentes externas</p>
+    <h2>No lo decimos nosotros</h2>
+    <div class="impact-row">
+      <div class="impact" data-morph="i20"><div class="n">−20%</div><div class="l">paros de línea</div><div class="src">ABB</div></div>
+      <div class="impact" data-morph="i50"><div class="n">−50%</div><div class="l">espacio de staging</div><div class="src">ABB</div></div>
+      <div class="impact" data-morph="i70"><div class="n">+70%</div><div class="l">utilización del espacio</div><div class="src">ABB</div></div>
+      <div class="impact" data-morph="i85"><div class="n">40%→85%</div><div class="l">seguridad del personal</div><div class="src">Kostić et al.</div></div>
+    </div>
+    <p class="fine" style="margin-top:0.85rem">Referencias de industria sobre automatización de manejo de materiales / convivencia montacargas–peatón.</p>
+  </section>
+
+  <!-- 11 CRITERIOS 6/6 -->
+  <section class="slide" data-t="3:16–3:42 · Andrés" data-notes="Cumplimos sus criterios, uno a uno. Innovación: Néstor decide con percepción real y con el algoritmo húngaro. Propuesta de valor: techo de 411 pallets por turno — 91% más. Efectividad: 1.035 movimientos, espera menor a 30 segundos, averías que no detienen. Sustentabilidad: menos energía y transición humana respetuosa. Escalabilidad: demanda +5% y Néstor la absorbe sin obras civiles. Replicabilidad: otro centro es otro archivo de configuración.">
+    <p class="eyebrow">Evaluación · 6 criterios</p>
+    <h2>Por qué cumplimos — 6/6</h2>
+    <div class="grid-6">
+      <div class="card compact"><div class="ico">💡</div><h3>Innovación</h3><p>Néstor + húngaro + percepción real.</p><div class="dato">Óptimo global · VDA 5050</div></div>
+      <div class="card compact"><div class="ico">📈</div><h3>Propuesta de valor</h3><p>Más capacidad con la misma planta.</p><div class="dato">411/turno (+91%) · takt 132 s</div></div>
+      <div class="card compact"><div class="ico">🎯</div><h3>Efectividad</h3><p>Flujo continuo · re-ruteo AMR sin obras.</p><div class="dato">1.035 mov · ≤30 s · ≥98%</div></div>
+      <div class="card compact"><div class="ico">🌱</div><h3>Sustentabilidad</h3><p>Energía / pallet + personas primero.</p><div class="dato">Net Zero · ODS 12</div></div>
+      <div class="card compact"><div class="ico">📐</div><h3>Escalabilidad</h3><p>+5%/año · saturación 85%→80%.</p><div class="dato">Sin obras civiles</div></div>
+      <div class="card compact"><div class="ico">🔁</div><h3>Replicabilidad</h3><p>Otro centro = otra config.</p><div class="dato">Mismo Néstor</div></div>
+    </div>
+  </section>
+
+  <!-- 12 HUMANOS -->
+  <section class="slide" data-t="3:42–4:02 · Andrés" data-notes="Y lo hacemos con las personas. Jubilaciones voluntarias — la edad promedio del área es 45 a 60 —, capacitación para emprendimientos, acompañamiento familiar y psicológico, y transferencia bidireccional de conocimiento: el know-how operativo de la bodega entra a la era digital. Nestlé ya lo hizo con 51 personas y cero conflicto.">
+    <p class="eyebrow">Business Partner · gestión del cambio</p>
+    <h2>Personas primero</h2>
+    <div class="grid-3">
+      <div class="card"><div class="ico">🤝</div><h3>Transición</h3><ul><li>Jubilaciones voluntarias (45–60)</li><li>Emprendimientos</li><li>Acompañamiento familiar / psicológico</li></ul></div>
+      <div class="card"><div class="ico">🔄</div><h3>Know-how ↔ digital</h3><p>Transferencia bidireccional: experiencia de piso ↔ Néstor / IA.</p></div>
+      <div class="card"><div class="ico">🕊️</div><h3>Clima laboral</h3><p>Proceso transparente.</p><div class="dato">51 personas · 0 conflicto</div></div>
+    </div>
+  </section>
+
+  <!-- 13 ROI -->
+  <!--
+    CAPEX $640k / ahorro $270k ≈ 2.37 ≈ 2.4 años
+    Labor 20×$660×12=$158.4k + pata vacía + energía + mermas ≈ $270k
+    Q&A +30%/ud KUKA → payback ≤3.2 dentro del estándar
+  -->
+  <section class="slide" data-t="4:02–4:20 · Andrés" data-notes="¿Y la recuperación? La labor real del área es 20 colaboradores a 660 al mes — 158 mil al año. NestHive asume el transporte interno y el equipo se reasigna a valor, más los kilómetros en vacío, la energía y las mermas: cerca de 270 mil al año de ahorro. Con una inversión de 640 mil, el payback es de 2,4 años: por debajo del estándar Nestlé.">
+    <p class="eyebrow">Inversión</p>
+    <h2>ROI por debajo del estándar Nestlé</h2>
+    <div class="banner">≈2,4 años — POR DEBAJO DEL ESTÁNDAR NESTLÉ (2,7–3 · máx 3,5)</div>
+    <div>
+      <div class="stat" data-morph="capex"><span class="n">$640k</span><span class="l">CAPEX · 4 AMRs</span></div>
+      <div class="stat" data-morph="ahorro"><span class="n">$270k</span><span class="l">ahorro / año</span></div>
+      <div class="stat hot" data-morph="payback"><span class="n">≈2,4</span><span class="l">años payback</span></div>
+      <div class="stat"><span class="n">$250k</span><span class="l">piloto 2 AMRs &lt;1 turno</span></div>
+    </div>
+    <div class="card" style="margin-top:0.75rem">
+      <h3>Labor bodega</h3>
+      <p>20 colaboradores · <b>$660/mes</b> → <b>$158,4k/año</b> liberados para calidad / empaque / control.</p>
+    </div>
+  </section>
+
+  <!-- 14 CAPEX -->
+  <section class="slide" data-t="4:20–4:38 · Andrés" data-notes="El desglose: cuatro KUKA KMP 600P — 440 mil —, importación desde Colombia — arancel cero por la CAN, más logística: 20 mil —, integración WCS, RFID, infraestructura y puesta en marcha — 180 mil. Total: 640 mil. El IVA del 15% vuelve como crédito fiscal: no es costo. Piloto de dos AMRs, 250 mil, reversible en menos de un turno.">
+    <p class="eyebrow">CAPEX · recuperación</p>
+    <h2>Cómo se compone la inversión</h2>
+    <div class="payback">
+      <div>
+        <table class="cost">
+          <thead><tr><th>Línea</th><th>Inversión</th></tr></thead>
+          <tbody>
+            <tr><td>KUKA KMP 600P ×4 (≈$110k)</td><td class="num">$440k</td></tr>
+            <tr><td>Importación CO→EC (CAN 0% + logística)</td><td class="num">$20k</td></tr>
+            <tr><td>Integración WCS + RFID + infra + puesta</td><td class="num">$180k</td></tr>
+            <tr><td>IVA 15% (~$96k)</td><td class="num">recuperable</td></tr>
+          </tbody>
+          <tfoot><tr><td>TOTAL (sin IVA)</td><td class="num">≈ $640k</td></tr></tfoot>
+        </table>
+        <p class="fine">Arancel 0% CAN (Decisión 599). IVA = crédito fiscal — no entra al payback.</p>
+      </div>
+      <div class="chart">
+        <h3>Ahorro acumulado vs CAPEX</h3>
+        <div class="bars">
+          <div class="bar-col"><div class="bar-val">0,64</div><div class="bar capex" style="height:79%" data-morph="capex"></div><div class="bar-lab">CAPEX</div></div>
+          <div class="bar-col"><div class="bar-val">0,27</div><div class="bar" style="height:33%" data-morph="ahorro"></div><div class="bar-lab">Año 1</div></div>
+          <div class="bar-col"><div class="bar-val">0,54</div><div class="bar eq" style="height:67%" data-morph="payback"></div><div class="bar-lab">Año 2<br/>≈eq.</div></div>
+          <div class="bar-col"><div class="bar-val">0,81</div><div class="bar" style="height:100%"></div><div class="bar-lab">Año 3</div></div>
+        </div>
+        <p class="fine">Cruce ≈ 2,4 años · escala a $0,81M</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 ESCALABILIDAD -->
+  <section class="slide" data-t="4:38–4:52 · Joshua" data-notes="¿Y mañana? Otro centro de distribución es otro archivo de configuración: con demanda creciendo 5% al año, Néstor predice la saturación y planifica la siguiente inversión antes del 85% de capacidad — y el mismo motor opera todos los centros desde un solo tablero.">
+    <p class="eyebrow">Escalabilidad · replicabilidad</p>
+    <h2>De un Nestlé Warehouse a la colmena</h2>
+    <div class="grid-2">
+      <div>
+        <div class="card" style="margin-bottom:0.55rem"><div class="ico">📐</div><h3>+5% demanda / año</h3><p>Néstor predice saturación antes del <b>85%</b> → planifica inversión → vuelve a <b>80%</b>.</p></div>
+        <div class="card"><div class="ico">🗺️</div><h3>Multi-centro</h3><p>Otro CD = otro archivo de configuración. Mismo Néstor · mismo tablero · AMRs KUKA sin obras civiles.</p></div>
+      </div>
+      <figure class="photo">
+        <img src="canva_assets/p14_0.jpeg" alt="Operación multi-centro" />
+        <figcaption class="cap">Un cerebro · muchos centros</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 16 GRACIAS -->
+  <section class="slide thanks" data-t="4:52–5:00 · Joshua" data-notes="Somos NestHive. La infraestructura habla con Néstor — y Néstor habla contigo. Muchas gracias.">
+    <img class="cover-logo" src="logo.png" alt="NestHive" data-morph="logo" />
+    <h2>Gracias</h2>
+    <p class="team">Joshua · Andrea · Andrés</p>
+    <p class="mantra" style="max-width:36rem;margin:1rem auto 0;font-size:clamp(14px,1.5vw,18px)" data-morph="mantra">«La infraestructura habla con Néstor y Néstor habla contigo.»</p>
+  </section>
+
+  <aside class="notes" id="notes">
+    <div class="meta" id="notes-meta"></div>
+    <div class="script" id="notes-script"></div>
+  </aside>
+
+  <div class="footer-bar">
+    <div><span class="brand">NestHive</span> · morph deck · ← → · <kbd>N</kbd> notas · <kbd>F</kbd> fullscreen</div>
+    <div class="counter" id="counter">1 / 16</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const slides = Array.from(document.querySelectorAll(".slide"));
+  const notesEl = document.getElementById("notes");
+  const notesMeta = document.getElementById("notes-meta");
+  const notesScript = document.getElementById("notes-script");
+  const counter = document.getElementById("counter");
+  const progress = document.getElementById("progress");
+  const cornerLogo = document.getElementById("cornerLogo");
+  let i = 0, notesOn = false, morphing = false;
+
+  function activeSlide() { return slides[i]; }
+
+  function firstRects(ids) {
+    const map = {};
+    ids.forEach((id) => {
+      const el = activeSlide().querySelector('[data-morph="' + id + '"]') ||
+        (id === "logo" ? (i === 0 ? activeSlide().querySelector('[data-morph="logo"]') : cornerLogo) : null);
+      if (el && (el.offsetParent !== null || el === cornerLogo)) {
+        const r = el.getBoundingClientRect();
+        if (r.width > 0 && r.height > 0) map[id] = { el, r, html: el.outerHTML };
+      }
+    });
+    // also gather all morph ids present on current slide + corner
+    activeSlide().querySelectorAll("[data-morph]").forEach((el) => {
+      const id = el.getAttribute("data-morph");
+      const r = el.getBoundingClientRect();
+      if (r.width > 0) map[id] = { el, r, html: el.outerHTML };
+    });
+    if (cornerLogo.classList.contains("show")) {
+      const r = cornerLogo.getBoundingClientRect();
+      if (r.width > 0) map.logo = { el: cornerLogo, r, html: cornerLogo.outerHTML };
+    }
+    return map;
+  }
+
+  function lastRects() {
+    const map = {};
+    activeSlide().querySelectorAll("[data-morph]").forEach((el) => {
+      const id = el.getAttribute("data-morph");
+      const r = el.getBoundingClientRect();
+      if (r.width > 0) map[id] = { el, r };
+    });
+    if (cornerLogo.classList.contains("show")) {
+      const r = cornerLogo.getBoundingClientRect();
+      if (r.width > 0) map.logo = { el: cornerLogo, r };
+    }
+    return map;
+  }
+
+  function playFlip(before) {
+    const after = lastRects();
+    const shared = Object.keys(before).filter((k) => after[k]);
+    if (!shared.length) return;
+
+    morphing = true;
+    shared.forEach((id) => {
+      const b = before[id], a = after[id];
+      const ghost = document.createElement("div");
+      ghost.className = "morph-ghost";
+      ghost.innerHTML = b.html;
+      const inner = ghost.firstElementChild;
+      if (inner) {
+        inner.style.width = b.r.width + "px";
+        inner.style.height = b.r.height + "px";
+        inner.style.margin = "0";
+        inner.style.maxWidth = "none";
+      }
+      ghost.style.left = b.r.left + "px";
+      ghost.style.top = b.r.top + "px";
+      ghost.style.width = b.r.width + "px";
+      ghost.style.height = b.r.height + "px";
+      document.body.appendChild(ghost);
+
+      a.el.style.opacity = "0";
+      const dx = a.r.left - b.r.left;
+      const dy = a.r.top - b.r.top;
+      const sx = a.r.width / b.r.width;
+      const sy = a.r.height / b.r.height;
+
+      requestAnimationFrame(() => {
+        ghost.style.transform = "translate(" + dx + "px," + dy + "px) scale(" + sx + "," + sy + ")";
+        ghost.style.opacity = "0.15";
+      });
+
+      const done = () => {
+        ghost.remove();
+        a.el.style.opacity = "";
+      };
+      ghost.addEventListener("transitionend", done, { once: true });
+      setTimeout(done, 600);
+    });
+    setTimeout(() => { morphing = false; }, 620);
+  }
+
+  function syncCorner() {
+    const onCover = i === 0 || i === slides.length - 1;
+    cornerLogo.classList.toggle("show", !onCover);
+  }
+
+  function show(n, withMorph) {
+    const before = withMorph ? firstRects([]) : null;
+    i = (n + slides.length) % slides.length;
+    slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+    syncCorner();
+    counter.textContent = (i + 1) + " / " + slides.length;
+    progress.style.width = ((i + 1) / slides.length * 100) + "%";
+    const s = slides[i];
+    notesMeta.textContent = "Guion · " + (s.dataset.t || "");
+    notesScript.textContent = s.dataset.notes || "";
+    if (withMorph && before) {
+      requestAnimationFrame(() => playFlip(before));
+    }
+    // pause demo when leaving
+    const dv = document.getElementById("demoVideo");
+    if (dv && i !== 7) { dv.pause(); document.getElementById("demoPlay").classList.remove("hidden"); }
+  }
+
+  function next() { if (!morphing) show(i + 1, true); }
+  function prev() { if (!morphing) show(i - 1, true); }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") { e.preventDefault(); next(); }
+    else if (e.key === "ArrowLeft" || e.key === "PageUp") { e.preventDefault(); prev(); }
+    else if (e.key === "n" || e.key === "N") { notesOn = !notesOn; notesEl.classList.toggle("show", notesOn); }
+    else if (e.key === "f" || e.key === "F") {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+      else document.exitFullscreen?.();
+    } else if (e.key === "Home") show(0, false);
+    else if (e.key === "End") show(slides.length - 1, false);
+  });
+
+  let touchX = null;
+  document.addEventListener("touchstart", (e) => { touchX = e.changedTouches[0].screenX; }, { passive: true });
+  document.addEventListener("touchend", (e) => {
+    if (touchX == null) return;
+    const dx = e.changedTouches[0].screenX - touchX;
+    if (Math.abs(dx) > 40) (dx < 0 ? next : prev)();
+    touchX = null;
+  }, { passive: true });
+
+  const demoPlay = document.getElementById("demoPlay");
+  const demoVideo = document.getElementById("demoVideo");
+  if (demoPlay && demoVideo) {
+    demoPlay.addEventListener("click", () => {
+      demoVideo.play();
+      demoPlay.classList.add("hidden");
+    });
+    demoVideo.addEventListener("ended", () => demoPlay.classList.remove("hidden"));
+    demoVideo.addEventListener("pause", () => { if (demoVideo.currentTime < demoVideo.duration - 0.2) demoPlay.classList.remove("hidden"); });
+  }
+
+  show(0, false);
+})();
+</script>
+</body>
+</html>
