@@ -12,7 +12,7 @@ def _put_on_edge(env, vehicle, u, v):
     vehicle.estado = "MOVING_TO_PICKUP"
 
 
-def test_software_signal_reports_critical_wear_and_repair_is_ten_sim_seconds():
+def test_software_signal_reports_critical_wear_and_repair_is_thirty_sim_seconds():
     env = SimulationEnvironment("espol_fusion")
     vehicle = env.amrs[0]
     assert env.receive_maintenance_signal(vehicle.id, 86.0, None)["status"] == "critical"
@@ -30,8 +30,8 @@ def test_software_signal_reports_critical_wear_and_repair_is_ten_sim_seconds():
     assert env.G[u][v]["blocked"]
     assert any(o.tipo == "BLOCK" and o.edge == [u, v] or o.edge == [v, u]
                for o in env.obstacle_manager.get_snapshot())
-    assert env.get_snapshot().maintenance[0].remaining_seconds == 10.0
-    for _ in range(9):
+    assert env.get_snapshot().maintenance[0].remaining_seconds == 30.0
+    for _ in range(29):
         env.step_tick(1.0)
     assert vehicle.estado == "ERROR"
     assert (vehicle.x, vehicle.y) == original_position
@@ -85,7 +85,7 @@ def test_unique_active_route_pauses_operation_until_repair():
     assert env.get_snapshot().maintenance_paused
     before = env.tick_id
     positions = [(a.x, a.y) for a in env.amrs]
-    env.step_tick(9.0)
+    env.step_tick(29.0)
     assert env.tick_id == before + 1
     assert [(a.x, a.y) for a in env.amrs] == positions
     env.step_tick(1.0)

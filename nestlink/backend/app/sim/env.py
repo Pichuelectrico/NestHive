@@ -210,7 +210,7 @@ class SimulationEnvironment:
         u, v = edge
         previous = self.obstacle_manager.blocked_edges.get((u, v))
         self.maintenance_broken[amr_id] = {
-            "edge": edge, "repair_at": self.sim_time + 10.0,
+            "edge": edge, "repair_at": self.sim_time + 30.0,
             "previous_state": amr.estado, "previous_block": previous,
         }
         amr.estado = "ERROR"
@@ -221,13 +221,13 @@ class SimulationEnvironment:
         self.maintenance_paused = self._maintenance_requires_pause()
         self.add_notice("MAINTENANCE", amr_id,
                         f"Néstor: {amr.nombre} descompuesto ({cause}) en {u} ↔ {v}. "
-                        "Equipo de reparación en camino; tramo bloqueado por 10 s simulados.")
+                        "Equipo de reparación en camino; tramo bloqueado por 30 s simulados.")
         if self.maintenance_paused:
             self.add_notice("PAUSE", amr_id,
                             f"Néstor: {amr.nombre} descompuesto. Operación pausada: este tramo es la única ruta para un pedido activo. "
                             "Se reanudará al reparar el AGV.")
         return {"status": "broken", "agv_id": amr_id, "edge": [u, v],
-                "remaining_seconds": 10.0, "maintenance_paused": self.maintenance_paused}
+                "remaining_seconds": 30.0, "maintenance_paused": self.maintenance_paused}
 
     def receive_maintenance_signal(self, amr_id: str, wear_pct: Optional[float],
                                    failure_code: Optional[str]) -> Optional[Dict[str, Any]]:

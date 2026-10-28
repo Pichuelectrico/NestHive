@@ -926,6 +926,32 @@ export function PlantMap({
         // Saltar AMR problemático; el resto sigue visible
       }
     });
+
+    // Avería activa: señal persistente y visible sobre el AGV detenido.
+    amrs.forEach((amr) => {
+      if (amr.estado !== "ERROR") return;
+      try {
+        const anchor = getAmrAnchor(amr, layout);
+        const s = toScreen(anchor.x, anchor.y);
+        const size = Math.max(14, 18 * spriteK * scale);
+        const y = s.y - 25 * spriteK * scale;
+        ctx.save();
+        ctx.font = `${size}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillStyle = "rgba(255, 255, 255, 0.96)";
+        ctx.strokeStyle = "#dc2626";
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.arc(s.x, y, size * 0.72, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillText("⚠️", s.x, y + 1);
+        ctx.restore();
+      } catch {
+        // No ocultar la planta si un AGV averiado tiene datos incompletos.
+      }
+    });
   }, [layout, amrs, missions, obstacles, spillMode, selectedEdge, getBlockedEdges, plantId, lidarMode, simTime, outStock, stationStock, showWifiNetwork, v2]);
 
   useEffect(() => {
