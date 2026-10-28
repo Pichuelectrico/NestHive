@@ -155,9 +155,9 @@ export function FleetChatPanel() {
   };
 
   return (
-    <div className="nest-panel shrink-0 px-2 py-1.5 space-y-1.5">
+    <div className="shrink-0 space-y-2 px-1.5 py-1">
       <div className="flex items-center justify-between gap-2 px-1">
-        <div className="nest-label">💬 Asistente de flota</div>
+        <div className="nest-label">Asistente de flota</div>
         <span
           className={`text-[0.6rem] font-medium ${
             motorOk ? "text-nest-green" : "text-[#92400e]"

@@ -1,5 +1,6 @@
 "use client";
 
+import { X } from "@phosphor-icons/react";
 import { useState } from "react";
 import type { LineaState } from "@/lib/types";
 
@@ -76,11 +77,11 @@ export function FloatingLinesBar({
               <button
                 type="button"
                 onClick={onClose}
-                className="nest-btn-ghost nest-btn px-2 py-1 text-sm"
+                className="nest-icon-btn"
                 title="Salir de mapa completo (Esc)"
                 aria-label="Cerrar mapa completo"
               >
-                ✕
+                <X size={14} aria-hidden />
               </button>
             </div>
           </div>

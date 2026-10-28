@@ -1,5 +1,6 @@
 "use client";
 
+import { BatteryWarning } from "@phosphor-icons/react";
 import { AMR_STATE_COLORS } from "@/lib/amrColors";
 import { FLEET_PRESENTATION, colorDeFlota } from "@/lib/config";
 import { nearestNodeId } from "@/lib/layoutBounds";
@@ -103,9 +104,10 @@ export function FleetDetailView({
                 type="button"
                 disabled={loadingId === amr.id}
                 onClick={() => onLowBattery(amr.id, amr.nombre)}
-                className="shrink-0 rounded border border-yellow-600/50 bg-yellow-500/10 px-3 py-1.5 text-xs hover:bg-yellow-500/20 disabled:opacity-50"
+                className="nest-btn-ghost nest-btn shrink-0"
               >
-                🔋 Simular 15%
+                <BatteryWarning size={14} aria-hidden />
+                Simular 15%
               </button>
             </div>
             <div className="mt-3">

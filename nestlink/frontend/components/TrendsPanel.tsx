@@ -4,14 +4,8 @@
  * Panel de tendencias con Recharts.
  * TODO: conectar a GET /api/v1/metrics para histórico real de viajes y ROI.
  */
-import {
-  Line,
-  LineChart,
-  ResponsiveContainer,
-  Tooltip,
-  XAxis,
-  YAxis,
-} from "recharts";
+import { TrendUp } from "@phosphor-icons/react";
+import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 const DEMO_TREND = [
   { t: "10:00", viajes: 4, roi: 12 },
@@ -23,10 +17,16 @@ const DEMO_TREND = [
 
 export function TrendsPanel() {
   return (
-    <div className="nest-panel hidden lg:block shrink-0 p-3">
-      <div className="nest-label mb-2">Tendencia de viajes</div>
-      <ResponsiveContainer width="100%" height={72}>
-        <LineChart data={DEMO_TREND}>
+    <section className="nest-tile" aria-label="Tendencia de viajes">
+      <h3 className="nest-section-title">
+        <span className="flex items-center gap-1.5">
+          <TrendUp size={14} weight="bold" aria-hidden />
+          Tendencia de viajes
+        </span>
+        <span className="nest-chip">Demo</span>
+      </h3>
+      <ResponsiveContainer width="100%" height={88}>
+        <LineChart data={DEMO_TREND} margin={{ top: 4, right: 8, bottom: 0, left: 8 }}>
           <XAxis
             dataKey="t"
             tick={{ fontSize: 10, fill: "#674627" }}
@@ -53,6 +53,6 @@ export function TrendsPanel() {
           />
         </LineChart>
       </ResponsiveContainer>
-    </div>
+    </section>
   );
 }

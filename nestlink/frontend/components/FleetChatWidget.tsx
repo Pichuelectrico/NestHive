@@ -1,5 +1,6 @@
 "use client";
 
+import { Siren, X } from "@phosphor-icons/react";
 import { useEffect, useRef, useState } from "react";
 import { FleetChatPanel } from "@/components/FleetChatPanel";
 import { BASE_PATH } from "@/lib/config";
@@ -60,14 +61,17 @@ export function FleetChatWidget({ breakdownAlert }: { breakdownAlert?: { key: st
             type="button"
             onClick={() => setOpen(false)}
             aria-label="Cerrar asistente de flota"
-            className="nest-btn nest-btn-ghost px-1.5 py-0.5 text-[0.65rem]"
+            className="nest-icon-btn !h-6 !w-6"
           >
-            ✕
+            <X size={12} aria-hidden />
           </button>
         </div>
         {activeAlert && (
           <div className="mx-1 mb-2 rounded-lg border border-nest-red/35 bg-[#fff5f5] px-3 py-2" role="alert">
-            <p className="text-[0.65rem] font-bold uppercase tracking-wide text-nest-red">🚨 Aviso de mantenimiento</p>
+            <p className="flex items-center gap-1 text-[0.65rem] font-bold uppercase tracking-wide text-nest-red">
+              <Siren size={13} weight="fill" aria-hidden />
+              Aviso de mantenimiento
+            </p>
             <p className="mt-0.5 text-xs leading-snug text-nest-text">{activeAlert}</p>
           </div>
         )}

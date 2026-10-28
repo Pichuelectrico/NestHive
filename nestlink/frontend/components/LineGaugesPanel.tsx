@@ -1,102 +1,57 @@
 "use client";
 
-import { CollapsibleSidePanel } from "@/components/CollapsibleSidePanel";
 import type { LineaState } from "@/lib/types";
 
 interface LineGaugesPanelProps {
   lines: LineaState[];
-  collapsed: boolean;
-  onToggle: () => void;
 }
 
 function levelColor(pct: number): string {
-  if (pct < 25) return "#f87171";
-  if (pct < 50) return "#fbbf24";
-  return "#34d399";
+  if (pct < 25) return "#e4032e";
+  if (pct < 50) return "#d97706";
+  return "#059669";
 }
 
-export function LineGaugesPanel({
-  lines,
-  collapsed,
-  onToggle,
-}: LineGaugesPanelProps) {
-  const headerExtra = (
-    <span className="flex items-center gap-1.5 min-w-0 normal-case tracking-normal font-medium">
-      <span className="text-nest-muted/80 tabular-nums">· {lines.length}</span>
-      {lines.length > 0 && (
-        <span className="flex items-center gap-0.5" aria-hidden>
-          {lines.slice(0, 8).map((line) => (
-            <span
-              key={line.id}
-              className="h-1.5 w-1.5 rounded-full shrink-0"
-              style={{ background: levelColor(line.nivel_pct) }}
-              title={`${line.nombre}: ${line.nivel_pct.toFixed(0)}%`}
-            />
-          ))}
-          {lines.length > 8 && (
-            <span className="text-[0.55rem] text-nest-muted ml-0.5">
-              +{lines.length - 8}
-            </span>
-          )}
-        </span>
-      )}
-    </span>
-  );
-
+export function LineGaugesPanel({ lines }: LineGaugesPanelProps) {
   return (
-    <CollapsibleSidePanel
-      title="Insumos por línea"
-      collapsed={collapsed}
-      onToggle={onToggle}
-      onExpand={onToggle}
-      headerExtra={headerExtra}
-      hideExpand
-    >
-      {lines.length === 0 && (
-        <p className="text-xs text-nest-muted">Sin datos de líneas</p>
-      )}
-      <div className="space-y-2">
+    <section aria-label="Insumos por línea">
+      <h3 className="nest-section-title">
+        <span>Insumos por línea</span>
+        <span className="nest-chip tabular-nums">{lines.length}</span>
+      </h3>
+      {lines.length === 0 && <p className="text-xs text-nest-muted">Sin datos de líneas</p>}
+      <ul className="space-y-2">
         {lines.map((line) => {
           const low = line.nivel_pct < 25;
           const color = levelColor(line.nivel_pct);
           return (
-            <div key={line.id} className="nest-card px-3 py-2.5">
-              <div className="flex items-start justify-between gap-2 mb-2">
+            <li key={line.id} className="nest-tile-soft">
+              <div className="flex items-baseline justify-between gap-2">
                 <div className="min-w-0">
-                  <div className="text-sm font-medium text-nest-text truncate">
-                    {line.nombre}
-                  </div>
-                  <div className="text-[0.65rem] text-nest-muted truncate">
-                    {line.material}
-                  </div>
+                  <p className="truncate text-sm font-semibold text-nest-text">{line.nombre}</p>
+                  <p className="truncate text-[0.7rem] text-nest-muted">{line.material}</p>
                 </div>
                 <span
-                  className={`font-mono text-sm font-semibold tabular-nums shrink-0 ${
-                    low ? "text-nest-red" : "text-nest-text"
-                  }`}
+                  className={`shrink-0 text-sm font-semibold tabular-nums ${low ? "text-nest-red" : "text-nest-text"}`}
                 >
                   {line.nivel_pct.toFixed(0)}%
                 </span>
               </div>
-              <div className="h-1.5 overflow-hidden rounded-full bg-nest-text/10">
-                <div
-                  className="h-full rounded-full transition-all duration-500"
-                  style={{
-                    width: `${line.nivel_pct}%`,
-                    background: `linear-gradient(90deg, ${color}cc, ${color})`,
-                    boxShadow: low ? `0 0 8px ${color}66` : undefined,
-                  }}
-                />
+              <div
+                className="nest-meter mt-2"
+                role="progressbar"
+                aria-label={`Nivel de insumos ${line.nombre}`}
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={Math.round(line.nivel_pct)}
+              >
+                <span style={{ width: `${Math.max(0, Math.min(100, line.nivel_pct))}%`, background: color }} />
               </div>
-              {low && (
-                <div className="mt-1.5 text-[0.65rem] font-medium text-nest-red">
-                  Stock crítico
-                </div>
-              )}
-            </div>
+              {low && <p className="mt-1.5 text-[0.7rem] font-semibold text-nest-red">Stock crítico</p>}
+            </li>
           );
         })}
-      </div>
-    </CollapsibleSidePanel>
+      </ul>
+    </section>
   );
 }

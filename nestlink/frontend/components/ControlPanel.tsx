@@ -1,6 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  ArrowCounterClockwise,
+  Broadcast,
+  CheckCircle,
+  Lightning,
+  Minus,
+  Plus,
+  Siren,
+  Stack,
+  Warning,
+  WifiHigh,
+  Wrench,
+} from "@phosphor-icons/react";
+import { useEffect, useState, type ReactNode } from "react";
 import type { AMRState, LineaState, SelectedEdge, SpillMode } from "@/lib/types";
 
 interface ControlPanelProps {
@@ -26,6 +39,39 @@ interface ControlPanelProps {
   agvs?: AMRState[];
   onBreakdown?: (id: string, name: string) => Promise<void>;
   breakdownLoadingId?: string | null;
+}
+
+function Group({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <section className="nest-tile" aria-label={title}>
+      <h3 className="nest-section-title">{title}</h3>
+      <div className="space-y-2">{children}</div>
+    </section>
+  );
+}
+
+function Toggle({
+  pressed,
+  onClick,
+  icon,
+  label,
+  hint,
+}: {
+  pressed: boolean;
+  onClick: () => void;
+  icon: ReactNode;
+  label: string;
+  hint?: string;
+}) {
+  return (
+    <button type="button" aria-pressed={pressed} onClick={onClick} className="nest-toggle" title={hint}>
+      <span className="flex items-center gap-2">
+        {icon}
+        {label}
+      </span>
+      <span className="nest-switch" aria-hidden />
+    </button>
+  );
 }
 
 export function ControlPanel({
@@ -55,9 +101,7 @@ export function ControlPanel({
   const [selectedAgvId, setSelectedAgvId] = useState("");
   const fleetAgvs = agvs;
   const activeAgv = fleetAgvs.find((amr) => amr.id === selectedAgvId) ?? fleetAgvs[0];
-  const packingLines = lines.filter(
-    (l) => l.is_packing ?? l.id.startsWith("E")
-  );
+  const packingLines = lines.filter((l) => l.is_packing ?? l.id.startsWith("E"));
 
   useEffect(() => {
     if (packingLines.length && !peakLineId) {
@@ -77,84 +121,126 @@ export function ControlPanel({
   const needsConfirm = spillMode !== "none";
 
   return (
-    <div className="nest-panel shrink-0 px-2 py-1.5 space-y-1.5">
-      <div className="flex flex-wrap items-center gap-1.5">
-        <span className="nest-label shrink-0 px-1 hidden sm:inline">Ops</span>
+    <div className="space-y-3">
+      {offline && (
+        <div className="nest-status-offline w-full justify-center py-1 text-[0.7rem]">
+          Sin backend · acciones limitadas
+        </div>
+      )}
 
-        <button
-          type="button"
-          onClick={() => toggleMode("block")}
-          title="Modo derrame"
-          className={`nest-btn ${
-            spillMode === "block" ? "nest-btn-warm" : "nest-btn-ghost"
-          }`}
-        >
-          🚧 Derrame
-        </button>
-        <button
-          type="button"
-          onClick={() => toggleMode("unblock")}
-          title="Modo despeje"
-          className={`nest-btn ${
-            spillMode === "unblock" ? "nest-btn-primary" : "nest-btn-ghost"
-          }`}
-        >
-          ✅ Despeje
-        </button>
+      {(onLidarModeChange || onShowWifiNetworkChange) && (
+        <Group title="Vista del mapa">
+          {onLidarModeChange && (
+            <Toggle
+              pressed={lidarMode}
+              onClick={() => onLidarModeChange(!lidarMode)}
+              icon={<Broadcast size={16} weight="duotone" aria-hidden />}
+              label="LiDAR"
+              hint="Vista LiDAR — rutas como barrido SLAM"
+            />
+          )}
+          {onShowWifiNetworkChange && (
+            <Toggle
+              pressed={showWifiNetwork}
+              onClick={() => onShowWifiNetworkChange(!showWifiNetwork)}
+              icon={<WifiHigh size={16} weight="duotone" aria-hidden />}
+              label="Red Wi-Fi industrial"
+              hint="Mostrar APs y cobertura Wi-Fi industrial"
+            />
+          )}
+        </Group>
+      )}
 
-        {onLidarModeChange && (
+      <Group title="Pasillos">
+        <div className="grid grid-cols-2 gap-2">
           <button
             type="button"
-            onClick={() => onLidarModeChange(!lidarMode)}
-            title="Vista LiDAR — rutas como barrido SLAM"
-            className={`nest-btn ${
-              lidarMode ? "nest-btn-primary" : "nest-btn-ghost"
-            }`}
-            aria-pressed={lidarMode}
+            aria-pressed={spillMode === "block"}
+            onClick={() => toggleMode("block")}
+            title="Modo derrame: bloquear un pasillo"
+            className={`nest-btn ${spillMode === "block" ? "nest-btn-primary" : "nest-btn-ghost"}`}
           >
-            {lidarMode ? "📡 LiDAR ON" : "📡 LiDAR"}
+            <Warning size={14} aria-hidden />
+            Derrame
           </button>
-        )}
-
-        {onShowWifiNetworkChange && (
           <button
             type="button"
-            onClick={() => onShowWifiNetworkChange(!showWifiNetwork)}
-            title="Mostrar APs / cobertura Wi-Fi industrial"
-            className={`nest-btn ${
-              showWifiNetwork ? "nest-btn-primary" : "nest-btn-ghost"
-            }`}
-            aria-pressed={showWifiNetwork}
+            aria-pressed={spillMode === "unblock"}
+            onClick={() => toggleMode("unblock")}
+            title="Modo despeje: liberar un pasillo"
+            className={`nest-btn ${spillMode === "unblock" ? "nest-btn-primary" : "nest-btn-ghost"}`}
           >
-            {showWifiNetwork ? "📶 Red ON" : "📶 Mostrar red"}
+            <CheckCircle size={14} aria-hidden />
+            Despeje
           </button>
+        </div>
+
+        {needsConfirm && spillMode === "block" && (
+          <div className="nest-hint nest-hint-warm text-xs" role="status">
+            <span>Selecciona un pasillo en el mapa</span>
+            {selectedEdge && (
+              <>
+                <span className="font-mono">
+                  {selectedEdge.from} → {selectedEdge.to}
+                </span>
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={() => onConfirmBlock()}
+                  className="nest-btn-danger"
+                >
+                  Confirmar
+                </button>
+              </>
+            )}
+          </div>
         )}
 
-        <span className="hidden sm:inline h-5 w-px bg-nest-border mx-0.5" aria-hidden />
+        {needsConfirm && spillMode === "unblock" && (
+          <div className="nest-hint nest-hint-info text-xs" role="status">
+            <span>Clic en un pasillo bloqueado (rojo)</span>
+            {selectedEdge && (
+              <>
+                <span className="font-mono text-nest-ink">
+                  {selectedEdge.from} → {selectedEdge.to}
+                </span>
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={() => onConfirmUnblock()}
+                  className="nest-btn-primary"
+                >
+                  Confirmar
+                </button>
+              </>
+            )}
+          </div>
+        )}
+      </Group>
 
-        {packingLines.length > 0 && (
-          <>
-            <select
-              value={peakLineId}
-              onChange={(e) => setPeakLineId(e.target.value)}
-              className="nest-select min-w-[110px] max-w-[160px] text-xs py-1"
-              aria-label="Línea de producción"
-            >
-              {packingLines.map((l) => (
-                <option key={l.id} value={l.id} className="bg-nest-panel text-nest-text">
-                  {l.nombre}
-                </option>
-              ))}
-            </select>
+      {packingLines.length > 0 && (
+        <Group title="Demanda de línea">
+          <select
+            value={peakLineId}
+            onChange={(e) => setPeakLineId(e.target.value)}
+            className="nest-select w-full cursor-pointer py-1.5 text-sm"
+            aria-label="Línea de producción"
+          >
+            {packingLines.map((l) => (
+              <option key={l.id} value={l.id} className="bg-nest-panel text-nest-text">
+                {l.nombre}
+              </option>
+            ))}
+          </select>
+          <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               disabled={loading || !peakLineId}
-              onClick={() =>
-                onPeak(peakLineId, selectedLine?.nombre ?? peakLineId)
-              }
+              onClick={() => onPeak(peakLineId, selectedLine?.nombre ?? peakLineId)}
               className="nest-btn-warm"
               title="Inyectar pico de demanda"
             >
+              <Lightning size={14} aria-hidden />
               Pico
             </button>
             <button
@@ -162,127 +248,106 @@ export function ControlPanel({
               disabled={loading || !peakLineId}
               onClick={() => onRefill(peakLineId)}
               className="nest-btn-success"
-              title="Rellenar línea al 80%"
+              title="Rellenar la línea al 80%"
             >
-              80%
+              <Stack size={14} aria-hidden />
+              Rellenar 80%
             </button>
-            <button
-              type="button"
-              disabled={loading}
-              onClick={() => onRefillAll()}
-              className="nest-btn-ghost"
-              title="Rellenar todas al 80%"
-            >
-              Todas
-            </button>
-          </>
-        )}
+          </div>
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => onRefillAll()}
+            className="nest-btn-ghost w-full"
+            title="Rellenar todas las líneas al 80%"
+          >
+            Rellenar todas
+          </button>
+        </Group>
+      )}
 
-        <span className="hidden md:inline h-5 w-px bg-nest-border mx-0.5" aria-hidden />
+      <Group title="Cola de misiones">
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => onResetMissions()}
+            className="nest-btn-ghost"
+            title="Reiniciar tareas"
+            aria-label="Reiniciar misiones"
+          >
+            <ArrowCounterClockwise size={14} aria-hidden />
+            Reset
+          </button>
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => onAdjustMissions(5)}
+            className="nest-btn-success"
+            title="Agregar 5 misiones"
+            aria-label="Agregar 5 misiones"
+          >
+            <Plus size={14} aria-hidden />5
+          </button>
+          <button
+            type="button"
+            disabled={loading}
+            onClick={() => onAdjustMissions(-5)}
+            className="nest-btn-warning"
+            title="Quitar 5 misiones"
+            aria-label="Quitar 5 misiones"
+          >
+            <Minus size={14} aria-hidden />5
+          </button>
+        </div>
+      </Group>
 
-        <button
-          type="button"
-          disabled={loading}
-          onClick={() => onResetMissions()}
-          className="nest-btn-ghost"
-          title="Reiniciar tareas"
-        >
-          Reset
-        </button>
-        <button
-          type="button"
-          disabled={loading}
-          onClick={() => onAdjustMissions(5)}
-          className="nest-btn-success"
-          title="+5 misiones"
-        >
-          +5
-        </button>
-        <button
-          type="button"
-          disabled={loading}
-          onClick={() => onAdjustMissions(-5)}
-          className="nest-btn-warning"
-          title="−5 misiones"
-        >
-          −5
-        </button>
-
-        {offline && (
-          <span className="nest-status-offline ml-auto text-[0.65rem]">
-            Sin backend
-          </span>
-        )}
-      </div>
-      {onEmergencyPickup && <div className="flex items-center gap-1 rounded border border-nest-red/30 bg-[#fff5f5] px-1.5 py-1">
-        <span className="text-[0.65rem] font-semibold text-nest-red">🚨 Emergencia</span>
-        {(["R1", "R2", "R3"] as const).map((line) => <button key={line} type="button" disabled={loading || offline} onClick={() => void onEmergencyPickup(line)} aria-label={`Disparar emergencia de recolección ${line}`} className="nest-btn nest-btn-danger px-2 py-0.5">{line}</button>)}
-      </div>}
+      {onEmergencyPickup && (
+        <Group title="Emergencia de recolección">
+          <div className="grid grid-cols-3 gap-2">
+            {(["R1", "R2", "R3"] as const).map((line) => (
+              <button
+                key={line}
+                type="button"
+                disabled={loading || offline}
+                onClick={() => void onEmergencyPickup(line)}
+                aria-label={`Disparar emergencia de recolección ${line}`}
+                className="nest-btn nest-btn-danger"
+              >
+                <Siren size={14} aria-hidden />
+                {line}
+              </button>
+            ))}
+          </div>
+        </Group>
+      )}
 
       {onBreakdown && (
-        <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-nest-red/30 bg-[#fff5f5] px-2 py-1.5">
-          <span className="text-[0.65rem] font-bold uppercase tracking-wide text-nest-red">Avería AMR</span>
+        <Group title="Avería de AMR">
           <select
             value={activeAgv?.id ?? ""}
             onChange={(e) => setSelectedAgvId(e.target.value)}
             disabled={!fleetAgvs.length || offline}
             aria-label="AMR para simular avería"
-            className="nest-select min-w-0 flex-1 py-1 text-xs"
+            className="nest-select w-full cursor-pointer py-1.5 text-sm"
           >
             {fleetAgvs.length === 0 && <option value="">Sin AMR</option>}
-            {fleetAgvs.map((agv) => <option key={agv.id} value={agv.id}>{agv.nombre}</option>)}
+            {fleetAgvs.map((agv) => (
+              <option key={agv.id} value={agv.id}>
+                {agv.nombre}
+              </option>
+            ))}
           </select>
           <button
             type="button"
             disabled={offline || !activeAgv || activeAgv.estado === "ERROR" || Boolean(breakdownLoadingId)}
             onClick={() => activeAgv && void onBreakdown(activeAgv.id, activeAgv.nombre)}
-            className="nest-btn-danger"
+            className="nest-btn-danger w-full"
           >
+            <Wrench size={14} aria-hidden />
             {breakdownLoadingId ? "Simulando…" : "Simular avería"}
           </button>
-        </div>
-      )}
-
-      {needsConfirm && spillMode === "block" && (
-        <div className="nest-hint nest-hint-warm text-xs py-1.5">
-          <span>Selecciona un pasillo en el mapa</span>
-          {selectedEdge && (
-            <>
-              <span className="font-mono text-orange-800">
-                {selectedEdge.from} → {selectedEdge.to}
-              </span>
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() => onConfirmBlock()}
-                className="nest-btn-danger"
-              >
-                Confirmar
-              </button>
-            </>
-          )}
-        </div>
-      )}
-
-      {needsConfirm && spillMode === "unblock" && (
-        <div className="nest-hint nest-hint-info text-xs py-1.5">
-          <span>Clic en pasillo bloqueado (rojo)</span>
-          {selectedEdge && (
-            <>
-              <span className="font-mono text-nest-ink">
-                {selectedEdge.from} → {selectedEdge.to}
-              </span>
-              <button
-                type="button"
-                disabled={loading}
-                onClick={() => onConfirmUnblock()}
-                className="nest-btn-primary"
-              >
-                Confirmar
-              </button>
-            </>
-          )}
-        </div>
+        </Group>
       )}
     </div>
   );

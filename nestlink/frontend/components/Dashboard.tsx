@@ -1,7 +1,9 @@
 "use client";
 
+import { ArrowsOut, ListChecks, Robot, SlidersHorizontal, SquaresFour } from "@phosphor-icons/react";
 import { useCallback, useEffect, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
+import { SidebarTabs, type SidebarTab } from "@/components/SidebarTabs";
 import { FleetBatteryPanel } from "@/components/FleetBatteryPanel";
 import { FleetMaintenancePanel } from "@/components/FleetMaintenancePanel";
 import { FleetChatWidget } from "@/components/FleetChatWidget";
@@ -67,11 +69,8 @@ export function Dashboard() {
   const [lowBatteryLoadingId, setLowBatteryLoadingId] = useState<string | null>(
     null
   );
-  const [fleetCollapsed, setFleetCollapsed] = useState(false);
-  const [maintenanceCollapsed, setMaintenanceCollapsed] = useState(false);
   const [breakdownLoadingId, setBreakdownLoadingId] = useState<string | null>(null);
-  const [linesCollapsed, setLinesCollapsed] = useState(true);
-  const [kanbanCollapsed, setKanbanCollapsed] = useState(false);
+  const [sidebarTab, setSidebarTab] = useState("resumen");
   const [fleetModalOpen, setFleetModalOpen] = useState(false);
   const [kanbanModalOpen, setKanbanModalOpen] = useState(false);
   const [fullscreen, setFullscreen] = useState(false);
@@ -278,6 +277,18 @@ export function Dashboard() {
 
   const kpis = snapshot?.kpis ?? EMPTY_KPIS;
   const lines = snapshot?.lines ?? [];
+  const openMissions = missions.filter((m) => m.estado !== "completada").length;
+  const sidebarTabs: SidebarTab[] = [
+    { id: "resumen", label: "Resumen", icon: <SquaresFour size={18} weight="duotone" aria-hidden /> },
+    { id: "flota", label: "Flota", icon: <Robot size={18} weight="duotone" aria-hidden /> },
+    {
+      id: "misiones",
+      label: "Misiones",
+      icon: <ListChecks size={18} weight="duotone" aria-hidden />,
+      badge: openMissions,
+    },
+    { id: "operar", label: "Operar", icon: <SlidersHorizontal size={18} weight="duotone" aria-hidden /> },
+  ];
   const obstacles = snapshot?.obstacles ?? [];
   const notices = snapshot?.notices ?? [];
   const fleetAmrs = snapshot?.amrs ?? [];
@@ -364,89 +375,95 @@ export function Dashboard() {
       />
       <NoticeBanner notices={notices} />
       <div
-        className="dashboard-grid grid flex-1 gap-2 p-3 min-h-0 transition-[grid-template-columns] duration-300"
+        className="dashboard-grid grid min-h-0 flex-1 gap-3 p-3"
         style={{
-          gridTemplateColumns: "300px minmax(0, 1fr)",
+          gridTemplateColumns: "340px minmax(0, 1fr)",
           gridTemplateRows: "minmax(0, 1fr)",
         }}
       >
-        <div className="dashboard-main relative flex flex-col gap-1.5 min-h-0 min-w-0">
-          <div className="nest-panel relative flex-1 min-h-0 min-w-0 overflow-hidden">
+        <div className="dashboard-main relative flex min-h-0 min-w-0 flex-col">
+          <div className="nest-panel relative min-h-0 min-w-0 flex-1 overflow-hidden">
             {mapEl}
             <button
               type="button"
               onClick={() => setFullscreen(true)}
-              className="absolute top-2 right-2 z-10 nest-btn-ghost nest-btn px-2 py-1 text-[0.65rem] shadow-nest-panel"
-              title="Abrir mapa en página única"
+              className="nest-icon-btn absolute right-3 top-3 z-10 shadow-nest-panel"
+              title="Abrir mapa en pantalla completa"
+              aria-label="Abrir mapa en pantalla completa"
             >
-              ⛶ Ampliar
+              <ArrowsOut size={16} aria-hidden />
             </button>
           </div>
         </div>
 
-        <div className="dashboard-sidebar flex h-full min-h-0 flex-col gap-1.5 overflow-y-auto overflow-x-hidden">
-          <ControlPanel
-            spillMode={spillMode}
-            onSpillModeChange={handleSpillModeChange}
-            selectedEdge={selectedEdge}
-            onConfirmBlock={handleConfirmBlock}
-            onConfirmUnblock={handleConfirmUnblock}
-            lines={lines}
-            onPeak={handlePeak}
-            onRefill={(lineId) => handleRefill(lineId)}
-            onRefillAll={() => handleRefill(null)}
-            onResetMissions={handleResetMissions}
-            onAdjustMissions={handleAdjustMissions}
-            offline={mode === "offline"}
-            loading={actionLoading}
-            lidarMode={lidarMode}
-            onLidarModeChange={setLidarMode}
-            showWifiNetwork={showWifiNetwork}
-            onShowWifiNetworkChange={setShowWifiNetwork}
-            onEmergencyPickup={async (line) => { await postEmergencyPickup(line); }}
-            agvs={selectedPlantId === "espol_fusion" ? fleetAmrs : undefined}
-            onBreakdown={selectedPlantId === "espol_fusion" ? handleBreakdown : undefined}
-            breakdownLoadingId={breakdownLoadingId}
-          />
-          <KpiMiniPanel kpis={kpis} plantId={selectedPlantId} />
-          <FleetBatteryPanel
-            amrs={fleetAmrs}
-            plantId={selectedPlantId}
-            onLowBattery={handleLowBattery}
-            loadingId={lowBatteryLoadingId}
-            collapsed={fleetCollapsed}
-            onToggle={() => setFleetCollapsed((c) => !c)}
-            onExpand={() => setFleetModalOpen(true)}
-          />
-          {selectedPlantId === "espol_fusion" && (
-            <FleetMaintenancePanel
-              maintenance={maintenance}
-              paused={snapshot?.maintenance_paused ?? false}
-              amrs={fleetAmrs}
-              offline={mode !== "live"}
-              loadingId={breakdownLoadingId}
-              collapsed={maintenanceCollapsed}
-              onToggle={() => setMaintenanceCollapsed((c) => !c)}
-              onBreakdown={handleBreakdown}
-            />
-          )}
-          <LineGaugesPanel
-            lines={lines}
-            collapsed={linesCollapsed}
-            onToggle={() => setLinesCollapsed((c) => !c)}
-          />
-          <KanbanPanel
-            missions={missions}
-            plantId={selectedPlantId}
-            collapsed={kanbanCollapsed}
-            onToggle={() => setKanbanCollapsed((c) => !c)}
-            onExpand={() => setKanbanModalOpen(true)}
-          />
-          {!fleetCollapsed && !linesCollapsed && !kanbanCollapsed && (
-            <div className="shrink-0">
-              <TrendsPanel />
-            </div>
-          )}
+        <div className="dashboard-sidebar h-full min-h-0">
+          <SidebarTabs tabs={sidebarTabs} active={sidebarTab} onChange={setSidebarTab}>
+            {sidebarTab === "resumen" && (
+              <>
+                <KpiMiniPanel kpis={kpis} plantId={selectedPlantId} />
+                <LineGaugesPanel lines={lines} />
+                <TrendsPanel />
+              </>
+            )}
+
+            {sidebarTab === "flota" && (
+              <>
+                <FleetBatteryPanel
+                  amrs={fleetAmrs}
+                  plantId={selectedPlantId}
+                  onLowBattery={handleLowBattery}
+                  loadingId={lowBatteryLoadingId}
+                  onExpand={() => setFleetModalOpen(true)}
+                />
+                {selectedPlantId === "espol_fusion" && (
+                  <FleetMaintenancePanel
+                    maintenance={maintenance}
+                    paused={snapshot?.maintenance_paused ?? false}
+                    amrs={fleetAmrs}
+                    offline={mode !== "live"}
+                    loadingId={breakdownLoadingId}
+                    onBreakdown={handleBreakdown}
+                  />
+                )}
+              </>
+            )}
+
+            {sidebarTab === "misiones" && (
+              <KanbanPanel
+                missions={missions}
+                plantId={selectedPlantId}
+                onExpand={() => setKanbanModalOpen(true)}
+              />
+            )}
+
+            {sidebarTab === "operar" && (
+              <ControlPanel
+                spillMode={spillMode}
+                onSpillModeChange={handleSpillModeChange}
+                selectedEdge={selectedEdge}
+                onConfirmBlock={handleConfirmBlock}
+                onConfirmUnblock={handleConfirmUnblock}
+                lines={lines}
+                onPeak={handlePeak}
+                onRefill={(lineId) => handleRefill(lineId)}
+                onRefillAll={() => handleRefill(null)}
+                onResetMissions={handleResetMissions}
+                onAdjustMissions={handleAdjustMissions}
+                offline={mode === "offline"}
+                loading={actionLoading}
+                lidarMode={lidarMode}
+                onLidarModeChange={setLidarMode}
+                showWifiNetwork={showWifiNetwork}
+                onShowWifiNetworkChange={setShowWifiNetwork}
+                onEmergencyPickup={async (line) => {
+                  await postEmergencyPickup(line);
+                }}
+                agvs={selectedPlantId === "espol_fusion" ? fleetAmrs : undefined}
+                onBreakdown={selectedPlantId === "espol_fusion" ? handleBreakdown : undefined}
+                breakdownLoadingId={breakdownLoadingId}
+              />
+            )}
+          </SidebarTabs>
         </div>
       </div>
 
