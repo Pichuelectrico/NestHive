@@ -8,7 +8,7 @@ export function ToastStack() {
   if (!toasts.length) return null;
 
   return (
-    <div className="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm pointer-events-none">
+    <div className="fixed bottom-5 left-5 z-50 flex flex-col gap-2 max-w-sm pointer-events-none">
       {toasts.map((t) => (
         <div
           key={t.id}

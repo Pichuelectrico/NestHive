@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import type { LineaState, SelectedEdge, SpillMode } from "@/lib/types";
+import type { AMRState, LineaState, SelectedEdge, SpillMode } from "@/lib/types";
 
 interface ControlPanelProps {
   spillMode: SpillMode;
@@ -23,6 +23,9 @@ interface ControlPanelProps {
   showWifiNetwork?: boolean;
   onShowWifiNetworkChange?: (on: boolean) => void;
   onEmergencyPickup?: (line: string) => Promise<void>;
+  agvs?: AMRState[];
+  onBreakdown?: (id: string, name: string) => Promise<void>;
+  breakdownLoadingId?: string | null;
 }
 
 export function ControlPanel({
@@ -44,8 +47,14 @@ export function ControlPanel({
   showWifiNetwork = false,
   onShowWifiNetworkChange,
   onEmergencyPickup,
+  agvs = [],
+  onBreakdown,
+  breakdownLoadingId,
 }: ControlPanelProps) {
   const [peakLineId, setPeakLineId] = useState("");
+  const [selectedAgvId, setSelectedAgvId] = useState("");
+  const fleetAgvs = agvs;
+  const activeAgv = fleetAgvs.find((amr) => amr.id === selectedAgvId) ?? fleetAgvs[0];
   const packingLines = lines.filter(
     (l) => l.is_packing ?? l.id.startsWith("E")
   );
@@ -209,6 +218,30 @@ export function ControlPanel({
         <span className="text-[0.65rem] text-red-700">🚨 Emergencia</span>
         {(["R1", "R2", "R3"] as const).map((line) => <button key={line} type="button" disabled={loading || offline} onClick={() => void onEmergencyPickup(line)} aria-label={`Disparar emergencia de recolección ${line}`} className="nest-btn nest-btn-ghost border-red-500/40 text-red-700 px-2 py-0.5">{line}</button>)}
       </div>}
+
+      {onBreakdown && (
+        <div className="flex flex-wrap items-center gap-1.5 rounded-lg border border-red-600/25 bg-red-50/70 px-2 py-1.5">
+          <span className="text-[0.65rem] font-bold uppercase tracking-wide text-red-800">Avería AGV</span>
+          <select
+            value={activeAgv?.id ?? ""}
+            onChange={(e) => setSelectedAgvId(e.target.value)}
+            disabled={!fleetAgvs.length || offline}
+            aria-label="AGV para simular avería"
+            className="nest-select min-w-0 flex-1 py-1 text-xs"
+          >
+            {fleetAgvs.length === 0 && <option value="">Sin AGV</option>}
+            {fleetAgvs.map((agv) => <option key={agv.id} value={agv.id}>{agv.nombre}</option>)}
+          </select>
+          <button
+            type="button"
+            disabled={offline || !activeAgv || activeAgv.estado === "ERROR" || Boolean(breakdownLoadingId)}
+            onClick={() => activeAgv && void onBreakdown(activeAgv.id, activeAgv.nombre)}
+            className="nest-btn-danger"
+          >
+            {breakdownLoadingId ? "Simulando…" : "Simular avería"}
+          </button>
+        </div>
+      )}
 
       {needsConfirm && spillMode === "block" && (
         <div className="nest-hint nest-hint-warm text-xs py-1.5">

@@ -1,40 +1,31 @@
 {
   "lines": [
     {
-      "id": "L1_OUT",
-      "nombre": "L1 Nescafé",
-      "material": "Frasco Vidrio 200g",
+      "id": "R1",
+      "nombre": "R1 · Cookies",
+      "material": "Insumos para cookies",
       "tasa_consumo_kg_min": 4.2,
       "umbral_critico_pct": 25,
       "nivel_inicial_pct": 68,
       "capacidad_pallet_unidades": 480
     },
     {
-      "id": "L2_OUT",
-      "nombre": "L2 Maggi",
-      "material": "Sobre Sopas 50g",
+      "id": "R2",
+      "nombre": "R2 · Chocolates",
+      "material": "Insumos para chocolates",
       "tasa_consumo_kg_min": 3.5,
       "umbral_critico_pct": 20,
       "nivel_inicial_pct": 70,
       "capacidad_pallet_unidades": 960
     },
     {
-      "id": "E1_IN",
-      "nombre": "E1 Savoy",
-      "material": "Film Laminado",
+      "id": "R3",
+      "nombre": "R3 · Wafer",
+      "material": "Insumos para wafer",
       "tasa_consumo_kg_min": 2.8,
       "umbral_critico_pct": 30,
       "nivel_inicial_pct": 40,
       "capacidad_pallet_unidades": 12
-    },
-    {
-      "id": "E2_IN",
-      "nombre": "E2 Lechera",
-      "material": "Lata 395g",
-      "tasa_consumo_kg_min": 5.1,
-      "umbral_critico_pct": 25,
-      "nivel_inicial_pct": 35,
-      "capacidad_pallet_unidades": 600
     }
   ],
   "skus": [
@@ -74,7 +65,7 @@
   "amrs": [
     {
       "id": "AMR_01",
-      "nombre": "AMR 1",
+      "nombre": "AGV 1",
       "tipo": "pallet_lifter",
       "velocidad_ms": 1.5,
       "carga_kg": 500,
@@ -85,7 +76,7 @@
     },
     {
       "id": "AMR_02",
-      "nombre": "AMR 2",
+      "nombre": "AGV 2",
       "tipo": "towing_tug",
       "velocidad_ms": 0.9,
       "carga_kg": 350,
@@ -96,7 +87,7 @@
     },
     {
       "id": "AMR_03",
-      "nombre": "AMR 3",
+      "nombre": "AGV 3",
       "tipo": "unit_load",
       "velocidad_ms": 1.5,
       "carga_kg": 400,
@@ -107,31 +98,30 @@
     },
     {
       "id": "AMR_04",
-      "nombre": "AMR 4",
+      "nombre": "AGV 4 · Transporte",
       "tipo": "pallet_lifter",
       "velocidad_ms": 1.5,
       "carga_kg": 500,
       "bateria_inicial": 90,
       "posicion_nodo": "CHARGER_2",
       "home_zone": "ControlPoint4",
-      "clase": "AMR",
+      "clase": "AGV",
       "delivery_amr_ids": ["AMR_04"]
     },
     {
       "id": "AMR_05",
-      "nombre": "AMR 5",
+      "nombre": "AGV 5",
       "tipo": "unit_load",
       "velocidad_ms": 1.5,
       "carga_kg": 400,
       "bateria_inicial": 82,
       "posicion_nodo": "CHARGER_1",
       "home_zone": "ControlPoint5",
-      "clase": "AMR",
-      "delivery_amr_ids": ["AMR_05"]
+      "clase": "AGV"
     },
     {
       "id": "AMR_06",
-      "nombre": "AMR 6",
+      "nombre": "AGV 6",
       "tipo": "pallet_lifter",
       "velocidad_ms": 1.5,
       "carga_kg": 480,
@@ -143,11 +133,14 @@
   ],
   "fleet_rules": {
     "enabled": true,
+    "flow": "espol_supply_to_palet",
+    "process_seconds": 20.0,
+    "supply_interval_seconds": 110.0,
+    "export_overload_seconds": 120.0,
     "pickup_node": {
-      "E1_IN": "RECO_R1",
-      "L2_OUT": "RECO_R1",
-      "L1_OUT": "RECO_R2",
-      "E2_IN": "RECO_R3"
+      "R1": "RECO_R1",
+      "R2": "RECO_R2",
+      "R3": "RECO_R3"
     },
     "palet_nodes": "PALET_*"
   }

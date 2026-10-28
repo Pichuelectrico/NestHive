@@ -85,6 +85,8 @@ class AMRAgent:
         generator_manager: Any = None,
         env: Optional[Any] = None
     ):
+        if self.estado == "ERROR":
+            return
         estado_previo = self.estado
 
         # 1. Comprobar proximidad con peatones
@@ -154,6 +156,7 @@ class AMRAgent:
                     # Si entregó insumos a empacadora, RESTOCK visible de la línea
                     if self.tarea_actual.tipo == "SUPPLY_REQUEST" and generator_manager:
                         generator_manager.restock_line(self.tarea_actual.destino, amount_pct=20.0)
+                        generator_manager.supply_delivered(self.tarea_actual.destino, sim_time)
 
                     # Ronda 13: Paletizado → OUT. Al entregar PT en Paletizado (WH_PT_*), se
                     # encadena una misión EXPEDITION (WH_PT → OUT<mejor buffer>). Entregar en un
@@ -189,6 +192,7 @@ class AMRAgent:
                         env
                         and getattr(env, "out_nodes", [])
                         and self.tarea_actual.destino in env.out_nodes
+                        and (not env.generator.espol_flow or self.tarea_actual.tipo == "PICKUP_PT")
                     ):
                         env.out_arrive(self.tarea_actual.destino, sim_time=sim_time)
 
@@ -317,6 +321,16 @@ class AMRAgent:
                         return
 
         if G.has_edge(current_node, next_node) and G[current_node][next_node].get("blocked", False):
+            # Si el tramo se cerró mientras avanzaba, retrocede por la misma
+            # arista antes de elegir el desvío. Replanear desde mitad de tramo
+            # produciría una diagonal fuera del grafo.
+            cx, cy = self.node_positions[current_node]
+            distance_back = math.hypot(cx - self.x, cy - self.y)
+            if distance_back > 1e-6:
+                advance = min(distance_back, self.velocidad_ms * 10.0 * dt_sim)
+                self.x += (cx - self.x) * advance / distance_back
+                self.y += (cy - self.y) * advance / distance_back
+                return
             dest = self.tarea_actual.destino if (self.tarea_actual and self.tarea_actual.estado == "en_curso") else (self.tarea_actual.origen if self.tarea_actual else self.path[-1])
             new_path = find_shortest_path(G, current_node, dest, self.node_positions)
             if new_path and len(new_path) > 1:
@@ -328,6 +342,7 @@ class AMRAgent:
             return
 
         tx, ty = self.node_positions.get(next_node, (self.x, self.y))
+
         dx = tx - self.x
         dy = ty - self.y
         dist = math.sqrt(dx * dx + dy * dy)

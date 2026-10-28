@@ -8,7 +8,7 @@ import { WIFI_APS_BY_PLANT } from "@/lib/config";
 import { VISUAL_V2_DEFAULT, VISUAL_V2_PLANTS, isVisualV2Enabled } from "@/lib/config";
 import { drawVisualV2Nodes, drawVisualV2Underlay, drawVisualV2ZoneTitles } from "@/lib/mapVisualV2";
 import { edgeKey, findEdgeAtScreenPoint } from "@/lib/edgeHit";
-import { getAmrAnchor } from "@/lib/mapGeometry";
+import { getAmrAnchor, projectOntoSegment } from "@/lib/mapGeometry";
 import { getLayoutBounds, type LayoutBounds } from "@/lib/layoutBounds";
 import type {
   AMRRenderState,
@@ -80,7 +80,7 @@ function isDenseLandmark(n: { id: string; type?: string }): boolean {
 /** Semántica New_map (planta espol_fusion): colores específicos por prefijo de nodo. */
 function getSemanticNodeColor(id: string): string | null {
   if (id.startsWith("RECO_")) return "#f97316"; // naranja (puntos de recolección de pallets)
-  if (id.startsWith("PALET_")) return "#8b5cf6"; // morado (zona de paletizaje)
+  if (/^PALET_\d+$/.test(id)) return "#8b5cf6"; // morado (zona de paletizaje)
   if (id.startsWith("TRANSPORTE")) return "#e4032e"; // rojo (hub de transporte externo)
   if (id.startsWith("INSUMO_")) return "#d29922"; // amarillo (colocación de insumos)
   if (id.startsWith("FUENTE_INSUMOS")) return "#92400e"; // café (fuente de insumos)
@@ -115,6 +115,8 @@ interface PlantMapProps {
   simTime?: number;
   /** Paquetes esperando en OUTs (id nodo → cantidad) → emoji 📦 en la ruta rosada */
   outStock?: Record<string, number>;
+  /** Estado de las estaciones ESPOL: 🧩 en P, 📦 en R. */
+  stationStock?: Record<string, number>;
   /** Capa Wi-Fi: APs + halo (default OFF — pitch de red) */
   showWifiNetwork?: boolean;
 }
@@ -133,6 +135,7 @@ export function PlantMap({
   lidarMode = false,
   simTime = 0,
   outStock,
+  stationStock,
   showWifiNetwork = false,
 }: PlantMapProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -606,21 +609,31 @@ export function PlantMap({
       }
     });
 
-    // Ronda 15: emoji 📦 sobre cada OUT con paquete terminado esperando la entrega exclusiva al muro
-    if (outStock) {
+    // Inventario físico: se actualiza con cada snapshot, fuera de la caché estática V2.
+    if (outStock || stationStock) {
       layout.nodes.forEach((n) => {
-        if (/^OUT/.test(n.id) && (outStock[n.id] || 0) > 0) {
-          const s = toScreen(n.x, n.y);
-          const fs = (dense ? 13 : 17) * scale;
-          const ly = s.y - (dense ? 24 : 32) * scale;
-          ctx.font = `${fs}px sans-serif`;
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.strokeStyle = "rgba(255,255,255,0.9)";
-          ctx.lineWidth = 3.5;
-          ctx.strokeText("📦", s.x, ly);
-          ctx.fillText("📦", s.x, ly);
-        }
+        const isSupply = plantId === "espol_fusion" && /^INSUMO_P[1-3]$/.test(n.id);
+        const isPickup = plantId === "espol_fusion" && /^RECO_R[1-3]$/.test(n.id);
+        const isPalet = plantId === "espol_fusion" && /^PALET_\d+$/.test(n.id);
+        const count = isSupply || isPickup ? stationStock?.[n.id] : outStock?.[n.id];
+        if (!count || !(isSupply || isPickup || isPalet || /^OUT/.test(n.id))) return;
+        const s = toScreen(n.x, n.y);
+        const emoji = isSupply ? "🧩" : "📦";
+        const fontSize = Math.max(13, (dense ? 14 : 17) * scale);
+        const y = s.y - Math.max(18, (dense ? 24 : 28) * scale);
+        ctx.save();
+        ctx.fillStyle = "rgba(255, 253, 247, 0.96)";
+        ctx.strokeStyle = isSupply ? "#d29922" : isPickup ? "#f97316" : "#8b5cf6";
+        ctx.lineWidth = 1.2;
+        ctx.beginPath();
+        ctx.arc(s.x, y, fontSize * 0.77, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.font = `${fontSize}px sans-serif`;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(emoji, s.x, y + 1);
+        ctx.restore();
       });
     }
 
@@ -717,6 +730,27 @@ export function PlantMap({
 
         const anchor = getAmrAnchor(amr, layout);
         const start = toScreen(anchor.x, anchor.y);
+        const nextId = amr.path[0];
+        // Solo unir la posición actual al siguiente nodo si cae sobre una arista
+        // declarada; el LERP entre snapshots puede atravesar una esquina.
+        let routeAnchor: { x: number; y: number } | null = null;
+        let routeDistance = Infinity;
+        for (const e of layout.edges) {
+          const fromId = e.to === nextId ? e.from : e.from === nextId ? e.to : null;
+          const from = fromId && nodeById.get(fromId);
+          const next = nodeById.get(nextId);
+          if (!from || !next) continue;
+          const projected = projectOntoSegment(anchor.x, anchor.y, from.x, from.y, next.x, next.y);
+          const distance = Math.hypot(projected.x - anchor.x, projected.y - anchor.y);
+          if (distance < routeDistance) {
+            routeDistance = distance;
+            routeAnchor = projected;
+          }
+        }
+        const onActiveEdge = routeDistance <= 2;
+        const routeStart = routeAnchor && onActiveEdge
+          ? toScreen(routeAnchor.x, routeAnchor.y)
+          : start;
 
         // Dirección de avance (siguiente nodo del path o angulo)
         let dirX = Math.cos((amr.angulo * Math.PI) / 180);
@@ -745,12 +779,23 @@ export function PlantMap({
           ctx.shadowColor = "rgba(80, 255, 180, 0.55)";
           ctx.shadowBlur = 10 * scale;
           ctx.beginPath();
-          ctx.moveTo(start.x, start.y);
-          amr.path.forEach((nid) => {
+          ctx.moveTo(routeStart.x, routeStart.y);
+          let previousId: string | null = null;
+          amr.path.forEach((nid, index) => {
             const n = nodeById.get(nid);
             if (!n) return;
-            const s2 = toScreen(n.x, n.y);
-            ctx.lineTo(s2.x, s2.y);
+            // El primer tramo parte del ancla sobre la arista activa. Los siguientes
+            // solo se unen si el API declara esa arista entre los nodos del path.
+            if ((index === 0 && onActiveEdge) || (previousId && layout.edges.some((e) =>
+              (e.from === previousId && e.to === nid) || (e.to === previousId && e.from === nid)
+            ))) {
+              const s2 = toScreen(n.x, n.y);
+              ctx.lineTo(s2.x, s2.y);
+            } else {
+              const s2 = toScreen(n.x, n.y);
+              ctx.moveTo(s2.x, s2.y);
+            }
+            previousId = nid;
           });
           ctx.stroke();
 
@@ -803,12 +848,23 @@ export function PlantMap({
           ctx.setLineDash([8, 6]);
           ctx.lineDashOffset = -dashOffset;
           ctx.beginPath();
-          ctx.moveTo(start.x, start.y);
-          amr.path.forEach((nid) => {
+          ctx.moveTo(routeStart.x, routeStart.y);
+          let previousId: string | null = null;
+          amr.path.forEach((nid, index) => {
             const n = nodeById.get(nid);
             if (!n) return;
-            const s2 = toScreen(n.x, n.y);
-            ctx.lineTo(s2.x, s2.y);
+            // El primer tramo parte del ancla sobre la arista activa. Los siguientes
+            // solo se unen si el API declara esa arista entre los nodos del path.
+            if ((index === 0 && onActiveEdge) || (previousId && layout.edges.some((e) =>
+              (e.from === previousId && e.to === nid) || (e.to === previousId && e.from === nid)
+            ))) {
+              const s2 = toScreen(n.x, n.y);
+              ctx.lineTo(s2.x, s2.y);
+            } else {
+              const s2 = toScreen(n.x, n.y);
+              ctx.moveTo(s2.x, s2.y);
+            }
+            previousId = nid;
           });
           ctx.stroke();
           ctx.restore();
@@ -831,7 +887,7 @@ export function PlantMap({
         ctx.lineWidth = 3 * spriteK * scale;
         ctx.stroke();
 
-        const fleetType = tipoDeAmr(amr.id);
+        const fleetType = plantId === "espol_fusion" ? "AGV" : tipoDeAmr(amr.id);
         const typeColor = fleetType === "AMR" ? FLEET_PRESENTATION.AMR_COLOR : FLEET_PRESENTATION.AGV_COLOR;
         ctx.fillStyle = typeColor;
         const w = 20 * spriteK * scale;
@@ -844,7 +900,8 @@ export function PlantMap({
         ctx.font = `bold ${8 * spriteK * scale}px sans-serif`;
         ctx.textAlign = "center";
         ctx.textBaseline = "alphabetic";
-        const amrLabel = FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre;
+        const defaultLabel = FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre;
+        const amrLabel = plantId === "espol_fusion" ? defaultLabel.replace(/^AMR\b/, "AGV") : defaultLabel;
         ctx.fillText(amrLabel, s.x, s.y - 22 * spriteK * scale);
         ctx.font = `${Math.max(8, 9 * spriteK * scale)}px Arial, sans-serif`;
         ctx.fillStyle = typeColor;
@@ -869,7 +926,7 @@ export function PlantMap({
         // Saltar AMR problemático; el resto sigue visible
       }
     });
-  }, [layout, amrs, missions, obstacles, spillMode, selectedEdge, getBlockedEdges, plantId, lidarMode, simTime, outStock, showWifiNetwork, v2]);
+  }, [layout, amrs, missions, obstacles, spillMode, selectedEdge, getBlockedEdges, plantId, lidarMode, simTime, outStock, stationStock, showWifiNetwork, v2]);
 
   useEffect(() => {
     resize();

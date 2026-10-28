@@ -162,6 +162,12 @@ export function useSimulation(layout: PlantLayout | null) {
     [mode]
   );
 
+  const simulateBreakdown = useCallback(async (amrId: string) => {
+    if (mode !== "live") throw new Error("Solo disponible con backend");
+    const { simulateFleetBreakdown } = await import("@/lib/api");
+    await simulateFleetBreakdown(amrId);
+  }, [mode]);
+
   const refill = useCallback(
     async (lineId?: string | null, targetPct = 80) => {
       if (mode === "offline" && demoRef.current) {
@@ -207,6 +213,7 @@ export function useSimulation(layout: PlantLayout | null) {
     unblockEdge,
     injectPeak,
     simulateLowBattery,
+    simulateBreakdown,
     refill,
     resetMissions: resetMissionsAction,
     adjustMissions: adjustMissionsAction,
@@ -216,7 +223,8 @@ export function useSimulation(layout: PlantLayout | null) {
 /** Interpolación LERP a 60fps entre snapshots WS (5 Hz) */
 export function useLerpAmrs(
   snapshot: SimulationSnapshot | null,
-  resetKey = 0
+  resetKey = 0,
+  plantId = "realistic"
 ): AMRRenderState[] {
   const [renderAmrs, setRenderAmrs] = useState<AMRRenderState[]>([]);
   const targetRef = useRef<SimulationSnapshot | null>(null);
@@ -251,8 +259,10 @@ export function useLerpAmrs(
       if (target) {
         const next: AMRRenderState[] = target.amrs.map((a) => {
           const cur = displayRef.current.get(a.id) ?? { x: a.x, y: a.y };
-          const nx = cur.x + (a.x - cur.x) * LERP_FACTOR;
-          const ny = cur.y + (a.y - cur.y) * LERP_FACTOR;
+          // ESPOL must display the simulator's exact graph position. LERP across
+          // a turn cuts the corner and makes an AGV appear to cross a wall.
+          const nx = plantId === "espol_fusion" ? a.x : cur.x + (a.x - cur.x) * LERP_FACTOR;
+          const ny = plantId === "espol_fusion" ? a.y : cur.y + (a.y - cur.y) * LERP_FACTOR;
           displayRef.current.set(a.id, { x: nx, y: ny });
           return { ...a, renderX: nx, renderY: ny };
         });
@@ -263,7 +273,7 @@ export function useLerpAmrs(
 
     rafRef.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(rafRef.current);
-  }, []);
+  }, [plantId]);
 
   return renderAmrs;
 }

@@ -6,6 +6,7 @@ import type { Mission } from "@/lib/types";
 
 interface KanbanPanelProps {
   missions: Mission[];
+  plantId?: string;
   collapsed: boolean;
   onToggle: () => void;
   onExpand: () => void;
@@ -27,6 +28,7 @@ const STATUS_STYLE: Record<string, string> = {
 
 export function KanbanPanel({
   missions,
+  plantId,
   collapsed,
   onToggle,
   onExpand,
@@ -69,7 +71,7 @@ export function KanbanPanel({
             </div>
             {m.amr_asignado && (
               <span className="mt-1.5 inline-block rounded-md border border-black/[0.08] bg-black/[0.03] px-1.5 py-0.5 font-mono text-[0.6rem] text-nest-ink">
-                {m.amr_asignado}
+                {plantId === "espol_fusion" ? m.amr_asignado.replace(/^AMR_/, "AGV_") : m.amr_asignado}
               </span>
             )}
           </div>

@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { ControlPanel } from "@/components/ControlPanel";
 import { FleetBatteryPanel } from "@/components/FleetBatteryPanel";
+import { FleetMaintenancePanel } from "@/components/FleetMaintenancePanel";
 import { FleetChatWidget } from "@/components/FleetChatWidget";
 import { FleetDetailView } from "@/components/FleetDetailView";
 import { FloatingDetailModal } from "@/components/FloatingDetailModal";
@@ -52,12 +53,13 @@ export function Dashboard() {
     unblockEdge,
     injectPeak,
     simulateLowBattery,
+    simulateBreakdown,
     refill,
     resetMissions,
     adjustMissions,
   } = useSimulation(layout);
 
-  const renderAmrs = useLerpAmrs(snapshot, layoutKey);
+  const renderAmrs = useLerpAmrs(snapshot, layoutKey, selectedPlantId);
 
   const [spillMode, setSpillMode] = useState<SpillMode>("none");
   const [selectedEdge, setSelectedEdge] = useState<SelectedEdge | null>(null);
@@ -66,6 +68,8 @@ export function Dashboard() {
     null
   );
   const [fleetCollapsed, setFleetCollapsed] = useState(false);
+  const [maintenanceCollapsed, setMaintenanceCollapsed] = useState(false);
+  const [breakdownLoadingId, setBreakdownLoadingId] = useState<string | null>(null);
   const [linesCollapsed, setLinesCollapsed] = useState(true);
   const [kanbanCollapsed, setKanbanCollapsed] = useState(false);
   const [fleetModalOpen, setFleetModalOpen] = useState(false);
@@ -79,9 +83,6 @@ export function Dashboard() {
   useEffect(() => {
     setLidarMode(selectedPlantId === "realistic");
   }, [selectedPlantId]);
-
-  const sidebarNarrow =
-    fleetCollapsed && linesCollapsed && kanbanCollapsed ? "72px" : "240px";
 
   useEffect(() => {
     if (!fullscreen) return;
@@ -225,6 +226,18 @@ export function Dashboard() {
     [simulateLowBattery, pushToast]
   );
 
+  const handleBreakdown = useCallback(async (amrId: string, nombre: string) => {
+    setBreakdownLoadingId(amrId);
+    try {
+      await simulateBreakdown(amrId);
+      pushToast(`Avería simulada en ${nombre}`, "success");
+    } catch {
+      pushToast(`No se pudo simular la avería en ${nombre}`, "error");
+    } finally {
+      setBreakdownLoadingId(null);
+    }
+  }, [simulateBreakdown, pushToast]);
+
   const handlePlantChange = useCallback(
     async (plantId: string) => {
       pushToast(`Cambiando a planta ${plantId}…`, "info");
@@ -268,6 +281,20 @@ export function Dashboard() {
   const obstacles = snapshot?.obstacles ?? [];
   const notices = snapshot?.notices ?? [];
   const fleetAmrs = snapshot?.amrs ?? [];
+  const maintenance = snapshot?.maintenance ?? [];
+  const breakdownNotice = [...notices].reverse().find((notice) => {
+    const message = typeof notice === "string" ? notice : notice.mensaje ?? "";
+    return (typeof notice !== "string" && (notice.tipo.startsWith("MAINTENANCE") || notice.tipo === "PAUSE")) ||
+      /aver[ií]a|breakdown|averiado|descompuesto|reparado/i.test(message);
+  });
+  const breakdownAlert = breakdownNotice
+    ? {
+        key: typeof breakdownNotice === "string"
+          ? breakdownNotice
+          : `${breakdownNotice.tipo}:${breakdownNotice.sim_time ?? "?"}:${breakdownNotice.mensaje ?? ""}`,
+        message: typeof breakdownNotice === "string" ? breakdownNotice : breakdownNotice.mensaje ?? "Avería de flota",
+      }
+    : null;
 
   const mapEl = (
     <PlantMap
@@ -284,6 +311,7 @@ export function Dashboard() {
       lidarMode={lidarMode}
       simTime={snapshot?.sim_time ?? 0}
       outStock={snapshot?.out_stock}
+      stationStock={snapshot?.station_stock}
       showWifiNetwork={showWifiNetwork}
     />
   );
@@ -316,7 +344,7 @@ export function Dashboard() {
             loading={actionLoading}
           />
         </div>
-        <FleetChatWidget />
+        <FleetChatWidget breakdownAlert={breakdownAlert} />
       </div>
     );
   }
@@ -338,11 +366,25 @@ export function Dashboard() {
       <div
         className="dashboard-grid grid flex-1 gap-2 p-3 min-h-0 transition-[grid-template-columns] duration-300"
         style={{
-          gridTemplateColumns: `1fr ${sidebarNarrow}`,
+          gridTemplateColumns: "300px minmax(0, 1fr)",
           gridTemplateRows: "minmax(0, 1fr)",
         }}
       >
-        <div className="relative flex flex-col gap-1.5 min-h-0 min-w-0">
+        <div className="dashboard-main relative flex flex-col gap-1.5 min-h-0 min-w-0">
+          <div className="nest-panel relative flex-1 min-h-0 min-w-0 overflow-hidden shadow-nest-glow">
+            {mapEl}
+            <button
+              type="button"
+              onClick={() => setFullscreen(true)}
+              className="absolute top-2 right-2 z-10 nest-btn-ghost nest-btn px-2 py-1 text-[0.65rem] bg-white/90 backdrop-blur-sm shadow-nest-panel"
+              title="Abrir mapa en página única"
+            >
+              ⛶ Ampliar
+            </button>
+          </div>
+        </div>
+
+        <div className="dashboard-sidebar flex h-full min-h-0 flex-col gap-1.5 overflow-y-auto overflow-x-hidden">
           <ControlPanel
             spillMode={spillMode}
             onSpillModeChange={handleSpillModeChange}
@@ -362,30 +404,32 @@ export function Dashboard() {
             showWifiNetwork={showWifiNetwork}
             onShowWifiNetworkChange={setShowWifiNetwork}
             onEmergencyPickup={async (line) => { await postEmergencyPickup(line); }}
+            agvs={selectedPlantId === "espol_fusion" ? fleetAmrs : undefined}
+            onBreakdown={selectedPlantId === "espol_fusion" ? handleBreakdown : undefined}
+            breakdownLoadingId={breakdownLoadingId}
           />
-          <div className="nest-panel relative flex-1 min-h-0 min-w-0 overflow-hidden shadow-nest-glow">
-            {mapEl}
-            <button
-              type="button"
-              onClick={() => setFullscreen(true)}
-              className="absolute top-2 right-2 z-10 nest-btn-ghost nest-btn px-2 py-1 text-[0.65rem] bg-white/90 backdrop-blur-sm shadow-nest-panel"
-              title="Abrir mapa en página única"
-            >
-              ⛶ Ampliar
-            </button>
-          </div>
-        </div>
-
-        <div className="flex h-full min-h-0 flex-col gap-1.5 overflow-hidden">
-          <KpiMiniPanel kpis={kpis} />
+          <KpiMiniPanel kpis={kpis} plantId={selectedPlantId} />
           <FleetBatteryPanel
             amrs={fleetAmrs}
+            plantId={selectedPlantId}
             onLowBattery={handleLowBattery}
             loadingId={lowBatteryLoadingId}
             collapsed={fleetCollapsed}
             onToggle={() => setFleetCollapsed((c) => !c)}
             onExpand={() => setFleetModalOpen(true)}
           />
+          {selectedPlantId === "espol_fusion" && (
+            <FleetMaintenancePanel
+              maintenance={maintenance}
+              paused={snapshot?.maintenance_paused ?? false}
+              amrs={fleetAmrs}
+              offline={mode !== "live"}
+              loadingId={breakdownLoadingId}
+              collapsed={maintenanceCollapsed}
+              onToggle={() => setMaintenanceCollapsed((c) => !c)}
+              onBreakdown={handleBreakdown}
+            />
+          )}
           <LineGaugesPanel
             lines={lines}
             collapsed={linesCollapsed}
@@ -393,6 +437,7 @@ export function Dashboard() {
           />
           <KanbanPanel
             missions={missions}
+            plantId={selectedPlantId}
             collapsed={kanbanCollapsed}
             onToggle={() => setKanbanCollapsed((c) => !c)}
             onExpand={() => setKanbanModalOpen(true)}
@@ -413,6 +458,7 @@ export function Dashboard() {
         <FleetDetailView
           amrs={fleetAmrs}
           layout={layout}
+          plantId={selectedPlantId}
           onLowBattery={handleLowBattery}
           loadingId={lowBatteryLoadingId}
         />
@@ -423,10 +469,10 @@ export function Dashboard() {
         open={kanbanModalOpen}
         onClose={() => setKanbanModalOpen(false)}
       >
-        <KanbanDetailView missions={missions} />
+        <KanbanDetailView missions={missions} plantId={selectedPlantId} />
       </FloatingDetailModal>
 
-      <FleetChatWidget />
+      <FleetChatWidget breakdownAlert={breakdownAlert} />
     </div>
   );
 }

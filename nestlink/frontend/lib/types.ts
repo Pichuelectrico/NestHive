@@ -66,6 +66,13 @@ export interface Notice {
   sim_time?: number;
 }
 
+export interface FleetMaintenanceState {
+  agv_id: string;
+  wear_pct: number;
+  status: "normal" | "critical" | "broken";
+  remaining_seconds: number;
+}
+
 export interface SimulationSnapshot {
   sim_time: number;
   tick_id: number;
@@ -75,8 +82,12 @@ export interface SimulationSnapshot {
   kpis: KPIsState;
   /** Banners opcionales: en LIVE vienen como objetos Notice; en modo offline como strings */
   notices?: (string | Notice)[];
+  maintenance?: FleetMaintenanceState[];
+  maintenance_paused?: boolean;
   /** Paquetes terminados esperando la entrega exclusiva al muro (id nodo OUT → cantidad) */
   out_stock?: Record<string, number>;
+  /** Insumos en P y paquetes listos para recoger en R. */
+  station_stock?: Record<string, number>;
 }
 
 export interface PlantInfo {

@@ -5,6 +5,7 @@ from fastapi import APIRouter, WebSocket, WebSocketDisconnect, HTTPException, Qu
 from app.models import (
     AdjustMissionsRequest,
     LowBatteryRequest,
+    MaintenanceSignal,
     RefillRequest,
     PlantLayout,
     BlockRequest,
@@ -75,6 +76,20 @@ def select_plant(payload: PlantSelectRequest):
 @router.get("/api/v1/fleet")
 def get_fleet() -> List[Dict[str, Any]]:
     return [amr.get_state().model_dump() for amr in sim_env.amrs]
+
+@router.post("/api/v1/fleet/{amr_id}/breakdown")
+def post_agv_breakdown(amr_id: str) -> Dict[str, Any]:
+    result = sim_env.trigger_breakdown(amr_id)
+    if result is None:
+        raise HTTPException(status_code=404, detail="AGV no disponible para avería")
+    return result
+
+@router.post("/api/v1/fleet/{amr_id}/maintenance-signal")
+def post_maintenance_signal(amr_id: str, payload: MaintenanceSignal) -> Dict[str, Any]:
+    result = sim_env.receive_maintenance_signal(amr_id, payload.wear_pct, payload.failure_code)
+    if result is None:
+        raise HTTPException(status_code=404, detail="AGV no disponible")
+    return result
 
 @router.get("/api/v1/missions")
 def get_missions() -> List[Dict[str, Any]]:

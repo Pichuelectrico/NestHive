@@ -26,10 +26,13 @@ def answer(q: str, env: Any) -> Dict[str, Any]:
     if any(x in s for x in ("bater", "carga")):
         data = {"fleet": [{"id": a["id"], "bateria": a["bateria"], "estado": a["estado"]} for a in fleet]}
         text = "Baterías: " + ", ".join(f'{a["id"]} {a["bateria"]}%' for a in fleet)
-    elif any(x in s for x in ("flota", "amr")):
+    elif any(x in s for x in ("flota", "amr", "agv")):
         counts = {}
         for a in fleet: counts[a["estado"]] = counts.get(a["estado"], 0) + 1
-        data, text = {"counts": counts, "fleet": fleet}, "Flota híbrida de 6 vehículos: 4 AGVs + 2 AMRs de apoyo en puntos críticos. " + ", ".join(f"{n} {v}" for n, v in counts.items())
+        description = (f"Flota de {len(fleet)} AGV; uno reservado para paletizaje → transporte. "
+                       if env.plant_id == "espol_fusion" else
+                       f"Flota de {len(fleet)} vehículos. ")
+        data, text = {"counts": counts, "fleet": fleet}, description + ", ".join(f"{n} {v}" for n, v in counts.items())
     elif any(x in s for x in ("misiones", "misión", "curso", "complet")):
         data = {"active": active, "pending": pending, "completed": [m for m in missions if m["estado"] == "completada"]}
         text = f"{len(active)} misiones en curso y {len(pending)} pendientes; {k['viajes_completados']} viajes completados."
@@ -40,7 +43,9 @@ def answer(q: str, env: Any) -> Dict[str, Any]:
         data, text = {"kpis": k}, f"Turno: {k['viajes_completados']} viajes, {k['paradas_evitadas']} paradas evitadas y {k['km_evitados']} km evitados."
     elif any(x in s for x in ("estrateg", "asignó", "asigno")):
         data = {"active": active, "rule": "prioridad + distancia + afinidad de zona (asignación húngara)"}
-        text = "Estrategia activa: prioriza urgencia, distancia y afinidad de zona; la reserva AGV 6 atiende entregas."
+        text = ("Estrategia activa: AGV reservado para exportación; los demás se desvían ante bloqueos y apoyan si hay sobrecarga."
+                if env.plant_id == "espol_fusion" else
+                "Estrategia activa: prioriza urgencia, distancia y afinidad de zona.")
     elif any(x in s for x in ("cuello", "parada", "stock")):
         data = {"pending": pending, "lines": env.get_snapshot().model_dump().get("lines", [])}
         text = "Vigilo la cola de misiones y las líneas con menor nivel de material; no hay parada confirmada." if not pending else f"La cola tiene {len(pending)} misiones pendientes; esa es la prioridad operativa."

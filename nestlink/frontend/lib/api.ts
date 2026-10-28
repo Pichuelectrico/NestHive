@@ -153,6 +153,15 @@ export async function simulateLowBattery(amrId: string) {
   return res.json();
 }
 
+export async function simulateFleetBreakdown(amrId: string): Promise<void> {
+  const res = await fetchWithTimeout(
+    `${API_BASE}/api/v1/fleet/${encodeURIComponent(amrId)}/breakdown`,
+    { method: "POST" },
+    5000
+  );
+  if (!res.ok) throw new Error(`breakdown failed (${res.status})`);
+}
+
 export interface RefillResponse {
   status: string;
   target_pct: number;

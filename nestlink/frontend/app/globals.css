@@ -146,9 +146,31 @@ body {
   }
 }
 
+.dashboard-sidebar > aside {
+  flex: none;
+}
+
+@media (min-width: 901px) {
+  .dashboard-main {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  .dashboard-sidebar {
+    grid-column: 1;
+    grid-row: 1;
+  }
+}
+
 @media (max-width: 900px) {
   .dashboard-grid {
     grid-template-columns: 1fr !important;
-    grid-template-rows: auto !important;
+    grid-template-rows: minmax(400px, 60vh) auto !important;
+    overflow-y: auto;
+  }
+
+  .dashboard-sidebar {
+    height: auto;
+    overflow: visible;
   }
 }

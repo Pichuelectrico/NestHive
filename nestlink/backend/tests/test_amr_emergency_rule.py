@@ -147,10 +147,10 @@ class TestFleetClassEligibility(unittest.TestCase):
         v = self._vehicles("realistic")
         self.assertTrue(default_eligible(v["AMR_01"], self._task("EXPEDITION")))
 
-    def test_08c_espol_amr04_not_eligible_supply(self):
-        v = self._vehicles("espol_fusion")
-        self.assertEqual(v["AMR_04"].clase, "AMR")
-        self.assertFalse(default_eligible(v["AMR_04"], self._task("SUPPLY_REQUEST")))
+    def test_08c_espol_export_vehicle_is_an_agv(self):
+        env = SimulationEnvironment("espol_fusion")
+        self.assertEqual({v.clase for v in env.amrs}, {"AGV"})
+        self.assertEqual(env.delivery_amr_ids, {"AMR_04"})
 
     def test_08d_espol_amr01_not_eligible_expedition(self):
         v = self._vehicles("espol_fusion")
@@ -217,16 +217,18 @@ class TestRedChainBehaviour(unittest.TestCase):
         cls.env, cls.missions, cls.agv_on_transport = _run_plant("espol_fusion")
         cls.clase = {v.id: v.clase for v in cls.env.amrs}
 
-    def test_09a_exports_go_palet_to_transport_by_amr_only(self):
+    def test_09a_exports_go_palet_to_transport_by_agv(self):
         exports = [m for m in self.missions if m.tipo == "EXPORT" and m.estado == "completada"]
         self.assertGreater(len(exports), 0, "la cadena roja no entregó ningún EXPORT")
         for m in exports:
             self.assertTrue(m.origen.startswith("PALET_"), m.origen)
             self.assertEqual(m.destino, "TRANSPORTE")
-            self.assertEqual(self.clase.get(m.amr_asignado), "AMR", f"{m.id} entregado por {m.amr_asignado}")
+            self.assertEqual(self.clase.get(m.amr_asignado), "AGV", f"{m.id} entregado por {m.amr_asignado}")
 
-    def test_09b_agvs_never_reach_transport(self):
-        self.assertEqual(self.agv_on_transport, set())
+    def test_09b_only_export_agvs_reach_transport(self):
+        exporters = {m.amr_asignado for m in self.missions if m.tipo == "EXPORT"}
+        self.assertIn("AMR_04", self.agv_on_transport)
+        self.assertTrue(self.agv_on_transport <= exporters)
 
     def test_09c_chain_is_fed_and_drains(self):
         """Encadenado: hay pallets que llegan a paletizaje (RECO/EXPEDITION) y salen por EXPORT,

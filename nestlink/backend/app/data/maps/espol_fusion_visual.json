@@ -5,6 +5,90 @@
     "w": 1000,
     "h": 600
   },
+  "legend": {
+    "morado": "Punto de paletizaje",
+    "verde": "Punto de carga",
+    "azul": "Punto de redireccionamiento",
+    "amarillo": "Punto de insumos P1-P3",
+    "cafe": "Fuente de insumos",
+    "naranja": "Punto de recoleccion R1-R3",
+    "rojo": "Ruta AGV entre paletizaje y transporte"
+  },
+  "layout_spec": {
+    "paletizaje": {
+      "node_ids": [
+        "PALET_01",
+        "PALET_02",
+        "PALET_03",
+        "PALET_04",
+        "PALET_05",
+        "PALET_06",
+        "PALET_07",
+        "PALET_08",
+        "PALET_09",
+        "PALET_10",
+        "PALET_11",
+        "PALET_12",
+        "PALET_13",
+        "PALET_14",
+        "PALET_15"
+      ],
+      "grid": {
+        "rows": 3,
+        "columns": 5,
+        "order": "left_to_right_top_to_bottom"
+      },
+      "color": "#b96bd4"
+    },
+    "redirect_points": {
+      "node_type": "cruce",
+      "color": "#536ff0"
+    },
+    "chargers": {
+      "node_ids": [
+        "CHARGER_1",
+        "CHARGER_2"
+      ],
+      "color": "#6dcc62"
+    },
+    "supply_points": {
+      "node_ids": [
+        "INSUMO_P1",
+        "INSUMO_P2",
+        "INSUMO_P3"
+      ],
+      "source_node_id": "FUENTE_INSUMOS",
+      "color": "#ffc45a",
+      "source_color": "#7a3e0b"
+    },
+    "recollection_points": {
+      "node_ids": [
+        "RECO_R1",
+        "RECO_R2",
+        "RECO_R3"
+      ],
+      "destination": "PALET_*",
+      "color": "#ff6b21"
+    },
+    "transport": {
+      "node_id": "TRANSPORTE",
+      "label": "Transporte afuera",
+      "shape": "circle",
+      "arrow_color": "#ff302c",
+      "edge_domain": "AGV"
+    },
+    "rendering": {
+      "mode": "simplified",
+      "show_edges": "orthogonal_only",
+      "hide_diagonals": true,
+      "palet_connectors": "vertical_to_row_horizontal"
+    },
+    "perimeter_wall": {
+      "closed": true,
+      "style": "dashed",
+      "color": "#a8a29e"
+    }
+  },
   "warp": {
     "x": [
       [
@@ -99,36 +183,154 @@
         6,
         4
       ]
+    },
+    {
+      "points": [
+        [
+          50,
+          189
+        ],
+        [
+          300,
+          189
+        ]
+      ],
+      "dash": [
+        6,
+        4
+      ],
+      "label": "Pared media · tramo oeste"
+    },
+    {
+      "points": [
+        [
+          430,
+          189
+        ],
+        [
+          950,
+          189
+        ]
+      ],
+      "dash": [
+        6,
+        4
+      ],
+      "label": "Pared media · tramo este"
     }
   ],
   "corridors": [
     {
       "points": [
         [
-          50,
-          120
+          164,
+          116
         ],
         [
-          950,
-          120
+          870,
+          116
         ]
       ],
-      "width": 10,
-      "oneway": true
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          164,
+          130
+        ],
+        [
+          870,
+          130
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          400,
+          116
+        ],
+        [
+          400,
+          550
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          413,
+          130
+        ],
+        [
+          413,
+          550
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          400,
+          116
+        ],
+        [
+          413,
+          116
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          400,
+          130
+        ],
+        [
+          413,
+          130
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          870,
+          50
+        ],
+        [
+          870,
+          130
+        ]
+      ],
+      "width": 9,
+      "oneway": false
     },
     {
       "points": [
         [
           50,
-          300
+          302
         ],
         [
-          950,
-          300
+          320,
+          302
         ]
       ],
-      "width": 10,
-      "oneway": true
+      "width": 9,
+      "oneway": false
     },
     {
       "points": [
@@ -137,12 +339,12 @@
           344
         ],
         [
-          950,
+          413,
           344
         ]
       ],
-      "width": 10,
-      "oneway": true
+      "width": 9,
+      "oneway": false
     },
     {
       "points": [
@@ -151,12 +353,26 @@
           410
         ],
         [
-          950,
+          413,
           410
         ]
       ],
-      "width": 10,
-      "oneway": true
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          50,
+          468
+        ],
+        [
+          413,
+          468
+        ]
+      ],
+      "width": 9,
+      "oneway": false
     },
     {
       "points": [
@@ -165,12 +381,572 @@
           550
         ],
         [
+          413,
+          550
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          50,
+          302
+        ],
+        [
+          50,
+          550
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          320,
+          302
+        ],
+        [
+          320,
+          550
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          320,
+          302
+        ],
+        [
+          413,
+          302
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          94,
+          255
+        ],
+        [
+          94,
+          302
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          189,
+          255
+        ],
+        [
+          189,
+          302
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          400,
+          278
+        ],
+        [
+          927,
+          278
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          413,
+          294
+        ],
+        [
+          927,
+          294
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          413,
+          344
+        ],
+        [
+          927,
+          344
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          927,
+          278
+        ],
+        [
+          927,
+          344
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          877,
+          344
+        ],
+        [
+          877,
+          365
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          680,
+          344
+        ],
+        [
+          680,
+          368
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          680,
+          368
+        ],
+        [
+          800,
+          368
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          413,
+          410
+        ],
+        [
+          500,
+          410
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          500,
+          410
+        ],
+        [
+          500,
+          550
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          413,
+          468
+        ],
+        [
+          500,
+          468
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          413,
+          550
+        ],
+        [
           950,
           550
         ]
       ],
-      "width": 10,
-      "oneway": true
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          500,
+          468
+        ],
+        [
+          950,
+          468
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          725,
+          468
+        ],
+        [
+          725,
+          550
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          896,
+          468
+        ],
+        [
+          896,
+          550
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          950,
+          468
+        ],
+        [
+          950,
+          550
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          725,
+          500
+        ],
+        [
+          896,
+          500
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          350,
+          520
+        ],
+        [
+          400,
+          520
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          20,
+          344
+        ],
+        [
+          50,
+          344
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          20,
+          344
+        ],
+        [
+          20,
+          410
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          20,
+          410
+        ],
+        [
+          50,
+          410
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          80,
+          319
+        ],
+        [
+          80,
+          344
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          110,
+          319
+        ],
+        [
+          110,
+          344
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          140,
+          319
+        ],
+        [
+          140,
+          344
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          170,
+          319
+        ],
+        [
+          170,
+          344
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          200,
+          319
+        ],
+        [
+          200,
+          344
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          80,
+          387
+        ],
+        [
+          80,
+          410
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          110,
+          387
+        ],
+        [
+          110,
+          410
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          140,
+          387
+        ],
+        [
+          140,
+          410
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          170,
+          387
+        ],
+        [
+          170,
+          410
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          200,
+          387
+        ],
+        [
+          200,
+          410
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          80,
+          445
+        ],
+        [
+          80,
+          468
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          110,
+          445
+        ],
+        [
+          110,
+          468
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          140,
+          445
+        ],
+        [
+          140,
+          468
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          170,
+          445
+        ],
+        [
+          170,
+          468
+        ]
+      ],
+      "width": 9,
+      "oneway": false
+    },
+    {
+      "points": [
+        [
+          200,
+          445
+        ],
+        [
+          200,
+          468
+        ]
+      ],
+      "width": 9,
+      "oneway": false
     }
   ],
   "zones": [
@@ -178,10 +954,10 @@
       "id": "Z_PALET",
       "role": "paletizaje",
       "rect": [
-        50,
-        275,
-        300,
-        100
+        65,
+        310,
+        150,
+        158
       ],
       "color": "#b96bd4",
       "label": "Paletizaje"
@@ -190,10 +966,10 @@
       "id": "Z_CHARGE",
       "role": "carga",
       "rect": [
-        70,
-        270,
-        160,
-        50
+        80,
+        245,
+        120,
+        20
       ],
       "color": "#6dcc62",
       "label": "Carga"
@@ -310,63 +1086,63 @@
       "role": "carga",
       "color": "#6dcc62",
       "r": 6,
-      "label": null
+      "label": "Cargador 1"
     },
     {
-      "node_id": "CHARGER_1",
+      "node_id": "CHARGER_2",
       "role": "carga",
       "color": "#6dcc62",
       "r": 6,
-      "label": null
+      "label": "Cargador 2"
     },
     {
       "node_id": "INSUMO_P1",
       "role": "insumos",
       "color": "#ffc45a",
       "r": 6,
-      "label": null
+      "label": "P1"
     },
     {
       "node_id": "INSUMO_P2",
       "role": "insumos",
       "color": "#ffc45a",
       "r": 6,
-      "label": null
+      "label": "P2"
     },
     {
       "node_id": "INSUMO_P3",
       "role": "insumos",
       "color": "#ffc45a",
       "r": 6,
-      "label": null
+      "label": "P3"
     },
     {
       "node_id": "FUENTE_INSUMOS",
       "role": "fuente_insumos",
       "color": "#7a3e0b",
       "r": 6,
-      "label": null
+      "label": "Insumos"
     },
     {
       "node_id": "RECO_R1",
       "role": "recoleccion",
       "color": "#ff6b21",
       "r": 6,
-      "label": null
+      "label": "R1"
     },
     {
       "node_id": "RECO_R2",
       "role": "recoleccion",
       "color": "#ff6b21",
       "r": 6,
-      "label": null
+      "label": "R2"
     },
     {
       "node_id": "RECO_R3",
       "role": "recoleccion",
       "color": "#ff6b21",
       "r": 6,
-      "label": null
+      "label": "R3"
     }
   ],
   "labels": [

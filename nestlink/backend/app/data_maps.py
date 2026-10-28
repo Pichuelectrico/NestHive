@@ -3,6 +3,7 @@
 
 import json
 import os
+import math
 import networkx as nx
 from typing import Dict, Any, Tuple
 
@@ -90,6 +91,7 @@ def build_plant_graph(layout_data: Dict[str, Any]) -> Tuple[nx.DiGraph, Dict[str
         )
 
     walls = layout_data.get("walls", [])
+    is_espol = any(node_id.startswith("PALET_") for node_id in node_positions)
     for edge in layout_data.get("edges", []):
         u = edge["from"]
         v = edge["to"]
@@ -97,12 +99,15 @@ def build_plant_graph(layout_data: Dict[str, Any]) -> Tuple[nx.DiGraph, Dict[str
             continue
         if walls and _edge_crosses_walls(node_positions[u], node_positions[v], walls):
             continue
-        length = float(edge.get("length", 10.0))
+        ux, uy = node_positions[u]
+        vx, vy = node_positions[v]
+        # ESPOL's canonical JSON contains the physical lane lengths; other
+        # plants retain their historical weights and routing behaviour.
+        length = float(edge.get("length", math.hypot(vx - ux, vy - uy) if is_espol else 10.0))
         max_speed = float(edge.get("max_speed", 1.5))
         direction = edge.get("direction", "bi")
         blocked = bool(edge.get("blocked", False))
         weight = length / max(max_speed, 0.1)
-
         G.add_edge(u, v, length=length, max_speed=max_speed, weight=weight, blocked=blocked, direction=direction)
         if direction == "bi":
             G.add_edge(v, u, length=length, max_speed=max_speed, weight=weight, blocked=blocked, direction=direction)

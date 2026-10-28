@@ -8,6 +8,7 @@ import type { AMRState, PlantLayout } from "@/lib/types";
 interface FleetDetailViewProps {
   amrs: AMRState[];
   layout: PlantLayout;
+  plantId?: string;
   onLowBattery: (amrId: string, nombre: string) => Promise<void>;
   loadingId: string | null;
 }
@@ -25,17 +26,18 @@ function estadoLabel(estado: string): string {
 export function FleetDetailView({
   amrs,
   layout,
+  plantId,
   onLowBattery,
   loadingId,
 }: FleetDetailViewProps) {
   return (
     <div className="space-y-3">
       {amrs.length === 0 && (
-        <p className="text-sm text-nest-muted">Sin AMRs en snapshot</p>
+        <p className="text-sm text-nest-muted">Sin {plantId === "espol_fusion" ? "AGVs" : "AMRs"} en snapshot</p>
       )}
       {amrs.map((amr) => {
-        const fleetType = tipoDeAmr(amr.id);
-        const displayName = FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre;
+        const fleetType = plantId === "espol_fusion" ? "AGV" : tipoDeAmr(amr.id);
+        const displayName = plantId === "espol_fusion" ? amr.nombre : (FLEET_PRESENTATION.NAME_OVERRIDES[amr.id] ?? amr.nombre);
         const ring = AMR_STATE_COLORS[amr.estado] ?? "#8b949e";
         const barColor = batteryBarColor(amr.bateria);
         const nodeId = nearestNodeId(layout, amr.x, amr.y);
@@ -60,7 +62,7 @@ export function FleetDetailView({
                   <span className="font-bold text-base">{displayName}</span>
                   <span className="ml-1 rounded px-1.5 py-0.5 text-[0.6rem] font-bold" style={{ color: fleetType === "AMR" ? FLEET_PRESENTATION.AMR_COLOR : FLEET_PRESENTATION.AGV_COLOR, backgroundColor: fleetType === "AMR" ? "#DBEAFE" : "#FEE2E2" }}>{fleetType}</span>
                   <span className="font-mono text-xs text-nest-muted">
-                    {amr.id}
+                    {plantId === "espol_fusion" ? amr.id.replace(/^AMR_/, "AGV_") : amr.id}
                   </span>
                 </div>
                 <div className="mt-2 grid grid-cols-2 gap-x-4 gap-y-1 text-xs text-nest-muted">

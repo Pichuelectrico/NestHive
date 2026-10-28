@@ -6,6 +6,7 @@ import type { AMRState } from "@/lib/types";
 
 interface FleetBatteryPanelProps {
   amrs: AMRState[];
+  plantId?: string;
   onLowBattery: (amrId: string, nombre: string) => Promise<void>;
   loadingId: string | null;
   collapsed: boolean;
@@ -32,6 +33,7 @@ function estadoLabel(estado: string): string {
 
 export function FleetBatteryPanel({
   amrs,
+  plantId,
   onLowBattery,
   loadingId,
   collapsed,
@@ -46,7 +48,7 @@ export function FleetBatteryPanel({
       onExpand={onExpand}
     >
       {amrs.length === 0 && (
-        <p className="text-xs text-nest-muted">Sin AMRs en snapshot</p>
+        <p className="text-xs text-nest-muted">Sin {plantId === "espol_fusion" ? "AGVs" : "AMRs"} en snapshot</p>
       )}
       <div className="space-y-2">
         {amrs.map((amr) => {

@@ -30,7 +30,7 @@ function pickDataHighlights(data: Record<string, unknown>): string[] {
     out.push(`Pendientes: ${data.pending.length}`);
   }
   if (Array.isArray(data.fleet)) {
-    out.push(`Flota: ${data.fleet.length} AMR`);
+    out.push(`Flota: ${data.fleet.length} vehículos`);
   }
   if (data.kpis && typeof data.kpis === "object") {
     const k = data.kpis as Record<string, unknown>;

@@ -1,8 +1,7 @@
 /**
  * Renderer visual v2 de espol_fusion (estilo New_map.png).
  *
- * La GEOMETRÍA sale del grafo de simulación (nodos/aristas de espol_fusion.json): los
- * corredores son las aristas reales, así los agentes siempre circulan sobre lo dibujado.
+ * La geometría visible sale de los nodos y aristas recibidos en layout.
  * Del PNG (extracción CV de Codex, espol_fusion_visual.json) se toman paleta y semántica.
  */
 import type { LayoutEdge, LayoutNode, PlantLayout } from "@/lib/types";
@@ -25,12 +24,53 @@ export const V2_COLORS = {
 
 type ToScreen = (x: number, y: number) => { x: number; y: number };
 
-const WALL_PAD = 22;
 const CORRIDOR_W = 9;
+function isExpeditionEdge(e: LayoutEdge, nodes: Map<string, LayoutNode>): boolean {
+  const domain = (e as LayoutEdge & { domain?: string }).domain;
+  if (domain === "AMR" || domain === "EXPEDITION") return true;
+  if (e.from.startsWith("TRANSPORTE") || e.to.startsWith("TRANSPORTE")) return true;
+  // Los accesos reales al perímetro izquierdo nacen fuera de la planta.
+  const from = nodes.get(e.from);
+  const to = nodes.get(e.to);
+  return !!from && !!to && (from.x < 50 || to.x < 50);
+}
 
-function isTransportEdge(e: LayoutEdge): boolean {
-  if ((e as { domain?: string }).domain === "AMR") return true;
-  return e.from.startsWith("TRANSPORTE") || e.to.startsWith("TRANSPORTE");
+function isPaletMarker(id: string): boolean {
+  return /^PALET_\d+$/.test(id);
+}
+
+/** Aristas visibles únicas; el grafo incluye pares inversos para aristas bidireccionales. */
+function visibleCorridorEdges(layout: PlantLayout): LayoutEdge[] {
+  const seen = new Set<string>();
+  const nodes = new Map(layout.nodes.map((node) => [node.id, node]));
+  return layout.edges.filter((edge) => {
+    if (isExpeditionEdge(edge, nodes)) return false;
+    const from = nodes.get(edge.from);
+    const to = nodes.get(edge.to);
+    if (!from || !to || Math.hypot(from.x - to.x, from.y - to.y) < 1e-6) return false;
+    const key = edge.direction?.toLowerCase() === "bi"
+      ? [edge.from, edge.to].sort().join("|")
+      : `${edge.from}|${edge.to}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
+type BluePoint = { id: string; x: number; y: number };
+
+function numberedBluePoints(layout: PlantLayout): BluePoint[] {
+  const hasCanonicalIds = layout.nodes.some((node) => /^B\d+$/.test(node.id));
+  return layout.nodes
+    .filter((node) => node.type === "cruce" && (!hasCanonicalIds || /^B\d+$/.test(node.id)))
+    .filter((node) => node.id !== "B34")
+    .map((node) => ({ id: node.id, x: node.x, y: node.y }));
+}
+
+function drawBluePointNumber(ctx: CanvasRenderingContext2D, point: BluePoint, toScreen: ToScreen, scale: number) {
+  if (!/^B\d+$/.test(point.id)) return;
+  const s = toScreen(point.x, point.y);
+  label(ctx, point.id, s.x + 5 * scale, s.y - 5 * scale, 4.8 * scale, "#2446b8");
 }
 
 function bbox(nodes: LayoutNode[]) {
@@ -120,7 +160,7 @@ function zoneAround(
 /** Zonas semánticas del plano: nodos que encierran, margen, color y título. */
 function semanticZones(layout: PlantLayout) {
   return [
-    { nodes: layout.nodes.filter((n) => n.id.startsWith("PALET_")), pad: 8, color: V2_COLORS.morado, title: "Paletizaje" },
+    { nodes: layout.nodes.filter((n) => isPaletMarker(n.id)), pad: 8, color: V2_COLORS.morado, title: "Paletizaje" },
     { nodes: layout.nodes.filter((n) => n.type === "carga"), pad: 9, color: V2_COLORS.verde, title: "Carga" },
     {
       nodes: layout.nodes.filter((n) => n.id.startsWith("WH_MP_") || n.id.startsWith("FUENTE_INSUMOS")),
@@ -146,7 +186,7 @@ export function drawVisualV2ZoneTitles(
   }
 
   // "Punto de Entrega": como en el PNG, a la derecha de la 2.ª fila de puntos morados
-  const palet = layout.nodes.filter((n) => n.id.startsWith("PALET_"));
+  const palet = layout.nodes.filter((n) => isPaletMarker(n.id));
   const rows: LayoutNode[][] = [];
   for (const n of [...palet].sort((a, b) => a.y - b.y)) {
     const row = rows.find((r) => Math.abs(r[0].y - n.y) < 8);
@@ -185,11 +225,9 @@ export function drawVisualV2Underlay(
   scale: number
 ) {
   const nodeById = new Map(layout.nodes.map((n) => [n.id, n]));
-  const b = bbox(layout.nodes);
-
-  // Fondo crema de planta (sin cuadrícula, como el plano del usuario)
-  const tl = toScreen(b.minX - WALL_PAD, b.minY - WALL_PAD);
-  const br = toScreen(b.maxX + WALL_PAD, b.maxY + WALL_PAD);
+  // El perímetro de la planta excluye el transporte externo en x=20.
+  const tl = toScreen(50, 25);
+  const br = toScreen(950, 580);
   ctx.fillStyle = V2_COLORS.fondo;
   ctx.fillRect(tl.x, tl.y, br.x - tl.x, br.y - tl.y);
 
@@ -201,11 +239,26 @@ export function drawVisualV2Underlay(
   ctx.strokeRect(tl.x, tl.y, br.x - tl.x, br.y - tl.y);
   ctx.restore();
 
+  // Paredes físicas recibidas del API.
+  ctx.save();
+  ctx.strokeStyle = V2_COLORS.muro;
+  ctx.lineWidth = Math.max(1.5, 1.6 * scale);
+  ctx.setLineDash([3 * scale, 3 * scale]);
+  for (const wall of layout.walls ?? []) {
+    const a = toScreen(wall.x, wall.y + wall.h / 2);
+    const c = toScreen(wall.x + wall.w, wall.y + wall.h / 2);
+    ctx.beginPath();
+    ctx.moveTo(a.x, a.y);
+    ctx.lineTo(c.x, c.y);
+    ctx.stroke();
+  }
+  ctx.restore();
+
   // Zonas semánticas alrededor de los nodos reales
   for (const z of semanticZones(layout)) zoneAround(ctx, z.nodes, z.pad, z.color, toScreen, scale);
 
-  // Corredores: banda ancha bajo cada arista de circulación (no las del dominio AMR)
-  const corridorEdges = layout.edges.filter((e) => !isTransportEdge(e));
+  // Cada tramo corresponde a una arista real del layout, incluidas las diagonales.
+  const corridorEdges = visibleCorridorEdges(layout);
   ctx.save();
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
@@ -221,6 +274,7 @@ export function drawVisualV2Underlay(
     ctx.moveTo(sa.x, sa.y);
     ctx.lineTo(sc.x, sc.y);
   }
+
   ctx.stroke();
 
   // Línea central negra fina (las flechas del plano)
@@ -259,15 +313,19 @@ export function drawVisualV2Underlay(
     }
   }
 
-  // Flechas rojas del dominio AMR: paletizaje ↔ transporte
+  // Transporte externo: aristas reales hacia el nodo TRANSPORTE.
   ctx.save();
   ctx.strokeStyle = V2_COLORS.rojo;
   ctx.globalAlpha = 0.5;
   ctx.lineWidth = Math.max(1, 1.1 * scale);
-  for (const e of layout.edges.filter(isTransportEdge)) {
+  const seenTransport = new Set<string>();
+  for (const e of layout.edges.filter((edge) => isExpeditionEdge(edge, nodeById))) {
     const a = nodeById.get(e.from);
     const c = nodeById.get(e.to);
-    if (!a || !c) continue;
+    if (!a || !c || Math.hypot(a.x - c.x, a.y - c.y) < 1e-6) continue;
+    const key = [e.from, e.to].sort().join("|");
+    if (seenTransport.has(key)) continue;
+    seenTransport.add(key);
     const sa = toScreen(a.x, a.y);
     const sc = toScreen(c.x, c.y);
     ctx.beginPath();
@@ -277,7 +335,9 @@ export function drawVisualV2Underlay(
     const ang = Math.atan2(sc.y - sa.y, sc.x - sa.x);
     const back = 7 * scale;
     arrowHead(ctx, { x: sc.x - Math.cos(ang) * back, y: sc.y - Math.sin(ang) * back }, ang, 3.4 * scale, V2_COLORS.rojo);
-    arrowHead(ctx, { x: sa.x + Math.cos(ang) * back, y: sa.y + Math.sin(ang) * back }, ang + Math.PI, 3.4 * scale, V2_COLORS.rojo);
+    if ((e.direction || "bi").toLowerCase() === "bi") {
+      arrowHead(ctx, { x: sa.x + Math.cos(ang) * back, y: sa.y + Math.sin(ang) * back }, ang + Math.PI, 3.4 * scale, V2_COLORS.rojo);
+    }
   }
   ctx.restore();
 }
@@ -298,6 +358,7 @@ export function drawVisualV2Nodes(
   toScreen: ToScreen,
   scale: number
 ) {
+  const bluePoints = numberedBluePoints(layout);
   for (const n of layout.nodes) {
     const s = toScreen(n.x, n.y);
     const dot = (r: number, color: string) => {
@@ -320,7 +381,7 @@ export function drawVisualV2Nodes(
       ctx.lineWidth = 1;
       ctx.stroke();
       label(ctx, "Transporte afuera", s.x, s.y - r - 6 * scale, 7 * scale);
-    } else if (n.id.startsWith("PALET_")) {
+    } else if (isPaletMarker(n.id)) {
       dot(4.2, V2_COLORS.morado);
     } else if (n.id.startsWith("RECO_")) {
       dot(4.8, V2_COLORS.naranja);
@@ -335,21 +396,18 @@ export function drawVisualV2Nodes(
       dot(4.8, V2_COLORS.verde);
       label(ctx, "CARGADOR", s.x, s.y - 10 * scale, 6 * scale);
     } else if (n.type === "cruce") {
-      dot(2.6, V2_COLORS.azul);
-    } else {
-      // Almacenes, líneas, empacadoras y buffers: chip sobrio con su nombre real
-      const w = 30 * scale;
-      const h = 12 * scale;
-      ctx.save();
-      ctx.fillStyle = "#fffdf7";
-      ctx.strokeStyle = n.type === "almacen" ? V2_COLORS.cafe : V2_COLORS.texto;
-      ctx.lineWidth = 1;
-      ctx.beginPath();
-      roundedRect(ctx, s.x - w / 2, s.y - h / 2, w, h, 3 * scale);
-      ctx.fill();
-      ctx.stroke();
-      ctx.restore();
-      label(ctx, n.label || n.id, s.x, s.y, 5.2 * scale);
+      // Los cruces se pintan una sola vez con su número abajo.
+      continue;
     }
+  }
+
+  // Puntos azules: únicamente nodos cruce reales del layout.
+  for (const point of bluePoints) {
+    const screen = toScreen(point.x, point.y);
+    ctx.fillStyle = V2_COLORS.azul;
+    ctx.beginPath();
+    ctx.arc(screen.x, screen.y, 2.6 * scale, 0, Math.PI * 2);
+    ctx.fill();
+    drawBluePointNumber(ctx, point, toScreen, scale);
   }
 }

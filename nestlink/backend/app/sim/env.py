@@ -5,7 +5,7 @@ import asyncio
 import math
 import random
 from typing import List, Dict, Any, Optional
-from app.models import SimulationSnapshot, NoticeItem
+from app.models import SimulationSnapshot, NoticeItem, MaintenanceState
 from app.data_maps import load_layout_raw, load_seeds_raw, build_plant_graph, PLANT_CONFIGS, TEST_PLANTS, DEFAULT_PLANT_ID, get_plant_config
 from app.metrics import KPIManager
 from app.sim.routing import block_edge, unblock_edge, find_shortest_path
@@ -53,6 +53,7 @@ class SimulationEnvironment:
         self.plant_id = plant_id
         self.layout_raw = load_layout_raw(plant_id)
         self.seeds_raw = load_seeds_raw(plant_id)
+        self.espol_flow = self.seeds_raw.get("fleet_rules", {}).get("flow") == "espol_supply_to_palet"
         self.G, self.node_positions = build_plant_graph(self.layout_raw)
         # Transport/muro links remain available for EXPORT, but are not a cheap
         # shortcut for recovery traffic through the plant.
@@ -65,7 +66,11 @@ class SimulationEnvironment:
 
         # Nodos de expedición (OUT*) → buffer de producto terminado; nodo de entrega al muro externo
         prefixes = POLICY.get("out_node_prefixes", ["OUT"])
-        self.out_nodes: List[str] = sorted(nid for nid in self.node_positions if any(nid.startswith(p) for p in prefixes))
+        self.out_nodes: List[str] = (sorted(nid for nid in self.node_positions if nid.startswith("PALET_"))
+                                     if self.espol_flow else
+                                     sorted(nid for nid in self.node_positions if any(nid.startswith(p) for p in prefixes)))
+        if self.espol_flow:
+            self.out_nodes = [nid for nid in self.out_nodes if nid[6:].isdigit()]
         self.wall_node: Optional[str] = next((nid for nid in self.node_positions
                                               if nid in ("MURO_ENTREGA", "ENTREGA_MURO", "WALL_DOCK", "TRANSPORTE")), None)
         self.out_stock: Dict[str, int] = {out: 0 for out in self.out_nodes}
@@ -125,11 +130,29 @@ class SimulationEnvironment:
             )
 
         self.utilization_seconds = {a.id: 0.0 for a in self.amrs}
+        software = self.seeds_raw.get("maintenance_software", {}) if self.espol_flow else {}
+        self.maintenance_wear = {
+            a.id: float(software.get("initial_wear_pct", {}).get(a.id, 12 + i * 9))
+            for i, a in enumerate(self.amrs)
+        }
+        self.maintenance_broken: Dict[str, Dict[str, Any]] = {}
+        self.maintenance_paused = False
+        self._maintenance_critical_alerted: set[str] = set()
+        self._maintenance_rng = random.Random(142)
         # Misiones iniciales para activación inmediata con orígenes por marca
-        self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_1", "E1_IN", prioridad=10, sim_time=0.0)
-        self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_3", "L1_OUT", prioridad=8, sim_time=0.0)
-        self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_2", "E2_IN", prioridad=10, sim_time=0.0)
-        self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_4", "L2_OUT", prioridad=8, sim_time=0.0)
+        self._seed_initial_missions()
+
+    def _seed_initial_missions(self):
+        if self.espol_flow:
+            for i in range(1, 4):
+                self.mission_queue.add_mission("SUPPLY_REQUEST", "FUENTE_INSUMOS", f"INSUMO_P{i}",
+                                               prioridad=8, peso_kg=180.0, sim_time=self.sim_time)
+                self.generator._supply_due[f"INSUMO_P{i}"] = float("inf")
+            return
+        for origin, destination, priority in (("WH_MP_1", "E1_IN", 10), ("WH_MP_3", "L1_OUT", 8),
+                                               ("WH_MP_2", "E2_IN", 10), ("WH_MP_4", "L2_OUT", 8)):
+            self.mission_queue.add_mission("SUPPLY_REQUEST", origin, destination,
+                                           prioridad=priority, sim_time=self.sim_time)
 
     def select_plant(self, plant_id: str) -> bool:
         if plant_id not in PLANT_CONFIGS and plant_id not in TEST_PLANTS:
@@ -143,6 +166,123 @@ class SimulationEnvironment:
         if len(self.notices) > 5:
             self.notices.pop(0)
 
+    def _maintenance_edge(self, amr: AMRAgent) -> Optional[tuple[str, str]]:
+        """Tramo físico ocupado; en reposo, el próximo tramo del AGV."""
+        if amr.path and 0 < amr.target_node_idx < len(amr.path):
+            u, v = amr.path[amr.target_node_idx - 1:amr.target_node_idx + 1]
+            if (self.G.has_edge(u, v) and not self.G[u][v].get("blocked", False)
+                    and self.node_positions[u] != self.node_positions[v]):
+                return u, v
+        # Las estaciones tienen un alias en el mismo punto azul. Buscar desde
+        # cualquiera de esos nodos evita bloquear una arista de longitud cero.
+        nearby = [u for u, pos in self.node_positions.items()
+                  if pos == self.node_positions[amr.posicion_nodo]]
+        candidates = [(u, v) for u in nearby for v in self.G.successors(u)
+                      if not self.G[u][v].get("blocked", False)
+                      and self.node_positions[u] != self.node_positions[v]]
+        if not candidates:
+            return None
+        return max(candidates, key=lambda edge:
+                   abs(self.node_positions[edge[0]][0] - self.node_positions[edge[1]][0]) +
+                   abs(self.node_positions[edge[0]][1] - self.node_positions[edge[1]][1]))
+
+    def _maintenance_requires_pause(self) -> bool:
+        """La planta pausa si algún pedido operativo pierde su única ruta."""
+        for mission in self.mission_queue.get_all_missions():
+            if mission.estado == "completada":
+                continue
+            if not find_shortest_path(self.G, mission.origen, mission.destino, self.node_positions):
+                return True
+        return False
+
+    def trigger_breakdown(self, amr_id: str, cause: str = "llanta") -> Optional[Dict[str, Any]]:
+        if not self.espol_flow:
+            return None
+        amr = next((a for a in self.amrs if a.id == amr_id), None)
+        if not amr:
+            return None
+        if amr_id in self.maintenance_broken:
+            return {"status": "already_broken", "agv_id": amr_id,
+                    "remaining_seconds": max(0.0, self.maintenance_broken[amr_id]["repair_at"] - self.sim_time)}
+        edge = self._maintenance_edge(amr)
+        if edge is None:
+            return None
+        u, v = edge
+        previous = self.obstacle_manager.blocked_edges.get((u, v))
+        self.maintenance_broken[amr_id] = {
+            "edge": edge, "repair_at": self.sim_time + 10.0,
+            "previous_state": amr.estado, "previous_block": previous,
+        }
+        amr.estado = "ERROR"
+        amr._estado_desde = self.sim_time
+        self.maintenance_wear[amr_id] = 100.0
+        block_edge(self.G, u, v)
+        self.obstacle_manager.add_block(u, v, "BLOCK")
+        self.maintenance_paused = self._maintenance_requires_pause()
+        self.add_notice("MAINTENANCE", amr_id,
+                        f"Néstor: {amr.nombre} descompuesto ({cause}) en {u} ↔ {v}. "
+                        "Equipo de reparación en camino; tramo bloqueado por 10 s simulados.")
+        if self.maintenance_paused:
+            self.add_notice("PAUSE", amr_id,
+                            f"Néstor: {amr.nombre} descompuesto. Operación pausada: este tramo es la única ruta para un pedido activo. "
+                            "Se reanudará al reparar el AGV.")
+        return {"status": "broken", "agv_id": amr_id, "edge": [u, v],
+                "remaining_seconds": 10.0, "maintenance_paused": self.maintenance_paused}
+
+    def receive_maintenance_signal(self, amr_id: str, wear_pct: Optional[float],
+                                   failure_code: Optional[str]) -> Optional[Dict[str, Any]]:
+        """Entrada simulada del software embarcado de diagnóstico."""
+        if not self.espol_flow or not any(a.id == amr_id for a in self.amrs):
+            return None
+        if wear_pct is not None:
+            self.maintenance_wear[amr_id] = max(0.0, min(100.0, wear_pct))
+        wear = self.maintenance_wear[amr_id]
+        if failure_code or wear >= 100.0:
+            return self.trigger_breakdown(amr_id, failure_code or "desgaste crítico")
+        if wear >= 85.0 and amr_id not in self._maintenance_critical_alerted:
+            self._maintenance_critical_alerted.add(amr_id)
+            amr = next(a for a in self.amrs if a.id == amr_id)
+            self.add_notice("MAINTENANCE_PREVENTIVE", amr_id,
+                            f"Néstor: mantenimiento preventivo de {amr.nombre}; desgaste {wear:.0f}%.")
+        return {"status": "critical" if wear >= 85.0 else "normal", "agv_id": amr_id,
+                "wear_pct": wear}
+
+    def _maintenance_advance(self, dt_sim: float) -> None:
+        if not self.espol_flow:
+            return
+        for amr_id, fault in list(self.maintenance_broken.items()):
+            if self.sim_time < fault["repair_at"]:
+                continue
+            u, v = fault["edge"]
+            if fault["previous_block"]:
+                self.obstacle_manager.add_block(u, v, fault["previous_block"])
+            else:
+                unblock_edge(self.G, u, v)
+                self.obstacle_manager.remove_block(u, v)
+            amr = next(a for a in self.amrs if a.id == amr_id)
+            amr.estado = fault["previous_state"]
+            amr._estado_desde = self.sim_time
+            self.maintenance_wear[amr_id] = 45.0
+            self._maintenance_critical_alerted.discard(amr_id)
+            del self.maintenance_broken[amr_id]
+            self.add_notice("INFO", amr_id,
+                            f"Néstor: {amr.nombre} reparado. Tramo {u} ↔ {v} habilitado; operación reanudada.")
+        self.maintenance_paused = self._maintenance_requires_pause() if self.maintenance_broken else False
+        if self.maintenance_paused:
+            return
+        for amr in self.amrs:
+            if amr.id in self.maintenance_broken:
+                continue
+            if amr.estado in ("MOVING_TO_PICKUP", "MOVING_TO_DELIVERY", "REROUTING"):
+                wear = min(100.0, self.maintenance_wear[amr.id] + 0.03 * dt_sim)
+                self.maintenance_wear[amr.id] = wear
+                if wear >= 85.0 and amr.id not in self._maintenance_critical_alerted:
+                    self._maintenance_critical_alerted.add(amr.id)
+                    self.add_notice("MAINTENANCE_PREVENTIVE", amr.id,
+                                    f"Néstor: mantenimiento preventivo de {amr.nombre}; desgaste {wear:.0f}%.")
+                if wear >= 100.0 or (wear >= 85.0 and self._maintenance_rng.random() < 0.002 * dt_sim):
+                    self.trigger_breakdown(amr.id)
+
     async def run_loop(self):
         self.is_running = True
         while self.is_running:
@@ -153,6 +293,11 @@ class SimulationEnvironment:
 
             # Limpiar avisos tras 15s simulados
             self.notices = [n for n in self.notices if (self.sim_time - n.sim_time) < 15.0]
+            self._maintenance_advance(dt_sim)
+            if self.maintenance_paused:
+                await self.bridge.broadcast_snapshot(self.get_snapshot().model_dump())
+                await asyncio.sleep(self.TICK_INTERVAL_SEC)
+                continue
 
             # 0. Liberar reservas caducadas
             self.release_reservations(self.sim_time)
@@ -168,7 +313,7 @@ class SimulationEnvironment:
 
             # 2. Reubicación preventiva para AMRs ociosos (umbral reducido a 2.0s para flujo continuo)
             for amr in self.amrs:
-                if amr.estado == "IDLE" and amr.idle_timer > 2.0:
+                if amr.estado == "IDLE" and amr.idle_timer > 2.0 and not (self.espol_flow and amr.id in self.delivery_amr_ids):
                     is_on_operational_node = self.node_types.get(amr.posicion_nodo) in ["linea", "empacadora", "almacen"]
                     target_hub = amr.home_zone if (amr.home_zone and self.node_types.get(amr.home_zone) not in ["linea", "empacadora", "almacen"]) else ("X_02" if "X_02" in self.node_positions else list(self.node_positions.keys())[0])
                     if amr.posicion_nodo != target_hub or is_on_operational_node:
@@ -180,7 +325,8 @@ class SimulationEnvironment:
             self._dispatch_exports()
 
             # 3b. Asignación Húngara con validación de ruta (EXPORT fuera del pool; AMR exclusivo reservado)
-            idle_amrs = [a for a in self.amrs if a.estado == "IDLE"]
+            idle_amrs = [a for a in self.amrs if a.estado == "IDLE" and
+                         (not self.espol_flow or a.id not in self.delivery_amr_ids)]
             pending_missions = [m for m in self.mission_queue.get_pending_missions() if m.tipo != "EXPORT"]
             if idle_amrs and pending_missions:
                 assignments = compute_hungarian_assignment(idle_amrs, pending_missions, self.node_positions)
@@ -314,13 +460,16 @@ class SimulationEnvironment:
 
         self.release_reservations(self.sim_time)
         self.notices = [n for n in self.notices if (self.sim_time - n.sim_time) < 15.0]
+        self._maintenance_advance(dt_sim)
+        if self.maintenance_paused:
+            return
         self.generator.step(dt_sim, self.mission_queue, self.sim_time, self.metrics)
         self._auto_recharge_check()
 
         self._mark_emergencies()
 
         for amr in self.amrs:
-            if amr.estado == "IDLE" and amr.idle_timer > 2.0:
+            if amr.estado == "IDLE" and amr.idle_timer > 2.0 and not (self.espol_flow and amr.id in self.delivery_amr_ids):
                 is_on_operational_node = self.node_types.get(amr.posicion_nodo) in ["linea", "empacadora", "almacen"]
                 target_hub = amr.home_zone if (amr.home_zone and self.node_types.get(amr.home_zone) not in ["linea", "empacadora", "almacen"]) else ("X_02" if "X_02" in self.node_positions else list(self.node_positions.keys())[0])
                 if amr.posicion_nodo != target_hub or is_on_operational_node:
@@ -330,7 +479,8 @@ class SimulationEnvironment:
         # Entrega exclusiva al muro (EXPORT): solo el AMR designado, solo si hay stock en OUT
         self._dispatch_exports()
 
-        idle_amrs = [a for a in self.amrs if a.estado == "IDLE"]
+        idle_amrs = [a for a in self.amrs if a.estado == "IDLE" and
+                     (not self.espol_flow or a.id not in self.delivery_amr_ids)]
         pending_missions = [m for m in self.mission_queue.get_pending_missions() if m.tipo != "EXPORT"]
         if idle_amrs and pending_missions:
             assignments = compute_hungarian_assignment(idle_amrs, pending_missions, self.node_positions)
@@ -355,12 +505,16 @@ class SimulationEnvironment:
         self.is_running = False
 
     def block_path(self, u: str, v: str, tipo: str = "SPILL") -> bool:
+        if any(set(fault["edge"]) == {u, v} for fault in self.maintenance_broken.values()):
+            return False
         block_edge(self.G, u, v)
         self.obstacle_manager.add_block(u, v, tipo)
         self.add_notice("INCIDENT", None, f"Derrame reportado en tramo {u} ↔ {v}")
         return True
 
     def unblock_path(self, u: str, v: str) -> bool:
+        if any(set(fault["edge"]) == {u, v} for fault in self.maintenance_broken.values()):
+            return False
         unblock_edge(self.G, u, v)
         self.obstacle_manager.remove_block(u, v)
         self.add_notice("INFO", None, f"Tramo {u} ↔ {v} despejado")
@@ -498,16 +652,29 @@ class SimulationEnvironment:
         ejecuta misiones EXPORT, y solo existe una si hay stock (paquete terminado) en algún OUT."""
         if not self.delivery_amr_id or not self.wall_node or not self.out_nodes:
             return
-        amr = next((a for a in self.amrs if a.id in self.delivery_amr_ids and a.estado == "IDLE"), None)
-        if not amr or amr.estado != "IDLE":
+        exports = [m for m in self.mission_queue.get_pending_missions() if m.tipo == "EXPORT"]
+        if not exports:
             return
-        for m in self.mission_queue.get_pending_missions():
-            if m.tipo != "EXPORT":
-                continue
-            if amr.assign_mission(m, self.G, env=self):
-                # Nota informativa; el emoji se apagará cuando el AMR recoja (LOADING en OUT)
-                return
-        return
+        dedicated = [a for a in self.amrs if a.id in self.delivery_amr_ids and a.estado == "IDLE"]
+        for amr in dedicated:
+            for mission in exports:
+                if amr.assign_mission(mission, self.G, env=self):
+                    exports.remove(mission)
+                    break
+        if not self.espol_flow or not exports:
+            return
+        # La flota restante apoya solo cuando la cola supera la capacidad del AGV reservado.
+        overloaded = (len(exports) >= 2 or
+                      self.sim_time - min(m.created_at_sim for m in exports) >=
+                      float(self.seeds_raw["fleet_rules"].get("export_overload_seconds", 120.0)))
+        if overloaded:
+            for amr in self.amrs:
+                if amr.id in self.delivery_amr_ids or amr.estado != "IDLE":
+                    continue
+                for mission in list(exports):
+                    if amr.assign_mission(mission, self.G, env=self):
+                        exports.remove(mission)
+                        break
 
     def pick_best_out(self, from_node: Optional[str] = None) -> str:
         """Elige el OUT con MENOR carga: primero menos paquetes esperando (stock), luego menos
@@ -562,7 +729,8 @@ class SimulationEnvironment:
             sim_time=st
         )
         self.out_en_ruta[out_id] += 1
-        self.add_notice("INFO", None, f"📦 Paquete en {out_id} esperando recolección del AMR exclusivo (muro externo)")
+        fleet_type = "AGV" if self.espol_flow else "AMR"
+        self.add_notice("INFO", None, f"📦 Paquete en {out_id} esperando recolección del {fleet_type} exclusivo (muro externo)")
         return True
 
     def abort_export(self, mission) -> None:
@@ -584,8 +752,8 @@ class SimulationEnvironment:
         self._provision_export(out)
         self.add_notice(
             "WARNING", None,
-            (f"EXPORT interrumpida: AMR exclusivo fue a recargar → paquete de {out} devuelto al buffer"
-             if picked_up else f"EXPORT interrumpida: AMR exclusivo fue a recargar → {out} reprogramado")
+            (f"EXPORT interrumpida: {'AGV' if self.espol_flow else 'AMR'} exclusivo fue a recargar → paquete de {out} devuelto al buffer"
+             if picked_up else f"EXPORT interrumpida: {'AGV' if self.espol_flow else 'AMR'} exclusivo fue a recargar → {out} reprogramado")
         )
 
     def out_pickup(self, out_id: str, amr_name: str = "") -> None:
@@ -625,16 +793,22 @@ class SimulationEnvironment:
             if amr.estado not in ["CHARGING"]:
                 amr.estado = "IDLE"
 
-        m1 = self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_1", "E1_IN", prioridad=10, sim_time=self.sim_time)
-        m2 = self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_3", "L1_OUT", prioridad=8, sim_time=self.sim_time)
-        m3 = self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_2", "E2_IN", prioridad=10, sim_time=self.sim_time)
-        m4 = self.mission_queue.add_mission("SUPPLY_REQUEST", "WH_MP_4", "L2_OUT", prioridad=8, sim_time=self.sim_time)
+        if self.espol_flow:
+            self.out_stock = {out: 0 for out in self.out_nodes}
+            self.out_en_ruta = {out: 0 for out in self.out_nodes}
+            self._out_pkg_arrivals = {out: [] for out in self.out_nodes}
+            self.generator._pickup_due = []
+            self.generator.reco_stock = {f"RECO_R{i}": 0 for i in range(1, 4)}
+            self.generator._palet_index = 0
+            self.generator._supply_due = {f"INSUMO_P{i}": 0.0 for i in range(1, 4)}
+        self._seed_initial_missions()
+        seeded = self.mission_queue.get_all_missions()
 
-        self.add_notice("INFO", None, f"Misiones reiniciadas: {cleared_count} limpiadas, 4 activas")
+        self.add_notice("INFO", None, f"Misiones reiniciadas: {cleared_count} limpiadas, {len(seeded)} activas")
         return {
             "status": "ok",
             "missions_clearadas": cleared_count,
-            "activas": [m.model_dump() for m in [m1, m2, m3, m4]]
+            "activas": [m.model_dump() for m in seeded]
         }
 
     def adjust_missions(self, delta: int) -> Dict[str, Any]:
@@ -644,11 +818,14 @@ class SimulationEnvironment:
             added = []
             for i in range(abs(delta)):
                 target_line = sorted_lines[i % len(sorted_lines)]
-                wh_origin = resolve_mp_origin(target_line.id, target_line.nombre)
+                wh_origin = ("FUENTE_INSUMOS" if self.espol_flow else
+                             resolve_mp_origin(target_line.id, target_line.nombre))
+                destination = (self.generator.espol_supply_destination(target_line.id)
+                               if self.espol_flow else target_line.id)
                 m = self.mission_queue.add_mission(
                     tipo="SUPPLY_REQUEST",
                     origen=wh_origin,
-                    destino=target_line.id,
+                    destino=destination,
                     prioridad=8,
                     peso_kg=180.0,
                     sim_time=self.sim_time,
@@ -705,6 +882,17 @@ class SimulationEnvironment:
         return affected
 
     def trigger_emergency_pickup(self, line: str = "R2") -> Dict[str, Any]:
+        if self.espol_flow:
+            if line not in ("R1", "R2", "R3"):
+                return {"status": "unavailable", "line": line}
+            mission = self.mission_queue.add_mission("PICKUP_PT", f"RECO_{line}", "PALET_01",
+                                                     prioridad=10, sim_time=self.sim_time)
+            mission.emergency = True
+            self.metrics.amr_emergency_assists += 1
+            self.add_notice("WARNING", None,
+                            f"🚨 Recolección urgente en {line}: AGV disponible irá a paletizaje")
+            return {"status": "emergency_queued", "line": line, "mission_id": mission.id,
+                    "emergency": True}
         amr = next((a for a in self.amrs if a.id == "AMR_04" and a.clase == "AMR"), None)
         if not amr: return {"status": "unavailable", "line": line}
         mission = self.mission_queue.add_mission("PICKUP_PT", f"RECO_{line}", "PALET_01", prioridad=10, sim_time=self.sim_time)
@@ -723,7 +911,21 @@ class SimulationEnvironment:
             obstacles=self.obstacle_manager.get_snapshot(),
             kpis=self.metrics.get_snapshot(),
             notices=self.notices,
-            out_stock=dict(self.out_stock)
+            maintenance=[MaintenanceState(
+                agv_id=a.id,
+                wear_pct=round(self.maintenance_wear.get(a.id, 0.0), 1),
+                status=("broken" if a.id in self.maintenance_broken else
+                        "critical" if self.maintenance_wear.get(a.id, 0.0) >= 85.0 else "normal"),
+                remaining_seconds=round(max(0.0, self.maintenance_broken[a.id]["repair_at"] - self.sim_time), 1)
+                if a.id in self.maintenance_broken else 0.0,
+            ) for a in self.amrs] if self.espol_flow else [],
+            maintenance_paused=self.maintenance_paused,
+            out_stock=dict(self.out_stock),
+            station_stock=(
+                {f"INSUMO_P{i}": sum(station == i for _, station in self.generator._pickup_due)
+                 for i in range(1, 4)} |
+                dict(self.generator.reco_stock)
+            ) if self.espol_flow else {}
         )
 
 sim_env = SimulationEnvironment()

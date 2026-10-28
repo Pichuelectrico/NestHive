@@ -12,9 +12,10 @@ const COLUMNS: Array<{ key: Mission["estado"]; label: string }> = [
 
 interface KanbanDetailViewProps {
   missions: Mission[];
+  plantId?: string;
 }
 
-export function KanbanDetailView({ missions }: KanbanDetailViewProps) {
+export function KanbanDetailView({ missions, plantId }: KanbanDetailViewProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 min-h-[200px]">
       {COLUMNS.map((col) => {
@@ -50,7 +51,7 @@ export function KanbanDetailView({ missions }: KanbanDetailViewProps) {
                   </div>
                   {m.amr_asignado && (
                     <div className="mt-1 text-[0.65rem]">
-                      🤖 {m.amr_asignado}
+                      🤖 {plantId === "espol_fusion" ? m.amr_asignado.replace(/^AMR_/, "AGV_") : m.amr_asignado}
                     </div>
                   )}
                 </div>

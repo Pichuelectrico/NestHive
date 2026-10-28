@@ -155,6 +155,11 @@ class ProductionLine:
 class PlantDemandGenerator:
     def __init__(self, seeds_data: Dict[str, Any]):
         self.fleet_rules = seeds_data.get("fleet_rules", {})
+        self.espol_flow = self.fleet_rules.get("flow") == "espol_supply_to_palet"
+        self._supply_due = {f"INSUMO_P{i}": 0.0 for i in range(1, 4)} if self.espol_flow else {}
+        self._pickup_due: List[tuple[float, int]] = []
+        self.reco_stock = {f"RECO_R{i}": 0 for i in range(1, 4)} if self.espol_flow else {}
+        self._palet_index = 0
         self._next_reco_sim = 110.0
         self._reco_index = 0
         self.lines: List[ProductionLine] = []
@@ -177,7 +182,24 @@ class PlantDemandGenerator:
                 return True
         return False
 
+    def supply_delivered(self, destination: str, sim_time: float) -> None:
+        """La cinta lleva la producción de Pn a Rn; ningún vehículo circula por ella."""
+        if not self.espol_flow or destination not in self._supply_due:
+            return
+        station = int(destination[-1])
+        self.restock_line(f"R{station}", amount_pct=20.0)
+        self._pickup_due.append((sim_time + float(self.fleet_rules.get("process_seconds", 20.0)), station))
+        self._supply_due[destination] = sim_time + float(self.fleet_rules.get("supply_interval_seconds", 110.0))
+
+    def espol_supply_destination(self, line_id: str) -> str:
+        recovery = self.fleet_rules.get("pickup_node", {}).get(line_id, "RECO_R1")
+        return f"INSUMO_P{recovery[-1]}"
+
     def drain_line_pickup(self, line_id: str, amount_pct: float = 55.0) -> bool:
+        if self.espol_flow and line_id.startswith("RECO_R"):
+            self.reco_stock[line_id] = max(0, self.reco_stock.get(line_id, 0) - 1)
+            line_id = f"R{line_id[-1]}"
+            amount_pct = 20.0
         for line in self.lines:
             if line.id == line_id:
                 line.drain_pickup(amount_pct)
@@ -200,6 +222,17 @@ class PlantDemandGenerator:
         for line in self.lines:
             if line.id != line_id:
                 continue
+            if self.espol_flow:
+                destination = self.espol_supply_destination(line_id)
+                if any(m.tipo == "SUPPLY_REQUEST" and m.destino == destination
+                       and m.estado in ("pendiente", "asignada", "en_curso")
+                       for m in mission_queue.get_all_missions()):
+                    return False
+                mission_queue.add_mission("SUPPLY_REQUEST", "FUENTE_INSUMOS", destination,
+                                          prioridad=10 if force else 8, peso_kg=180.0,
+                                          sim_time=sim_time, force_urgent=force)
+                self._supply_due[destination] = float("inf")
+                return True
             if not force and line.nivel_pct >= line.refill_target_pct:
                 return False
             pending_or_active = [
@@ -223,6 +256,38 @@ class PlantDemandGenerator:
         return False
 
     def step(self, dt_sim: float, mission_queue: MissionQueue, sim_time: float, metrics_manager: Any):
+        if self.espol_flow:
+            for line in self.lines:
+                if line.peak_duration_sec > 0:
+                    line.peak_duration_sec = max(0.0, line.peak_duration_sec - dt_sim)
+                    if line.peak_duration_sec == 0:
+                        line.peak_multiplier = 1.0
+                consumed = (line.tasa_kg_min / 60.0) * line.peak_multiplier * 0.40 * line.factor_drenaje * dt_sim
+                line.nivel_pct = max(0.0, line.nivel_pct - consumed)
+            active = ("pendiente", "asignada", "en_curso")
+            for destination, due in self._supply_due.items():
+                if sim_time >= due and not any(m.tipo == "SUPPLY_REQUEST" and m.destino == destination
+                                               and m.estado in active for m in mission_queue.get_all_missions()):
+                    mission_queue.add_mission("SUPPLY_REQUEST", "FUENTE_INSUMOS", destination,
+                                              prioridad=8, peso_kg=180.0, sim_time=sim_time)
+                    self._supply_due[destination] = float("inf")
+            waiting = []
+            for due, station in self._pickup_due:
+                if sim_time < due:
+                    waiting.append((due, station))
+                    continue
+                origin = f"RECO_R{station}"
+                self.reco_stock[origin] += 1
+            self._pickup_due = waiting
+            for origin, count in self.reco_stock.items():
+                if count <= 0 or any(m.tipo == "PICKUP_PT" and m.origen == origin and m.estado in active
+                                     for m in mission_queue.get_all_missions()):
+                    continue
+                destination = f"PALET_{self._palet_index % 15 + 1:02d}"
+                self._palet_index += 1
+                mission_queue.add_mission("PICKUP_PT", origin, destination, prioridad=8,
+                                          peso_kg=480.0, sim_time=sim_time)
+            return
         for line in self.lines:
             line.step(dt_sim, mission_queue, sim_time, metrics_manager)
         if self.fleet_rules.get("enabled") and sim_time >= self._next_reco_sim:
@@ -241,6 +306,9 @@ class PlantDemandGenerator:
             if line.id == line_id:
                 line.inject_peak(multiplier=3.0, duration_sec=300.0, drain_pct=drain_pct)
                 if mission_queue:
+                    if self.espol_flow:
+                        self.force_supply(line_id, mission_queue, sim_time, force=True)
+                        return True
                     wh_origin = resolve_mp_origin(line.id, line.nombre)
                     mission_queue.add_mission(
                         tipo="SUPPLY_REQUEST",

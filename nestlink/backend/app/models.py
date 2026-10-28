@@ -38,6 +38,16 @@ class NoticeItem(BaseModel):
     mensaje: str
     sim_time: float
 
+class MaintenanceState(BaseModel):
+    agv_id: str
+    wear_pct: float
+    status: Literal["normal", "critical", "broken"]
+    remaining_seconds: float = 0.0
+
+class MaintenanceSignal(BaseModel):
+    wear_pct: Optional[float] = Field(default=None, ge=0, le=100)
+    failure_code: Optional[str] = None
+
 class AMRState(BaseModel):
     id: str
     nombre: str
@@ -87,8 +97,12 @@ class SimulationSnapshot(BaseModel):
     obstacles: List[ObstaculoState]
     kpis: KPIsState
     notices: List[NoticeItem] = [] # Retrocompatible
+    maintenance: List[MaintenanceState] = []
+    maintenance_paused: bool = False
     # OUTs con paquete terminado esperando la entrega exclusiva al muro (id nodo → cantidad)
     out_stock: Dict[str, int] = {}
+    # Carga depositada en P (en proceso) y paquetes disponibles en R.
+    station_stock: Dict[str, int] = {}
 
 # --- Entidades del Layout de Planta ---
 
