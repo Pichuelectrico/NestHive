@@ -208,7 +208,7 @@
   <div class="progress" id="progress"></div>
 
   <!-- 1 PORTADA -->
-  <section class="slide cover active" data-t="0:00–0:12 · 12s" data-notes="Buenas tardes. Somos NestHive: una sola flota, un solo cerebro, cero desperdicio. Coordinamos el Nestlé Warehouse para que materiales y producto terminado se muevan solos, con datos en vivo. En cinco minutos: el problema, Néstor, la flota, cómo cumplimos los criterios Nestlé y cómo recuperamos la inversión en alrededor de tres años — dentro del estándar.">
+  <section class="slide cover active" data-t="0:00–0:12 · 12s" data-notes="Buenas tardes. Somos NestHive: una sola flota, un solo cerebro, cero desperdicio. Coordinamos el Nestlé Warehouse con AMRs MiR importados desde Colombia. En cinco minutos: el problema, Néstor, la flota, los criterios Nestlé y cómo recuperamos la inversión en alrededor de dos coma cuatro años — por debajo del estándar Nestlé.">
     <img class="logo stagger" src="logo-nesthive.png" alt="NestHive" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-flex'" />
     <div class="hex-mark" aria-hidden="true">NH</div>
     <p class="tagline stagger">Una sola flota · un solo cerebro · cero desperdicio</p>
@@ -238,12 +238,12 @@
   </section>
 
   <!-- 3 NÉSTOR -->
-  <section class="slide" data-t="0:40–1:00 · 20s" data-notes="NestHive es la colmena. Néstor es la reina: decide qué ruta usa cada vehículo y qué AGV atiende cada demanda. Informa KPIs y responde al operador. Las obreras son los AGVs. Velocidad sobre perfección, coraje sobre comodidad, colaboración sobre consenso — con respeto, seguridad, calidad y compliance SAP como bases innegociables.">
+  <section class="slide" data-t="0:40–1:00 · 20s" data-notes="NestHive es la colmena. Néstor es la reina: decide qué ruta usa cada vehículo y qué AMR atiende cada demanda. Informa KPIs y responde al operador. Las obreras son los AMRs MiR. Velocidad sobre perfección, coraje sobre comodidad, colaboración sobre consenso — con respeto, seguridad, calidad y compliance SAP como bases innegociables.">
     <p class="eyebrow stagger">El cerebro de la colmena</p>
     <h2 class="stagger">NestHive + Néstor, la reina abeja</h2>
     <p class="lead stagger">IA orquestadora: decide, informa y conversa — un cerebro para todo el Nestlé Warehouse.</p>
     <div class="grid-3">
-      <div class="card stagger"><div class="ico">🧭</div><h3>Decide</h3><p>Rutas, vehículos y prioridades — matching + re-ruteo.</p></div>
+      <div class="card stagger"><div class="ico">🧭</div><h3>Decide</h3><p>Rutas, AMRs y prioridades — matching + re-ruteo dinámico.</p></div>
       <div class="card stagger"><div class="ico">📊</div><h3>Informa</h3><p>KPIs en vivo: movimientos, paradas evitadas, averías.</p></div>
       <div class="card stagger"><div class="ico">💬</div><h3>Conversacional</h3><p>Flota, baterías, misiones, cuellos de botella, riesgo.</p></div>
     </div>
@@ -254,11 +254,11 @@
   </section>
 
   <!-- 4 WCS -->
-  <section class="slide" data-t="1:00–1:22 · 22s" data-notes="Tres capas. WCS es el piso: PLCs, cinta, AGVs. Néstor decide. WMS y SAP guardan el inventario. Al recoger cada palet, el RFID escanea el tag y actualiza SAP/WMS en tiempo real — exactitud mayor o igual a noventa y nueve coma nueve. Cuatro mensajes cierran el ciclo con EWM: pallet cerrado, etiqueta verificada, orden VDA y estado de flota.">
+  <section class="slide" data-t="1:00–1:22 · 22s" data-notes="Tres capas. WCS es el piso: PLCs, cinta, AMRs. Néstor decide. WMS y SAP guardan el inventario. Al recoger cada palet, el RFID escanea el tag y actualiza SAP/WMS en tiempo real — exactitud mayor o igual a noventa y nueve coma nueve. Cuatro mensajes cierran el ciclo con EWM: pallet cerrado, etiqueta verificada, orden VDA y estado de flota.">
     <p class="eyebrow stagger">Integración · SAP / WMS / WCS</p>
     <h2 class="stagger">WCS ↔ Néstor ↔ WMS / SAP</h2>
     <div class="arch stagger">
-      <div class="arch-box"><h3>🏭 WCS</h3><div class="role">Piso</div><ul><li>PLCs y cinta</li><li>AGVs en misión</li><li>Telemetría</li></ul></div>
+      <div class="arch-box"><h3>🏭 WCS</h3><div class="role">Piso</div><ul><li>PLCs y cinta</li><li>AMRs en misión</li><li>Telemetría</li></ul></div>
       <div class="arch-arrow"><div>⇄</div><div class="flow">misión<br/>estado</div></div>
       <div class="arch-box center"><h3>👑 NÉSTOR</h3><div class="role">Cerebro</div><ul><li>Rutas / vehículos</li><li>Prioridades</li><li>Averías</li></ul></div>
       <div class="arch-arrow"><div>⇄</div><div class="flow">órdenes<br/>stock</div></div>
@@ -290,24 +290,30 @@
   </section>
 
   <!-- 6 FLOTA -->
-  <section class="slide" data-t="1:42–2:00 · 18s" data-notes="Flota: cuatro AGVs — tres operativos y uno de backup. Redundancia N más uno. Si hay avería, el AGV bloquea su tramo y los demás re-rutean; reparación en diez segundos. Marcas a considerar con representación en LatAm: MiR, ABB, Toyota. Protocolo abierto — agnóstico de fabricante.">
-    <p class="eyebrow stagger">Flota · redundancia</p>
-    <h2 class="stagger">4 AGVs · 3 operativos + 1 backup</h2>
+  <section class="slide" data-t="1:42–2:00 · 18s" data-notes="Flota: cuatro AMRs MiR mil trescientos cincuenta con elevador de palets, importados desde Colombia — zona CAN. Tres operativos y uno de backup. Navegación SLAM sin cintas ni imanes: cero obras civiles. Si hay avería, el AMR bloquea su tramo y los demás re-rutean; reparación en diez segundos. MiR elegido entre MiR, ABB y Toyota por representación LatAm y soporte local desde Colombia. Mil trescientos cincuenta kilos, IP52, LiDAR doble, PLd Cat.3, ISO 3691-4, VDA 5050.">
+    <p class="eyebrow stagger">Flota · MiR Colombia (CAN)</p>
+    <h2 class="stagger">4 AMRs MiR1350 · 3 + 1 backup</h2>
+    <p class="lead stagger">Importados desde Colombia · módulo elevador de palets (PLTM) · SLAM sin infraestructura fija</p>
     <div class="grid-2">
       <div class="stagger">
-        <div class="two-col-tight" style="margin-bottom:0.6rem">
+        <div class="two-col-tight" style="margin-bottom:0.55rem">
           <div class="card" style="text-align:center"><div class="big-num">3<span>operativos</span></div></div>
           <div class="card" style="text-align:center;border-left-color:var(--cafe)"><div class="big-num">1<span>backup N+1</span></div></div>
         </div>
+        <div class="card compact" style="margin-bottom:0.55rem">
+          <h3>🧭 AMR ≠ guiado fijo</h3>
+          <p>SLAM autónomo: <b>sin cintas ni imanes</b> → cero obras civiles. Re-ruteo dinámico natural para Néstor; escalable sin parar planta.</p>
+        </div>
         <div class="card compact">
-          <h3>🛠️ Avería sin parar la planta</h3>
-          <p>Detiene · bloquea tramo · re-ruteo · pausa si no hay paso · reparación 10 s.</p>
-          <p style="margin-top:0.4em"><span class="pill">MiR</span><span class="pill">ABB</span><span class="pill">Toyota</span> <small style="color:var(--muted)">LatAm</small></p>
+          <h3>🛠️ Avería sin parar · ficha MiR1350</h3>
+          <p>Detiene · bloquea tramo · re-ruteo · reparación 10 s.</p>
+          <p style="margin-top:0.35em"><span class="pill">1.350 kg</span><span class="pill">IP52</span><span class="pill">LiDAR×2</span><span class="pill">PLd Cat.3</span><span class="pill">ISO 3691-4</span><span class="pill">VDA 5050</span></p>
+          <p class="fine" style="margin-top:0.4em">MiR elegido entre MiR / ABB / Toyota — representación LatAm y soporte local desde Colombia.</p>
         </div>
       </div>
       <figure class="photo tall stagger">
-        <img src="assets/agv.jpg" alt="AGV en almacén" />
-        <figcaption class="cap">AGV NestHive — protocolo abierto</figcaption>
+        <img src="assets/amr.jpg" alt="AMR MiR en almacén" />
+        <figcaption class="cap">MiR1350 NestHive — importado desde Colombia (CAN)</figcaption>
       </figure>
     </div>
   </section>
@@ -339,16 +345,16 @@
   </section>
 
   <!-- 8 SEIS CRITERIOS -->
-  <section class="slide" data-t="2:20–2:48 · 28s" data-notes="Cumplimos los seis criterios de evaluación Nestlé. Innovación: Néstor orquesta y decide sobre percepción real. Valor: techo cuatrocientos once, más noventa y uno por ciento, takt ciento treinta y dos. Efectividad: mil treinta y cinco movimientos, espera menor o igual a treinta segundos, averías sin parar. Sustentabilidad: Net Zero y ODS doce. Escalabilidad: crecimiento cinco por ciento anual — Néstor predice saturación antes del ochenta y cinco por ciento en el año cinco y planifica inversión para volver al ochenta. Replicabilidad: un centro es un mundo configurable, multi-centro con el mismo Néstor.">
+  <section class="slide" data-t="2:20–2:48 · 28s" data-notes="Cumplimos los seis criterios Nestlé. Innovación: Néstor orquesta sobre percepción real con AMRs SLAM. Valor: techo cuatrocientos once y takt ciento treinta y dos. Efectividad: mil treinta y cinco movimientos, espera menor o igual a treinta segundos, re-ruteo dinámico AMR sin obras civiles y averías sin parar. Sustentabilidad: Net Zero y ODS doce. Escalabilidad: crecimiento cinco por ciento — Néstor predice saturación y los AMRs se escalan sin cintas fijas. Replicabilidad: un centro configurable, multi-centro con el mismo Néstor.">
     <p class="eyebrow stagger">Evaluación · 6 criterios de los ponentes</p>
     <h2 class="stagger">Por qué cumplimos los criterios</h2>
     <div class="grid-6">
-      <div class="card compact stagger"><div class="ico">💡</div><h3>Innovación</h3><p>Néstor IA orquestadora + decisión sobre percepción real del layout.</p><div class="dato">API abierta · mission control</div></div>
+      <div class="card compact stagger"><div class="ico">💡</div><h3>Innovación</h3><p>Néstor IA orquestadora + decisión sobre percepción real del layout.</p><div class="dato">AMR SLAM · mission control</div></div>
       <div class="card compact stagger"><div class="ico">📈</div><h3>Propuesta de valor</h3><p>Más capacidad con la misma línea: techo y ritmo medidos.</p><div class="dato">411 /turno (+91%) · takt 132 s</div></div>
-      <div class="card compact stagger"><div class="ico">🎯</div><h3>Efectividad</h3><p>Flujo continuo, servicio y robustez ante avería.</p><div class="dato">1.035 mov/día · ≤30 s · sin parar planta</div></div>
+      <div class="card compact stagger"><div class="ico">🎯</div><h3>Efectividad</h3><p>Flujo continuo + <b>re-ruteo dinámico AMR sin obras civiles</b>.</p><div class="dato">1.035 mov/día · ≤30 s · sin parar planta</div></div>
       <div class="card compact stagger"><div class="ico">🌱</div><h3>Sustentabilidad</h3><p>Menos energía por pallet y cero desperdicio operativo.</p><div class="dato">Net Zero 2050 · ODS 12</div></div>
-      <div class="card compact stagger"><div class="ico">📐</div><h3>Escalabilidad</h3><p>Crecimiento 5%/año: Néstor predice saturación y planifica inversión antes del 85% (año 5) → optimizar a 80% y extender vida útil.</p><div class="dato">Capacidad anticipada</div></div>
-      <div class="card compact stagger"><div class="ico">🔁</div><h3>Replicabilidad</h3><p>Un centro = un mundo configurable; multi-centro con el mismo Néstor.</p><div class="dato">Layout + flota + ritmo</div></div>
+      <div class="card compact stagger"><div class="ico">📐</div><h3>Escalabilidad</h3><p>5%/año + saturación 85%→80%. Escalar flota AMR <b>sin obras civiles</b>.</p><div class="dato">Capacidad anticipada</div></div>
+      <div class="card compact stagger"><div class="ico">🔁</div><h3>Replicabilidad</h3><p>Un centro = un mundo configurable; multi-centro con el mismo Néstor.</p><div class="dato">Layout + flota AMR + ritmo</div></div>
     </div>
   </section>
 
@@ -366,27 +372,28 @@
 
   <!-- 10 ROI -->
   <!--
-    Aritmética interna ROI (Nestlé estándar payback 2.7–3.0, máx 3.5):
-    Labor bodega: 20 colab × $660/mes × 12 = $158,400/año
-    Stack ahorro ≈ $0,27M/año:
-      - Eficiencia laboral / reasignación a valor …… $158,4k
-      - Eliminar ~45% km pata vacía ………………… $60k
-      - Energía por pallet …………………………… $22k
-      - Mermas por olvidos ………………………… $25k
-      Total ………………………………………… $265,4k ≈ $0,27M
-    CAPEX NestHive 4 AGVs = $0,76M
-    Payback = 0,76 / 0,27 ≈ 2,81 años → DENTRO DEL ESTÁNDAR (máx 3,5)
-    Piloto canónico $0,22M reversible <1 turno.
+    Aritmética interna ROI v5 (oficial lead):
+    Labor: 20 × $660 × 12 = $158,400
+    Stack ahorro ≈ $270k/año (labor $158,4k + 45% pata vacía + energía + mermas)
+    CAPEX NestHive 4×MiR1350 = $640k
+      Base 4×≈$110k = $440k
+      Import CAN 0% + logística/seguro/agente/tasas = $20k
+      Integración WCS+RFID+infra+puesta = $180k
+      TOTAL = $640k
+    IVA 15% ≈ $96k = crédito fiscal recuperable (NO es costo CAPEX)
+    Payback = 640 / 270 ≈ 2,37 ≈ 2,4 años → POR DEBAJO del estándar Nestlé (2,7–3 · máx 3,5)
+    Piloto: 2 AMRs ≈ $250k, reversible <1 turno
+    Q&A: si "MiR1350 cuesta más" → cotización formal pendiente; incluso +30%/ud, payback ≤3,2 — dentro del estándar.
   -->
-  <section class="slide" data-t="3:10–3:28 · 18s" data-notes="Economía alineada al estándar Nestlé: recuperamos la inversión en alrededor de tres años — dentro del máximo de tres coma cinco. CAPEX de cero coma setenta y seis millones. Ahorro alrededor de cero coma veintisiete millones al año, con la plantilla real de bodega: veinte colaboradores a seiscientos sesenta dólares mensuales. Piloto de cero coma veintidós millones, reversible en menos de un turno.">
+  <section class="slide" data-t="3:10–3:28 · 18s" data-notes="Economía NestHive con AMRs MiR: recuperamos la inversión en alrededor de dos coma cuatro años — por debajo del estándar Nestlé de dos coma siete a tres, máximo tres coma cinco. CAPEX de seiscientos cuarenta mil. Ahorro de doscientos setenta mil al año, con la plantilla de bodega: veinte colaboradores a seiscientos sesenta dólares mensuales. Piloto de dos AMRs por doscientos cincuenta mil, reversible en menos de un turno.">
     <p class="eyebrow stagger">Inversión · estándar Nestlé</p>
-    <h2 class="stagger">ROI dentro del estándar Nestlé</h2>
-    <div class="banner stagger">DENTRO DEL ESTÁNDAR NESTLÉ · payback ≈ 2,8 años (máx 3,5)</div>
+    <h2 class="stagger">ROI por debajo del estándar Nestlé</h2>
+    <div class="banner stagger">≈2,4 años — POR DEBAJO DEL ESTÁNDAR NESTLÉ (2,7–3 · máx 3,5)</div>
     <div class="stagger" style="margin-bottom:0.7rem">
-      <div class="stat"><span class="n">$0,76M</span><span class="l">CAPEX · 4 AGVs</span></div>
-      <div class="stat"><span class="n">$0,27M</span><span class="l">ahorro / año</span></div>
-      <div class="stat hot"><span class="n">≈2,8</span><span class="l">años payback</span></div>
-      <div class="stat"><span class="n">$0,22M</span><span class="l">piloto &lt;1 turno</span></div>
+      <div class="stat"><span class="n">$640k</span><span class="l">CAPEX · 4 AMRs</span></div>
+      <div class="stat"><span class="n">$270k</span><span class="l">ahorro / año</span></div>
+      <div class="stat hot"><span class="n">≈2,4</span><span class="l">años payback</span></div>
+      <div class="stat"><span class="n">$250k</span><span class="l">piloto 2 AMRs &lt;1 turno</span></div>
     </div>
     <div class="card stagger">
       <h3>Plantilla bodega (dato ponentes)</h3>
@@ -396,58 +403,54 @@
 
   <!-- 11 CAPEX + RECUPERACIÓN -->
   <!--
-    CAPEX 4 AGVs = $760k exactos:
-      AGVs 4×$80k = $320k
-      Importación y aranceles (75% sobre AGVs) = $240k
-      WCS/comunicaciones = $70k
-      RFID + tags = $35k
-      Infra (cintas, sensores, señalización) = $45k
-      Puesta en marcha/licencias = $30k
-      Contingencia = $20k
-      TOTAL = $760k = $0,76M
-    Condiciones de pago multinacional: ventaja de cash flow (opcional).
-    Payback chart escala a $0,81M (= 3 × $0,27M).
+    CAPEX v5 oficial = $640k:
+      MiR1350 ×4 ≈ $110k = $440k
+      Importación Colombia→Ecuador: arancel 0% (CAN, Decisión 599, Cert. Origen)
+        + logística+seguro+agente+tasas ≈ $20k
+      Integración WCS + RFID + infra + puesta = $180k
+      TOTAL CAPEX = $640k
+    IVA 15% ≈ $96k = crédito fiscal recuperable (NO suma al CAPEX de payback)
+    Ahorro ≈ $270k/año → payback 640/270 ≈ 2,4 años
+    Chart escala a $0,81M (= 3×$270k): CAPEX 0,64→79%, Y1 33%, Y2 67%, Y3 100%
+    Q&A jurado "MiR1350 cuesta más": cotización formal pendiente; +30%/ud → payback ≤3,2 (dentro del estándar).
   -->
-  <section class="slide" data-t="3:28–3:54 · 26s" data-notes="El CAPEX incluye importación y aranceles al setenta y cinco por ciento — dato del panel técnico — y suma cero coma setenta y seis millones. El ahorro anual de cero coma veintisiete millones viene de eficiencia laboral, eliminar la pata vacía, energía y mermas. Recuperamos la inversión en alrededor de tres años, dentro del estándar Nestlé. Condiciones de pago multinacional mejoran el cash flow del piloto.">
+  <section class="slide" data-t="3:28–3:54 · 26s" data-notes="CAPEX NestHive: cuatro MiR mil trescientos cincuenta por cuatrocientos cuarenta mil; importación Colombia a Ecuador con arancel cero por la CAN y logística por veinte mil; integración por ciento ochenta mil. Total seiscientos cuarenta mil. El IVA del quince por ciento es crédito fiscal recuperable, no es costo. Con ahorro de doscientos setenta mil al año, recuperamos en dos coma cuatro años — por debajo del estándar Nestlé.">
     <p class="eyebrow stagger">CAPEX · recuperación</p>
-    <h2 class="stagger">Desglose y cómo se recupera</h2>
+    <h2 class="stagger">Desglose MiR Colombia y payback</h2>
     <div class="payback">
       <div class="stagger">
         <table class="cost">
           <thead><tr><th>Línea CAPEX</th><th>Inversión</th></tr></thead>
           <tbody>
-            <tr><td>AGVs — 4 uds × $80k</td><td class="num">$320k</td></tr>
-            <tr><td><b>Importación y aranceles (75%)</b></td><td class="num">$240k</td></tr>
-            <tr><td>Integración WCS / comunicaciones</td><td class="num">$70k</td></tr>
-            <tr><td>RFID + tags / palet</td><td class="num">$35k</td></tr>
-            <tr><td>Infraestructura (cintas, sensores, señalización)</td><td class="num">$45k</td></tr>
-            <tr><td>Puesta en marcha / licencias</td><td class="num">$30k</td></tr>
-            <tr><td>Contingencia</td><td class="num">$20k</td></tr>
+            <tr><td>MiR1350 + PLTM — 4 × ≈$110k</td><td class="num">$440k</td></tr>
+            <tr><td>Importación CO→EC (CAN 0% + logística)</td><td class="num">$20k</td></tr>
+            <tr><td>Integración WCS + RFID + infra + puesta</td><td class="num">$180k</td></tr>
+            <tr><td>IVA 15% (~$96k) — crédito fiscal</td><td class="num">recuperable</td></tr>
           </tbody>
-          <tfoot><tr><td>TOTAL NestHive</td><td class="num">≈ $0,76M</td></tr></tfoot>
+          <tfoot><tr><td>TOTAL NestHive (sin IVA)</td><td class="num">≈ $640k</td></tr></tfoot>
         </table>
-        <p class="fine">Incluye aranceles 75% (panel técnico). Ventaja: condiciones de pago multinacional → mejor cash flow del piloto.</p>
+        <p class="fine">Arancel 0% por CAN (Decisión 599, Certificado de Origen). IVA = crédito fiscal recuperable — no entra al payback.</p>
       </div>
       <div class="stagger">
         <div class="card" style="margin-bottom:0.55rem">
-          <h3>♻️ Ahorro ≈ $0,27M/año</h3>
+          <h3>♻️ Ahorro ≈ $270k/año</h3>
           <ul class="origins">
             <li>Eficiencia laboral (20 × $660 → $158,4k) → reasignación a valor</li>
             <li>Eliminar ~45% km pata vacía</li>
             <li>Menos energía por pallet</li>
             <li>Menos mermas por olvidos</li>
           </ul>
-          <p style="margin-top:0.45em;font-weight:700;color:var(--cafe)">Payback ≈ 2,8 años · dentro del estándar Nestlé (máx 3,5)</p>
+          <p style="margin-top:0.45em;font-weight:700;color:var(--cafe)">Payback ≈ 2,4 años — por debajo del estándar Nestlé</p>
         </div>
         <div class="chart">
-          <h3>Ahorro acumulado vs CAPEX</h3>
+          <h3>Ahorro acumulado vs CAPEX ($640k)</h3>
           <div class="bars">
-            <div class="bar-col"><div class="bar-val">0,76</div><div class="bar capex" style="height:94%"></div><div class="bar-lab">CAPEX</div></div>
+            <div class="bar-col"><div class="bar-val">0,64</div><div class="bar capex" style="height:79%"></div><div class="bar-lab">CAPEX</div></div>
             <div class="bar-col"><div class="bar-val">0,27</div><div class="bar" style="height:33%"></div><div class="bar-lab">Año 1</div></div>
-            <div class="bar-col"><div class="bar-val">0,54</div><div class="bar" style="height:67%"></div><div class="bar-lab">Año 2</div></div>
-            <div class="bar-col"><div class="bar-val">0,81</div><div class="bar eq" style="height:100%"></div><div class="bar-lab">Año 3<br/>equilibrio</div></div>
+            <div class="bar-col"><div class="bar-val">0,54</div><div class="bar eq" style="height:67%"></div><div class="bar-lab">Año 2<br/>≈equilibrio</div></div>
+            <div class="bar-col"><div class="bar-val">0,81</div><div class="bar" style="height:100%"></div><div class="bar-lab">Año 3</div></div>
           </div>
-          <p class="fine">Cruce ≈ año 2,8. Escala relativa a $0,81M.</p>
+          <p class="fine">Cruce ≈ año 2,4. Escala relativa a $0,81M.</p>
         </div>
       </div>
     </div>
