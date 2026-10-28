@@ -1,112 +1,112 @@
-# Oral Pitch Fase 2 — Guion slide a slide (14 bloques · 5:00 + Q&A)
+# 🎤 Pitch oral Fase 2 — NestHive (v6 · deck morph KUKA)
 
-> **Hackathon InnoLabs · Fase 2 · Loja · 27–28 oct 2026.** Solución: **NestHive** operando el **Nestlé Warehouse**.
-> **Equipo:** Joshua Reinoso (USFQ) · Andrea Verdezoto (ESPOL) · Andrés Fernandez (UTPL).
-> **Deck:** `tasksR/pitch_slides/index.html` (**14 slides, v5 en vuelo · base v4 `bab9369`**; la última = Gracias; tecla **N** = guion en pantalla). Q&A: banco en `tasksR/qa_jurado_fase2.md` (v4 actualizado).
-> **Framing (regla de oro):** hablamos SIEMPRE de la solución operando en la vida real — sin "simulador", sin alternativas descartadas, sin "6 unidades". Flota = **4 AMRs MiR1350 (3 operativos + 1 backup), importados desde Colombia — arancel 0% CAN**. Nunca decir "AGV": es AMR (navegación autónoma, sin obras civiles).
-> ⏱️ Objetivo: **5:00** (contenido hasta 4:28; los últimos ~30 s son margen sobre la slide de Gracias). Ritmo: frases cortas. Cada bloque indica quién habla.
+> **Deck:** `Slides_pitch/pitch_morph.html` (16 slides, morph animations; tecla **N** = guion en pantalla). Copia del guion en `Slides_pitch/oralpitch_fase2.md`.
+> **Framing (regla de oro):** hablamos SIEMPRE de la solución operando en la vida real — sin "simulador", sin alternativas descartadas. Flota = **4 AMRs KUKA KMP 600P (3 operativos + 1 backup), importados desde Colombia — arancel 0% CAN**. Nunca "AGV" ni "MiR".
+> **Frase estrella (usar 2×):** "La infraestructura habla con Néstor y Néstor habla contigo."
+> ⏱️ Objetivo: **5:00** (contenido hasta ~4:52; "Gracias" cierra). Tecla N = teleprompter.
 
 | Reparto | Voz en |
 |---|---|
-| **Joshua** | Apertura, problemática, Néstor, demo, escalabilidad, cierre |
-| **Andrea (ESPOL)** | Arquitectura WCS/WMS, demanda, flota |
-| **Andrés (UTPL)** | Criterios 6/6, gestión humana, ROI + CAPEX, sostenibilidad |
-
----
+| **Joshua** | Portada, problemática, Néstor, demo, flota KUKA, escalabilidad, cierre |
+| **Andrea (ESPOL)** | PLC/asignación, **algoritmo húngaro**, mantenimiento, WMS/demanda |
+| **Andrés (UTPL)** | Cifras de impacto, criterios 6/6, gestión humana, ROI + CAPEX |
 
 ## 1 · Portada (Joshua · 0:00–0:12)
 
-**Se ve:** logo NestHive grande + tagline + equipo.
-**Decimos:** "Buenas tardes. Somos NestHive: Joshua Reinoso de la USFQ, Andrea Verdezoto de ESPOL y Andrés Fernandez de UTPL. Una sola flota, un solo cerebro, cero desperdicio. En cinco minutos les mostramos cómo opera nuestro centro."
+**Se ve:** logo grande (morph).
+**Decimos:** "Buenos días. Somos NestHive — y venimos a convertir el manejo de materiales de Nestlé Ecuador en su ventaja competitiva."
 
-## 2 · Problemática (Joshua · 0:12–0:40)
+## 2 · Problemática — la cita que pesa (Joshua · 0:12–0:40)
 
-**Se ve:** foto almacén real + doble flujo + costo oculto.
-**Decimos:** "Cada día, 1.035 pallets deben moverse entre producción y el Nestlé Warehouse sin detener las líneas. Ese flujo hoy es manual: transporte y escaneo a mano, un solo equipo por ruta como punto único de falla. El efecto: líneas esperando insumo, inventario sin trazabilidad digital, personas compartiendo pasillo con montacargas — y casi la mitad de los kilómetros recorridos son pata vacía: puro costo oculto."
+**Se ve:** cita Tompkins + 4 dolores (morph).
+**Decimos:** "James Tompkins, la referencia mundial en manejo de materiales, es claro: **entre el 20 y el 50% de los gastos operativos de una planta son mover material**. Cada pallet que espera ser retirado es capacidad de producción, espacio y tiempo que no se aprovechan. Nestlé Ecuador necesita **215 pallets de salida por turno — 645 al día solo de salida** — más todo el flujo de insumos: más de **1.000 movimientos diarios** que hoy cargan sobre montacargas, escaneos manuales y suerte."
 
-## 3 · NestHive + Néstor, la reina abeja (Joshua · 0:40–1:00)
+## 3 · Néstor: el corazón + la frase (Joshua · 0:40–1:00)
 
-**Se ve:** colmena — obreras AMRs, reina Néstor + pilares culturales Nestlé.
-**Decimos:** "Nuestra solución tiene nombre: **Néstor**, la inteligencia orquestadora — la reina abeja de la colmena. Néstor gestiona los hilos de toda la operación: decide qué ruta usa cada vehículo, qué AMR atiende cada demanda, y reordena la colmena cuando algo cambia. Informa los datos en vivo y permite preguntarle rápido: *¿qué AMR está en transporte?* — y responde. Y trabajamos como pide Nestlé: **velocidad sobre perfección, coraje sobre comodidad, colaboración sobre consenso** — con respeto, seguridad, calidad y compliance SAP como bases innegociables."
+**Se ve:** Néstor en el centro, conectando todo (morph).
+**Decimos:** "El corazón de nuestro proyecto es **Néstor** — la reina abeja que orquesta la colmena. Néstor se comunica con los sistemas que ya existen en la planta y se comunica con el gerente. Nuestra promesa en una frase: **la infraestructura habla con Néstor, y Néstor habla contigo** — le preguntas qué AMR está en transporte, cuánto demorará la siguiente misión, y te responde con datos en segundos."
 
-## 4 · Arquitectura: WCS ⇄ Néstor ⇄ WMS/SAP (Andrea · 1:00–1:22)
+## 4 · Recepción de solicitudes: PLC → misión (Andrea · 1:00–1:18)
 
-**Se ve:** diagrama de 3 cajas + anillo RFID.
-**Decimos:** "Néstor vive en el medio del ecosistema Nestlé. Abajo, el **WCS** ejecuta en piso: cintas, sensores y AMRs con la misión asignada. Arriba, el **WMS/SAP** dueño del inventario. Néstor conecta los dos: convierte la demanda en misiones, las asigna al AMR óptimo, y cierra el círculo con **RFID** — cuando un AMR recoge un palet, su lector escanea el tag y **actualiza SAP/WMS en tiempo real** — exactitud ≥99,9%. Cuatro mensajes cierran el ciclo con EWM: palet cerrado, etiqueta verificada, orden VDA y estado de flota."
+**Se ve:** pantalla de recepción de solicitudes (Canva p8) con cola P1–P10.
+**Decimos:** "Todo empieza en el paletizado: el **PLC de la línea** — la señal 🧩 — avisa que el insumo se está consumiendo. Esa solicitud entra a Néstor, se convierte en misión con prioridad, y la asignación sale sola — **por prioridad y por disponibilidad**. Sin llamadas de radio, sin planillas, sin puntos ciegos."
 
-## 5 · Estrategia de movimiento de la demanda (Andrea · 1:22–1:42)
+## 5 · ⭐ Cómo orquesta Néstor: el algoritmo húngaro (Andrea · 1:18–1:44)
 
-**Se ve:** takt + techo + curva predictiva.
-**Decimos:** "Y no reaccionamos: anticipamos. El **robot nunca va vacío** — cada movimiento está justificado por el consumo real de línea. Con el takt de la línea — **132 segundos** — Néstor predice la demanda y mueve material **antes** de que la línea pida. Los sensores marcan el palet listo — 📦 —, Néstor lo detecta y despacha; distancias típicas de 15 a 20 metros. Para las galletas, el empaque es barrera contra luz, humedad y vapor, y el flujo respeta los tiempos máximos y mínimos. Resultado: techo de **411 pallets por turno — 91% más de capacidad**."
+**Se ve:** matriz 4×4 armándose celda por celda (morph) → asignación óptima resaltada.
+**Decimos:** "¿Y cómo decide qué AMR atiende qué misión? Con matemática elegante: el **algoritmo húngaro**. Cada misión pendiente y cada AMR libre forman una **matriz de costos**. Cada celda combina cinco datos: la **distancia estimada de ruta** — que Néstor calcula con A* —, la **prioridad de la misión, de P1 a P10**, el **nivel de batería** del AMR, su **estado** — libre o cargando — y su **home-zone**. El algoritmo húngaro resuelve esa matriz y encuentra la asignación de **costo mínimo global** — el mejor conjunto para TODA la planta, no el vehículo más cercano para cada misión. Y lo hace en milisegundos. **Greedy elige el más cercano; húngaro elige lo mejor para todos.**"
 
-## 6 · Flota: 4 AMRs MiR1350, 3 + 1 backup (Andrea · 1:42–2:00)
+## 6 · Mantenimiento de flota + robustez (Andrea · 1:44–2:00)
 
-**Se ve:** foto AMR MiR + robustez de averías.
-**Decimos:** "La flota es deliberadamente pequeña: **cuatro AMRs de MiR — tres operativos y uno de backup** — importados desde Colombia. Elegimos AMR sobre AGV por una razón: **navegación autónoma sin cintas ni imanes en el piso — cero obras civiles** — así el re-ruteo dinámico de Néstor es natural, no un parche. El MiR1350 carga 1.350 kilos, doble LiDAR, ISO 3691-4, y habla VDA 5050 — el idioma del WCS. Menos inversión, menos mantenimiento, misma cobertura. Y si uno se avería: Néstor lo saca del mapa, los demás **re-rutean solos y la planta no se detiene** — el backup asume sin perder misiones. Disponibilidad ≥98%."
+**Se ve:** panel de mantenimiento (uptime, km, baterías, próx. servicio).
+**Decimos:** "Y la colmena se cuida sola. Del software de cada AMR recibimos **tiempo de actividad, kilometraje, desgaste de baterías y fallas mecánicas** — Néstor avisa cuánto falta para el próximo mantenimiento y detecta la avería antes de que pare la planta. Si un AMR falla en plena misión: se bloquea su tramo, los demás **re-rutean solos y la producción sigue** — el backup asume. Disponibilidad ≥98%."
 
-## 7 · Demo en vivo — NestHive operando (Joshua · 2:00–2:20)
+## 7 · WMS: demanda anticipada + RFID→SAP (Andrea · 2:00–2:18)
 
-**Se ve:** pantalla con el Nestlé Warehouse corriendo: mapa, AMRs, Néstor informando, señales 🧩/📦.
-**Decimos (≈20 s):** "Esto que ven es **NestHive operando el Nestlé Warehouse ahora mismo**. Las líneas consumen insumos — señales 🧩 — Néstor asigna cada AMR, el paletizado recibe 📦, y el flujo llega hasta Transporte sin que nadie empuje un botón. El mapa es la planta real; cada AMR sigue la misma lógica que seguirá en piso."
+**Se ve:** alerta de insumos + flujo RFID (morph).
+**Decimos:** "La productividad no se limita a los AMRs. Néstor también vigila el warehouse: con el **análisis promedio de uso por turno**, anticipa cuándo las cintas y empaques se van a acabar y **alerta al gerente antes** de que la línea espere. Y cada palet que un AMR recoge se escanea con **RFID**: **SAP/WMS se actualiza en tiempo real** — exactitud de inventario ≥99,9%, sin escaneo manual."
 
-## 8 · Por qué cumplimos SUS criterios — 6/6 (Andrés · 2:20–2:48)
+## 8 · Demo en vivo (Joshua · 2:18–2:38)
+
+**Se ve:** video del MVP (Recording MVP.mov) — NestHive operando.
+**Decimos (≈20 s):** "Esto que ven es **NestHive operando el Nestlé Warehouse ahora mismo**: el mapa es la planta real, cada AMR sigue la misma lógica que seguirá en piso, y el dashboard muestra la operación en vivo — como la vería el supervisor."
+
+## 9 · Flota: KUKA KMP 600P (Joshua · 2:38–2:58)
+
+**Se ve:** video andén (AMR Nestlé Ecuador al andén.mp4) + specs.
+**Decimos:** "La flota: **cuatro AMRs KUKA KMP 600P — tres operando, uno de backup** — importados desde Colombia, **arancel cero por la Comunidad Andina**. KUKA es el gigante alemán de la robótica — el estándar de la industria automotriz. El KMP 600P **levanta palets de 600 kilos con su elevador integrado**, navega de forma autónoma — sin cintas ni imanes: **cero obras civiles** — y habla **VDA 5050**, el idioma del WCS. Y esto no es teoría: [señalar video] un AMR así, en un andén de Ecuador."
+
+## 10 · Cifras de impacto: no lo decimos nosotros (Andrés · 2:58–3:16)
+
+**Se ve:** números ABB y Kostić (morph: 20→50→70, 40→85).
+**Decimos:** "No lo decimos nosotros. **ABB** reporta que sistemas como este reducen hasta **20% los paros de línea**, liberan **50% del espacio de staging** y aumentan **70% la utilización del espacio disponible**. Y **Kostić y colaboradores** documentaron que la seguridad del personal sube de **40% a 85%** al eliminar la convivencia montacargas–peatón."
+
+## 11 · Por qué cumplimos SUS criterios — 6/6 (Andrés · 3:16–3:42)
 
 **Se ve:** tabla 6 criterios → evidencia.
-**Decimos:** "Cumplimos sus criterios, uno a uno. **Innovación**: Néstor — la IA orquestadora que decide con percepción real de la planta, mission control sin puntos ciegos y respuesta conversacional en segundos, sobre protocolo abierto. **Propuesta de valor**: techo de 411 pallets por turno — 91% más capacidad con la misma planta. **Efectividad**: 1.035 movimientos diarios, espera menor a 30 segundos y averías que no detienen la producción. **Sustentabilidad**: menos energía por pallet y una transición humana respetuosa. **Escalabilidad**: la demanda crece 5% al año y Néstor la absorbe. **Replicabilidad**: otro centro es otro archivo de configuración — el mismo Néstor."
+**Decimos:** "Cumplimos sus criterios, uno a uno. **Innovación**: Néstor decide con percepción real — y con el algoritmo húngaro, con óptimo global. **Propuesta de valor**: techo de 411 pallets por turno — 91% más capacidad con la misma planta. **Efectividad**: 1.035 movimientos diarios, espera menor a 30 segundos y averías que no detienen la producción. **Sustentabilidad**: menos energía por pallet y una transición humana respetuosa. **Escalabilidad**: la demanda crece 5% al año y Néstor la absorbe. **Replicabilidad**: otro centro es otro archivo de configuración — el mismo Néstor."
 
-## 9 · Gestión del cambio humano (Andrés · 2:48–3:10)
+## 12 · Gestión del cambio humano (Andrés · 3:42–4:02)
 
-**Se ve:** transición respetuosa — personas primero.
-**Decimos:** "Y la parte que más pesa: las personas. El equipo de bodega son 20 colaboradores, y la automatización se aborda como Nestlé sabe hacerlo: **jubilaciones voluntarias** — con la edad promedio de 45 a 60 años —, **capacitación para emprendimientos**, acompañamiento familiar y psicológico, y **transferencia de conocimiento bidireccional**: el know-how operativo de los veteranos hacia el sistema, y lo digital de los jóvenes hacia la operación. Proceso transparente, sin conflicto — como el caso de Nestlé con 51 personas."
+**Se ve:** gestión humana (jubilaciones, emprendimientos, 51/0).
+**Decimos:** "Y lo hacemos con las personas. **Jubilaciones voluntarias** — la edad promedio del área es 45 a 60 —, **capacitación para emprendimientos**, acompañamiento familiar y psicológico, y **transferencia bidireccional de conocimiento**: el know-how operativo de la bodega entra a la era digital. Nestlé ya lo hizo con **51 personas y cero conflicto**."
 
-## 10 · ROI — por debajo del estándar Nestlé (Andrés · 3:10–3:28)
+## 13 · ROI — por debajo del estándar Nestlé (Andrés · 4:02–4:20)
 
 **Se ve:** banner "≈2,4 AÑOS — POR DEBAJO DEL ESTÁNDAR NESTLÉ (2,7–3 · máx 3,5)".
-**Decimos:** "¿Y la recuperación? La labor real del área es **20 colaboradores a $660 al mes — $158 mil al año**. NestHive asume el transporte interno y el equipo se reasigna a valor, más los kilómetros en vacío eliminados, la energía por pallet y las mermas: **cerca de $270 mil al año de ahorro**. Con una inversión de **$640 mil** — sin el golpe arancelario, porque importamos desde Colombia dentro de la Comunidad Andina — el **payback es de 2,4 años: por debajo del estándar Nestlé, que fija el rango en 2,7 a 3**."
+**Decimos:** "¿Y la recuperación? La labor real del área es **20 colaboradores a $660 al mes — $158 mil al año**. NestHive asume el transporte interno y el equipo se reasigna a valor, más los kilómetros en vacío eliminados, la energía por pallet y las mermas: **cerca de $270 mil al año de ahorro**. Con una inversión de **$640 mil**, el **payback es de 2,4 años: por debajo del estándar Nestlé**."
 
-## 11 · CAPEX: cómo se compone la inversión (Andrés · 3:28–3:54)
+## 14 · CAPEX: cómo se compone la inversión (Andrés · 4:20–4:38)
 
-**Se ve:** tabla CAPEX línea por línea + curva de ahorro cruzando el payback.
-**Decimos:** "El desglose: cuatro AMRs MiR1350 con elevador de palets — **$440 mil** —, importación desde Colombia — **arancel cero por la Comunidad Andina, más logística y tasas: $20 mil** —, integración WCS, lectores RFID, infraestructura y puesta en marcha — $180 mil. **Total: $640 mil**. El IVA — 15% — se paga en aduana pero **vuelve como crédito fiscal: no es costo**. Y si prefieren entrar por pasos: **piloto de dos AMRs, $250 mil, reversible en menos de un turno**."
+**Se ve:** tabla CAPEX + curva de payback (morph).
+**Decimos:** "El desglose: cuatro KUKA KMP 600P — **$440 mil** —, importación desde Colombia — **arancel cero por la CAN, más logística: $20 mil** —, integración WCS, lectores RFID, infraestructura y puesta en marcha — $180 mil. **Total: $640 mil**. El IVA — 15% — **vuelve como crédito fiscal: no es costo**. Y si prefieren entrar por pasos: **piloto de dos AMRs, $250 mil, reversible en menos de un turno**."
 
-## 12 · Sostenibilidad (Andrés · 3:54–4:08)
+## 15 · Escalabilidad y replicabilidad (Joshua · 4:38–4:52)
 
-**Se ve:** Net Zero 2050 + ODS 12 + calidad del producto.
-**Decimos:** "La eficiencia es sostenibilidad con números: menos kilómetros en vacío, menos energía por pallet, menos mermas — alineado con el **Net Zero 2050** y el **ODS 12**. Y la calidad también: control de temperatura y humedad en producción y empaque — porque el empaque es la barrera que protege la galleta. Más producto protegido con menos recursos."
+**Se ve:** multi-centro desde un tablero.
+**Decimos:** "¿Y mañana? Otro centro de distribución es otro archivo de configuración: con demanda creciendo 5% al año, Néstor predice la saturación y planifica la siguiente inversión **antes del 85% de capacidad** — y el mismo motor opera todos los centros desde un solo tablero."
 
-## 13 · Escalabilidad y replicabilidad (Joshua · 4:08–4:28)
+## 16 · Gracias (Joshua · 4:52–5:00)
 
-**Se ve:** multi-centro desde un tablero + misma Néstor.
-**Decimos:** "¿Y mañana? Otro centro de distribución es otro archivo de configuración: Néstor predice la saturación — con demanda creciendo 5% al año, planifica la siguiente inversión antes del 85% de capacidad — y el mismo motor opera todos los centros desde un solo tablero. Lo que se replica es configuración — el cerebro ya está construido."
-
-## 14 · Gracias (Joshua · 4:28–5:00)
-
-**Se ve:** logo + "Gracias" + equipo.
-**Decimos:** "Somos NestHive. Las líneas nunca esperan. Muchas gracias." — *y se quedan en esta slide los ~30 s restantes: aplausos, transición a Q&A.*
+**Se ve:** logo + "Gracias".
+**Decimos:** "Somos NestHive. **La infraestructura habla con Néstor — y Néstor habla contigo.** Muchas gracias."
 
 ---
 
-## Q&A (10 min) — cómo operarlo
+## Q&A — banco rápido (el completo vive en `nestlink/tasksR/qa_jurado_fase2.md`)
 
-1. **Banco:** `tasksR/qa_jurado_fase2.md` — ⚠️ **pendiente: barrido de números a la versión nueva** (6 AMRs → 4 AMRs; payback 4,5 → ≈2,9; CAPEX 0,95 → 0,76 con arancel 75%; sin "AMR 6").
-2. **Regla:** responde quien recibe la pregunta; el resto respalda (Joshua=demo/Néstor, Andrea=tecnología, Andrés=finanzas/personas). **Una frase, luego el dato del deck.**
-3. **Números canónicos v5:** 1.035 mov/día · 215/131 por turno · takt 132 s · techo 411 (+91%) · **4 AMRs MiR1350 (3+1), importados desde Colombia** · CAPEX **$0,64M** (MiR $440k + import CAN 0%+logística $20k + integración $180k; **IVA 15% ≈$96k = crédito fiscal recuperable**) · ahorro ≈**$0,27M/año** · **payback ≈2,4 años — POR DEBAJO del estándar Nestlé (2,7–3, MÁX 3,5)** · labor real $660×20 = $158,4k/año · exactitud ≥99,9% (RFID) · disponibilidad ≥98% · espera ≤30 s p95 · piloto **2 AMRs ≈$250k** reversible <1 turno · 118+171 (+93 subtests) pruebas de plataforma.
-4. **Réplicas nuevas:** ¿AMR vs AGV? — "AMR navega autónomo (SLAM), sin cintas ni imanes: cero obras civiles y re-ruteo dinámico real; el AGV está esclavizado a una ruta física." ¿El MiR1350 cuesta más? — "Cotización formal pendiente; incluso con +30% por unidad, el payback sigue ≤3,2 — dentro del estándar." ¿Por qué Colombia? — "Representación y soporte MiR en LatAm + importación CAN con arancel 0% y Certificado de Origen."
-4. **Si preguntan por el piloto:** 2 AMRs, reversible en menos de un turno, medido contra el takt real.
-5. **Si preguntan por personas/huelgas:** proceso transparente + jubilaciones voluntarias + reasignación a valor; caso Nestlé 51 personas sin conflicto; riesgo sindical evaluado con el Business Partner.
-6. **Si preguntan por Wi-Fi/red:** 802.11 k/v/r, handover <50 ms, buffer local + VDA 5050; Nestlé ya tiene la red — no pedimos una nueva.
-7. **Si preguntan por el simulador/MVP:** el sistema opera en vivo sobre el modelo del centro; la integración WCS/RFID es el diseño de despliegue — *decirlo sin decir "simulador"*: "lo que ven es el sistema operando; el despliegue conecta el mismo Néstor al WCS de la planta".
-8. **Réplica anti-Reto-2:** "un dron audita; no mueve 1.035 pallets/día — el transporte físico es otro problema, y NestHive además eleva la exactitud de inventario a ≥99,9% con RFID".
+1. **Réplica anti-simulador:** "Lo que ven es el sistema operando — el mismo Néstor que, en el despliegue, se conecta al WCS de la planta. Cada cifra sale de esa operación."
+2. **Números canónicos v6:** 1.035 mov/día (645 solo salida) · 215/131 por turno · takt 132 s · techo 411 (+91%) · **4 AMRs KUKA KMP 600P (3+1) desde Colombia** · CAPEX **$0,64M** (KUKA $440k + CAN 0%+$20k + integración $180k; IVA 15%=$96k recuperable) · ahorro ≈**$0,27M/año** · **payback ≈2,4 (POR DEBAJO del estándar Nestlé 2,7–3, máx 3,5)** · labor $660×20=$158,4k/año · exactitud ≥99,9% (RFID→SAP) · disponibilidad ≥98% · espera ≤30 s p95 · piloto **2 AMRs $250k** reversible <1 turno · 118+171 tests · mapa 139 nodos/162 aristas.
+3. **Algoritmo húngaro (si profundizan):** matriz de costos AMR×misión; celda = w·distancia A* + prioridad P1–P10 + batería + estado + home-zone; Kuhn-Munkres O(n³) → asignación de costo mínimo global; se resuelve en ms cada vez que entra una misión o cambia la flota.
+4. **¿Por qué KUKA?** Gigante alemán de robótica (estándar automotriz), KMP 600P con elevador de palets integrado, VDA 5050, soporte y distribución en LatAm (Colombia → CAN 0%).
+5. **+30% costo:** "Incluso con +30% por unidad, el payback sigue ≤3,2 — dentro del estándar."
+6. **Réplica AMR vs AGV:** "El AGV está esclavizado a una ruta física — cintas, imanes, obras civiles. El AMR navega autónomo: cero obras, re-ruteo dinámico real. Un tren contra un conductor."
 
----
+## Checklist de ensayo
 
-## Ensayo (checklist)
-
-- [ ] Cronometrar los 14 bloques: contenido hasta **4:28**, margen sobre "Gracias" hasta 5:00 (tecla N = guion en pantalla como teleprompter).
-- [ ] Joshua: portada (12 s), problemática, Néstor (con pilares culturales), **demo ≈20 s** (NestHive corriendo a pantalla completa en localhost), escalabilidad, cierre.
-- [ ] Andrea: arquitectura WCS/WMS + RFID (memorizar la frase de SAP en tiempo real), demanda, **flota 4 AMRs MiR1350 con la frase AMR≠AGV (SLAM, cero obras civiles)**.
-- [ ] Andrés: **criterios 6/6 en ≈28 s** (innovation→replicabilidad, sin trabarse), gestión humana, ROI (banner **2,4 años, por debajo del estándar**) + CAPEX (**CAN 0% + $20k**, IVA recuperable, piloto $250k).
-- [ ] Q&A 10 min con el banco (jurado hostil rotativo) tras actualizar los números (ver §Q&A).
-- [ ] Plan B demo: deck completo sin demo en vivo (las 4 imágenes del deck + KPIs impresos en one-pager).
-
-> 🔒 Material local — nada se sube a GitHub público.
+- [ ] Cronometrar los 16 bloques: contenido hasta **4:52**, "Gracias" cierra en 5:00 (tecla N = teleprompter).
+- [ ] Joshua: portada (12 s), problemática con Tompkins, Néstor + **frase infraestructura**, demo con video MVP (≈20 s), flota KUKA con video andén (≈20 s), escalabilidad, cierre con la frase.
+- [ ] Andrea: PLC/asignación, **algoritmo húngaro completo sin apurarse (26 s — es la slide estrella técnica)**, mantenimiento, WMS+RFID.
+- [ ] Andrés: cifras ABB/Kostić de corrido, **criterios 6/6 en ≈26 s**, gestión humana, ROI (2,4 años) + CAPEX (CAN 0%, IVA recuperable, piloto $250k).
+- [ ] Nadie dice "AGV", "MiR", "simulador" ni "ESPOL Fusion".
+- [ ] Videos probados en el navegador: MVP con poster (click para reproducir), andén autoplay muted.
