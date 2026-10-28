@@ -19,21 +19,23 @@ def test_supply_delivery_starts_delayed_recovery_request():
 
     before = env.generator.lines[1].nivel_pct
     env.generator.supply_delivered("INSUMO_P2", 10.0)
-    assert env.get_snapshot().station_stock["INSUMO_P2"] == 1
+    assert env.get_snapshot().station_stock["INSUMO_P2"] == 3  # 3 generaciones de pallets por insumo
     assert env.get_snapshot().station_stock["RECO_R2"] == 0
     assert env.generator.lines[1].nivel_pct == min(100.0, before + 20.0)
     env.generator.step(19.9, env.mission_queue, 29.9, env.metrics)
     assert not any(m.origen == "RECO_R2" for m in env.mission_queue.get_all_missions())
     env.generator.step(0.1, env.mission_queue, 30.0, env.metrics)
-    assert env.get_snapshot().station_stock["INSUMO_P2"] == 0
+    assert env.get_snapshot().station_stock["INSUMO_P2"] == 2
     assert env.get_snapshot().station_stock["RECO_R2"] == 1
     recovery = [m for m in env.mission_queue.get_all_missions() if m.origen == "RECO_R2"]
     assert len(recovery) == 1
     assert recovery[0].tipo == "PICKUP_PT"
     assert recovery[0].destino.startswith("PALET_")
     assert not any(m.origen == "INSUMO_P2" for m in env.mission_queue.get_all_missions())
+    level = env.generator.lines[1].nivel_pct
     env.generator.drain_line_pickup("RECO_R2")
     assert env.get_snapshot().station_stock["RECO_R2"] == 0
+    assert abs(env.generator.lines[1].nivel_pct - (level - 20.0 / 3)) < 1e-9
 
 
 def test_palet_arrival_creates_export_for_dedicated_agv():

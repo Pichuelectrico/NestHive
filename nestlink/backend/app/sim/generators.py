@@ -54,6 +54,11 @@ def resolve_pt_destination(line_id: str, line_nombre: str) -> str:
 class ProductionLine:
     # Ronda 13: tiempo de proceso de la línea (~20 s) antes de emitir el PICKUP_PT a Paletizado
     LINE_PROCESS_TIME_SEC: float = 20.0
+    # Un insumo entregado repone RESTOCK_PCT y alcanza para PALLETS_PER_SUPPLY generaciones
+    # de pallets: el desgaste ocurre por pallet generado, no de forma continua.
+    RESTOCK_PCT: float = 20.0
+    PALLETS_PER_SUPPLY: int = 3
+    PALLET_DRAIN_PCT: float = RESTOCK_PCT / PALLETS_PER_SUPPLY
 
     def __init__(self, id_str: str, nombre: str, material: str, tasa_kg_min: float, umbral_critico_pct: float, nivel_inicial_pct: float):
         self.id = id_str
@@ -80,9 +85,10 @@ class ProductionLine:
         """Aumenta el nivel de insumos al completarse una entrega SUPPLY_REQUEST."""
         self.nivel_pct = min(100.0, self.nivel_pct + amount_pct)
 
-    def drain_pickup(self, amount_pct: float = 55.0):
-        """Reduce el nivel de producto terminado al retirarse el pallet (PICKUP_PT)."""
-        self.nivel_pct = max(10.0, self.nivel_pct - amount_pct)
+    def drain_pickup(self, amount_pct: Optional[float] = None):
+        """Desgaste de insumo por pallet generado (retirado en PICKUP_PT): 1/3 de un restock."""
+        amount = (self.PALLET_DRAIN_PCT if amount_pct is None else amount_pct) * self.peak_multiplier
+        self.nivel_pct = max(0.0, self.nivel_pct - amount)
 
     def step(self, dt_sim: float, mission_queue: MissionQueue, sim_time: float, metrics_manager: Any):
         if self.peak_duration_sec > 0:
@@ -90,10 +96,7 @@ class ProductionLine:
             if self.peak_duration_sec <= 0:
                 self.peak_multiplier = 1.0
 
-        rate_per_sec = (self.tasa_kg_min / 60.0) * self.peak_multiplier * 0.40
-
-        # Consumo continuo de insumos
-        self.nivel_pct = max(0.0, self.nivel_pct - rate_per_sec * self.factor_drenaje * dt_sim)
+        # El consumo ya no es continuo: se descuenta por pallet generado (ver drain_pickup).
 
         # Ronda 13: Línea → Paletizado (~20 s de proceso). Mientras haya insumo, se acumula
         # tiempo de proceso y, al cumplirse los 20 s, se encadena una misión PICKUP_PT
@@ -187,19 +190,22 @@ class PlantDemandGenerator:
         if not self.espol_flow or destination not in self._supply_due:
             return
         station = int(destination[-1])
-        self.restock_line(f"R{station}", amount_pct=20.0)
-        self._pickup_due.append((sim_time + float(self.fleet_rules.get("process_seconds", 20.0)), station))
+        self.restock_line(f"R{station}", amount_pct=ProductionLine.RESTOCK_PCT)
+        process = float(self.fleet_rules.get("process_seconds", 20.0))
+        for n in range(1, ProductionLine.PALLETS_PER_SUPPLY + 1):
+            self._pickup_due.append((sim_time + process * n, station))
         self._supply_due[destination] = sim_time + float(self.fleet_rules.get("supply_interval_seconds", 110.0))
 
     def espol_supply_destination(self, line_id: str) -> str:
         recovery = self.fleet_rules.get("pickup_node", {}).get(line_id, "RECO_R1")
         return f"INSUMO_P{recovery[-1]}"
 
-    def drain_line_pickup(self, line_id: str, amount_pct: float = 55.0) -> bool:
+    def drain_line_pickup(self, line_id: str, amount_pct: Optional[float] = None) -> bool:
+        """Cada pallet retirado consume 1/3 de un insumo entregado (amount_pct se ignora)."""
         if self.espol_flow and line_id.startswith("RECO_R"):
             self.reco_stock[line_id] = max(0, self.reco_stock.get(line_id, 0) - 1)
             line_id = f"R{line_id[-1]}"
-            amount_pct = 20.0
+        amount_pct = None
         for line in self.lines:
             if line.id == line_id:
                 line.drain_pickup(amount_pct)
@@ -262,8 +268,6 @@ class PlantDemandGenerator:
                     line.peak_duration_sec = max(0.0, line.peak_duration_sec - dt_sim)
                     if line.peak_duration_sec == 0:
                         line.peak_multiplier = 1.0
-                consumed = (line.tasa_kg_min / 60.0) * line.peak_multiplier * 0.40 * line.factor_drenaje * dt_sim
-                line.nivel_pct = max(0.0, line.nivel_pct - consumed)
             active = ("pendiente", "asignada", "en_curso")
             for destination, due in self._supply_due.items():
                 if sim_time >= due and not any(m.tipo == "SUPPLY_REQUEST" and m.destino == destination
